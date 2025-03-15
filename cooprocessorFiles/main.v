@@ -14,7 +14,7 @@ module main(
 	reg[4:0] i_B = 0;
 	reg[7:0] matriz_A [0:24];
 	reg[7:0] matriz_B [0:24];
-	reg activate;
+	reg finished;
 	reg[24:0] counter;
 	wire [7:0] data;
 	
@@ -30,7 +30,7 @@ module main(
 	
 	
 	matriz_soma(
-		clk2,
+		clk_sum,
 		matriz_A[i],
 		matriz_B[i],
 		data_c
@@ -53,7 +53,7 @@ module main(
 	always @(posedge clk)begin
 		if(address == 0) begin
 			size <= data;
-			address <= address + 1;
+			address <= address + 1;	
 		end else if (address <= size*size) begin
 			matriz_A[index_A] <= data;
 			index_A <= index_A + 1;
@@ -62,10 +62,13 @@ module main(
 			matriz_B[index_B] <= data;
 			index_B <= index_B + 1;
 			address <= address + 1;
-		end 
+		end else begin
+			finished <= 1;
+		end
 	end
+	and(clk_sum, clk2, finished); //versao final mudar clk2 p/ clk
 	
-	always @(posedge clk2)begin
+	always @(posedge clk_sum)begin
 		i_A <= i;
 		i_B <= i;
 		i <= i + 1;
