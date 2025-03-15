@@ -1,12 +1,14 @@
 module matriz_soma(
-	input clk,
-	input [7:0] q_a,
-	input [7:0] q_b,
-	output reg [7:0] data_c
+    input [255:0] q_a,
+    input [255:0] q_b,
+    output wire [255:0] data_c
 );
 
-	always @(posedge clk) begin
-		data_c <= q_a + q_b;	
-	end
-	
+    genvar i;
+    generate
+        for (i = 0; i < 256; i = i + 8) begin : soma_matrizes
+            assign data_c[i +: 8] = q_a[i +: 8] + q_b[i +: 8];
+        end
+    endgenerate
+
 endmodule
