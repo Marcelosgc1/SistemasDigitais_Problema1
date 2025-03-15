@@ -1,5 +1,5 @@
 *
-db/
+
 
 !*.v
 !*.qip
@@ -8,3 +8,5 @@ db/
 !.gitignore
 !*.qsf
 !*.qpf
+
+db/*.v
