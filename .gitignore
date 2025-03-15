@@ -1,0 +1,10 @@
+*
+db/
+
+!*.v
+!*.qip
+!*/
+
+!.gitignore
+!*.qsf
+!*.qpf
