@@ -1,1 +1,1 @@
-# SistemasDigitais_Problema1
+# Coprocessador aritmético especializado em operações matriciais
