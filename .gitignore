@@ -9,5 +9,5 @@
 !*.qsf
 !*.qpf
 
-db/**/*.v
+cooprocessorFiles/db/**/*
 
