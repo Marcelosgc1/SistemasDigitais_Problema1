@@ -7,7 +7,7 @@ module matriz_soma(
     genvar i;
     generate
         for (i = 0; i < 256; i = i + 8) begin : soma_matrizes
-            assign data_c[i +: 8] = q_a[i +: 8] + q_b[i +: 8];
+            assign data_c[i+7:i] = q_a[i+7:i] + q_b[i+7:i];
         end
     endgenerate
 
