@@ -1,5 +1,6 @@
 module main2(
 	input wire clk,
+	input [1:0]operation, //mudar p/ 32 bits no futuro, aq eh so opcode
 	output reg [7:0] leds
 );
 
@@ -12,17 +13,18 @@ module main2(
 	reg [255:0] matriz_B;
 	reg finished, read_finished;
 	reg [24:0] counter;
-	wire[255:0] data;
+	wire[255:0] data, data_c, data_c_sum, data_c_sub;
 	reg [7:0] address;
 	reg wren;
 	
+	assign data_c = operation[0] ? data_c_sub : data_c_sum;
 	
 	
 	ram1port256bits(
 		address,
 		clk,
 		data_c,
-		read_finished,
+		wren,
 		data
 	);
 	
@@ -30,9 +32,13 @@ module main2(
 	matriz_soma(
 		matriz_A,
 		matriz_B,
-		data_c
+		data_c_sum
 	);
-	
+	matrix_subtraction(
+		matriz_A,
+		matriz_B,
+		data_c_sub
+	);
 	
 	//iteracao das matrizes na memoria
 	always @(posedge clk)begin
@@ -53,7 +59,7 @@ module main2(
 		end
 	end
 	
-	and(clk_sum, clk2, read_finished); //versao final mudar clk2 p/ clk
+	
 	
 	
 	
@@ -69,8 +75,9 @@ module main2(
 		else
 			clk2 <= 0;	
 	end
+	and(clk_op, clk2, read_finished); //versao final mudar clk2 p/ clk
 	//demonstraçao nos leds do DE1-SoC
-	always @(posedge clk_sum) begin
+	always @(posedge clk_op) begin
 		leds <= data[i+:8];
 		if (i >= 3'd192) begin
 			i <= 0;
