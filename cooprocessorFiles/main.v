@@ -3,6 +3,7 @@ module main(
 	input [1:0]operation, //mudar p/ 32 bits no futuro, aq eh so opcode
 	output reg [7:0] leds,
 	output reg wren,
+	input rst,
 	input start_operation
 );
 
@@ -14,14 +15,13 @@ module main(
 	reg [255:0] matriz_A;
 	reg [255:0] matriz_B;
 	reg finished, read_finished, flag_Z = 0, flag_A = 0, flag_C = 0, flag_D = 0;
-	reg [24:0] counter;
-	reg [1:0] counter2;
-	wire[255:0] data, data_c, data_c_sum, data_c_sub;
+	reg [1:0] counter;
+	wire[255:0] data, data_c, data_c_sum, data_c_sub, data_c_transpose;
 	reg [7:0] address;
 
 	//reg wren;
 
-	assign data_c = operation[0] ? data_c_sub : data_c_sum;
+	assign data_c = operation[0] ? operation[1] ? data_c_transpose : data_c_sub : data_c_sum;
 	and(mclk,clk2,start_operation);
 
 	ram1port256bits(
@@ -44,7 +44,11 @@ module main(
 		matriz_B,
 		data_c_sub
 	);
-
+	
+	matrix_transposition(
+		matriz_A,
+		data_c_transpose
+	);
 
 	//iteracao das matrizes na memoria
 	always @(posedge mclk)begin
@@ -64,7 +68,7 @@ module main(
 
 
 		leds <= data[7:0];
-		if (operation[1]) begin
+		if (!rst) begin
 			read_finished <= 0;
 			wren <= 0;
 			finished <= 0;
