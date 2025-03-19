@@ -14,7 +14,7 @@ module main(
 	reg [7:0] i = 0;
 	reg [255:0] matriz_A;
 	reg [255:0] matriz_B;
-	reg finished, read_finished, flag_Z = 0, flag_A = 0, flag_C = 0, flag_D = 0;
+	reg finished, read_finished, flag_Z = 0, flag_A = 0, flag_D = 0;
 	reg [1:0] counter;
 	wire[255:0] data, data_c, data_c_sum, data_c_sub, data_c_transpose;
 	reg [7:0] address;
@@ -56,11 +56,9 @@ module main(
 			flag_Z = 1;
 		end else if(flag_A == 0) begin
 			matriz_A = data;
-			flag_A = 1;
 			matrix_address = 2;
-		end else if (flag_C == 0) begin
+			flag_A = 1;
 			matriz_B = data;
-			flag_C = 1;
 		end else begin
 			read_finished <= 1;
 		
@@ -70,24 +68,22 @@ module main(
 		leds <= data[7:0];
 		if (!rst) begin
 			read_finished <= 0;
-			wren <= 0;
+			wren = 0;
 			finished <= 0;
 			matrix_address = 1;
 			flag_Z = 0;
 			flag_A = 0;
-			flag_C = 0;
 			flag_D = 0;
 		end else if (finished) begin
-			wren <= 0;
-		end else if (flag_D == 1) begin // LEMBRAR DE TESTAR COM BLOQUEANTE NO LUGAR DE FLAG D, FICARIA NA MESMA PARTE DO 'read_finished'
-			wren <= 1;
-			finished <= 1;
+			wren = 0;	
 		end else if (read_finished) begin
 			address = 3;
 			flag_D = 1;
+			wren = 1;
+			finished = 1;
 		end else begin
 			address = matrix_address;
-			wren <= 0;
+			wren = 0;
 		end
 	end
 
