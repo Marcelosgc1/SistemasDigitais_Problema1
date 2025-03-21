@@ -1,13 +1,14 @@
 module matriz_soma(
-    input [255:0] q_a,
-    input [255:0] q_b,
+    input wire [255:0] matriz_a,
+    input wire [255:0] matriz_b,
     output wire [255:0] data_c
 );
-
+    
     genvar i;
+    
     generate
-        for (i = 0; i < 256; i = i + 8) begin : soma_matrizes
-            assign data_c[i+7:i] = q_a[i+7:i] + q_b[i+7:i];
+        for (i = 0; i<256; i = i + 8) begin : soma_matrizes
+            assign data_c[i +: 8] = matriz_a[i +: 8] + matriz_b[i +: 8];
         end
     endgenerate
 
