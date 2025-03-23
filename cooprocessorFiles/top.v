@@ -30,7 +30,7 @@ module top(
 	reg [2:0] state;
 	reg [31:0] fetched_instruction;
 	
-	reg wr, start, done; 
+	reg wr, start, done, start_memory, start_ALU; 
 	
 	reg [199:0] matrix_A; //registradores p/ salvar valores
 	reg [199:0] matrix_B;
@@ -65,7 +65,19 @@ module top(
 	);
 	*/
 	
+	
+	
 	always @(posedge clk) begin
+		
+		//MUX para iniciar operacoes aritimeticas ou de memoria
+		if ((opcode == WRITE) | (opcode == READ)) begin
+			start_memory <= start;
+		end else begin
+			start_ALU <= start;
+		end
+	
+	
+		//MEF
 		case (state)
 			FETCH: begin
 				if (activate_instruction) begin	
@@ -79,27 +91,26 @@ module top(
 			end
 			 
 			EXECUTE: begin
-				case (opcode)
-					READ: begin
-						wr <= 0;
-						start <= 1;
-						if (done) begin
-							start <= 0;
-							state <= FETCH;
-						end
-					end
-					WRITE: begin
-						wr <= 1;
-						start <= 1;
-						if (done) begin
-							start <= 0;
-							state <= FETCH;
-						end
-					end
-					default: begin
-						state <= FETCH;
-					end
-				endcase
+			
+				//done sera enviado da ALU ou Memoria, sinalizando que ja ouve a operacao
+				//start sera o sinal para comecar a operacao;
+				if (done) begin
+					start <= 0;
+					state <= FETCH;
+				end else begin
+					start <= 1;
+				end
+				
+				//certas operacoes precisam que certos sinais sejam enviados p/ os modulos
+				if (READ == opcode) begin
+					wr <= 0;
+				end else if (WRITE == opcode) begin
+					wr <= 1;
+				end else begin //PLACEHOLDER, ALTERAR DEPOIS
+					state <= FETCH;
+				end
+				
+				
 			end
 			
 			default: state <= FETCH;
