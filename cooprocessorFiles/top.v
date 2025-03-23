@@ -30,12 +30,13 @@ module top(
 	reg [2:0] state;
 	reg [31:0] fetched_instruction;
 	
-	reg wr, start, done, start_memory, start_ALU; 
+	reg wr, start, start_memory, start_ALU; 
+	wire done;
 	
 	reg [199:0] matrix_A; //registradores p/ salvar valores
 	reg [199:0] matrix_B;
 	reg [199:0] matrix_C;
-	reg [7:0] data_out;
+	wire [7:0] data_out;
 	
 	decoder(
 		fetched_instruction,
@@ -45,15 +46,17 @@ module top(
 	);
 	
 	//PLACEHOLDER
-	/*
+	
 	memory_mod(
-		adrs,
+		address,
 		data,
-		start,
+		start_memory,
 		wr,
+		clk,
 		data_out,
 		done		
 	);
+	/*
 	alu_mod(
 		matrix_A,
 		matrix_B,
