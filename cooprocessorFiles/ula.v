@@ -11,7 +11,8 @@ module ula(
 	reg signed [7:0] A [4:0][4:0];
 	reg signed [7:0] B [4:0][4:0];
 	reg signed [7:0] C [4:0][4:0];
-
+	reg clkDeterminante;
+	reg [24:0] equacaoA;
 	
 	integer i, j, k;
 
@@ -27,8 +28,8 @@ module ula(
 	
 			// Soma
 			4'b0011: begin				 
-				for (i = 0; i < 200; i = i + 8) begin : soma_matrizes
-					matriz_resultante[i +: 8] = matrizA[i +: 8] + matrizB[i +: 8];
+				for (i = 0; i < 256; i = i + 8) begin : soma_matrizes
+					assign matriz_resultante[i+7 +: 8] = matrizA[i+7 +: 8] + matrizB[i+7 +: 8];
 				end
 				done <= 1;
 			end
@@ -36,8 +37,8 @@ module ula(
 			
 			// Subtração
 			4'b0100: begin
-				for (i = 0; i < 200; i = i + 8) begin : subtracao_matrizes
-					matriz_resultante[i +: 8] = matrizA[i +: 8] - matrizB[i +: 8];
+				for (i = 0; i < 256; i = i + 8) begin : subtracao_matrizes
+					assign matriz_resultante[i+7 +: 8] = matrizA[i+7 +: 8] - matrizB[i+7 +: 8];
 				end
 				done <= 1;
 			end
@@ -68,7 +69,7 @@ module ula(
 			4'b0110: begin
 				for (j = 0; j < 5; j = j + 1) begin : linha
 					for (i = 0; i < 5; i = i + 1) begin : coluna
-						matriz_resultante[(8*i)+(40*j)+:8] = matrizA[(40*i)+(8*j) +:8];
+						assign matriz_resultante[(8*i)+(40*j)+:8] = matrizA[(40*i)+(8*j) +:8];
 					end
 				end
 				done <= 1;
@@ -76,8 +77,9 @@ module ula(
 			
 			// Matriz oposta
 			4'b0111: begin
-				for (i = 0; i < 200; i = i + 8) begin : oposta_matriz
-					matriz_resultante[i +: 8] = -matrizA[i +: 8];
+				for (i = 0; i < 256; i = i + 8) begin : oposta_matriz
+					reg signed [7:0] q_a = matrizA[i +: 8];  
+					assign matriz_resultante[i +: 8] = -q_a;
 				end
 				done <= 1;
 			end 
@@ -85,20 +87,37 @@ module ula(
 			
 			// Multiplicação escalar
 			4'b1000: begin
-				for (i = 0; i < 200; i = i + 8) begin : subtracao_matrizes
-					matriz_resultante[i +: 8] = data_escalar * matrizA[i +: 8];
+				for (i = 0; i < 256; i = i + 8) begin : subtracao_matrizes
+					assign matriz_resultante[i+7 +: 8] = data_escalar * matrizA[i+7 +: 8];
 				end
 				done <= 1;
 			end 
 			
 			// Determinante 2x2
 			4'b1001: begin
+				assign matriz_resultante = (matrizA[7:0] * matrizA[31:24]) - (matrizA[15:8] - matrizA[23:16]); 
 				done <= 1;
 			end
 			
 			// Determinante 3x3
-			4'b1010: begin
-				done <= 1;
+			4'b1010: begin 
+			
+				// Dois pulsos de clock para fazer a operação 
+				/* 
+				if(!clkDeterminante) begin
+					assign equacaoA = (matrizA[7:0]*matrizA[39:32]*matrizA[71:64]) + (matrizA[15:8]*matrizA[47:40]*matrizA[55:48]) + (matrizA[23:16]*matrizA[31:24]*matrizA[63:56]) 					
+				end else begin
+					assign matriz_resultante = equacaoA - ((matrizA[15:8]*matrizA[31:24]*matrizA[71:64]) + (matrizA[7:0]*matrizA[47:40]*matrizA[63:56]) + (matrizA[23:16]*matrizA[39:32]*matrizA[55:48]));
+					clkDeterminante <= 0;
+					done <= 1;
+				end 
+					clkDeterminante <= 1;
+				*/
+				
+				// Um pulso de clock para fazer a operação
+				assign matriz_resultante = (matrizA[7:0]*matrizA[39:32]*matrizA[71:64]) + (matrizA[15:8]*matrizA[47:40]*matrizA[55:48]) + (matrizA[23:16]*matrizA[31:24]*matrizA[63:56]) 
+					- ((matrizA[15:8]*matrizA[31:24]*matrizA[71:64]) + (matrizA[7:0]*matrizA[47:40]*matrizA[63:56]) + (matrizA[23:16]*matrizA[39:32]*matrizA[55:48]));
+					done <= 1; 
 			end
 			
 			// Determinante 4x4
