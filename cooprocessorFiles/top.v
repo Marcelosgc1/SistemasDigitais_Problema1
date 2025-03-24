@@ -31,11 +31,12 @@ module top(
 	reg [31:0] fetched_instruction;
 	
 	reg wr, start, start_memory, start_ALU; 
-	wire done;
+	wire done, done_alu, done_mem;
+	or op_done(done, done_alu, done_mem);
 	
 	reg [199:0] matrix_A; //registradores p/ salvar valores
 	reg [199:0] matrix_B;
-	reg [199:0] matrix_C;
+	wire [199:0] matrix_C;
 	wire [7:0] data_out;
 	
 	decoder(
@@ -54,19 +55,18 @@ module top(
 		wr,
 		clk,
 		data_out,
-		done		
+		done_mem
 	);
-	/*
-	alu_mod(
+	
+	ula(
+		clk,
+		opcode,
+		data,
 		matrix_A,
 		matrix_B,
-		data,
-		start,
 		matrix_C,
-		data_out,
-		done
+		done_alu
 	);
-	*/
 	
 	
 	
