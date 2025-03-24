@@ -39,7 +39,7 @@
 
 set_global_assignment -name FAMILY "Cyclone V"
 set_global_assignment -name DEVICE 5CSEMA5F31C6
-set_global_assignment -name TOP_LEVEL_ENTITY top
+set_global_assignment -name TOP_LEVEL_ENTITY test_top
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 23.1STD.1
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "08:26:35  MARCH 15, 2025"
 set_global_assignment -name LAST_QUARTUS_VERSION "23.1std.1 Lite Edition"
@@ -54,8 +54,6 @@ set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_
 set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_symbol
 set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_signal_integrity
 set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_boundary_scan
-set_location_assignment PIN_AB12 -to operation[0]
-set_location_assignment PIN_AC12 -to operation[1]
 set_location_assignment PIN_V16 -to leds[0]
 set_location_assignment PIN_W16 -to leds[1]
 set_location_assignment PIN_V17 -to leds[2]
@@ -65,16 +63,21 @@ set_location_assignment PIN_W19 -to leds[5]
 set_location_assignment PIN_Y19 -to leds[6]
 set_location_assignment PIN_W20 -to leds[7]
 set_location_assignment PIN_AF14 -to clk
-set_location_assignment PIN_AE12 -to start_operation
-set_location_assignment PIN_Y21 -to wren
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_global_assignment -name VERILOG_FILE ula.v
 set_global_assignment -name VERILOG_FILE memory_mod.v
 set_global_assignment -name VERILOG_FILE top.v
 set_global_assignment -name VERILOG_FILE decoder.v
 set_global_assignment -name QIP_FILE ram16bits.qip
+set_global_assignment -name VERILOG_FILE simple_ula.v
+set_global_assignment -name VERILOG_FILE load.v
+set_global_assignment -name VERILOG_FILE test_top.v
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_location_assignment PIN_AB12 -to sw0
+set_location_assignment PIN_AC12 -to sw1
+set_global_assignment -name VERILOG_FILE output_files/debounce.v
+set_location_assignment PIN_AA14 -to b
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
