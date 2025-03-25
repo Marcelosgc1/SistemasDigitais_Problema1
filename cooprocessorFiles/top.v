@@ -1,14 +1,16 @@
 module top(
 	input [31:0] instruction,
 	input activate_instruction,
-	input clk
+	input clk,
+	output [7:0] leds
 );
-
+	
 
 	parameter 	//STATES
-					FETCH = 2'b00,
-					DECODE = 2'b01,
-					EXECUTE = 2'b10,
+					FETCH = 3'b000,
+					DECODE = 3'b001,
+					EXECUTE = 3'b010,
+					MEMORY = 3'b011,
 					
 					//MEM-OPERATIONS
 					READ = 4'b0001,
@@ -26,23 +28,26 @@ module top(
 					DET4 = 4'b1011,
 					DET5 = 4'b1100;
 					
-	
+	assign leds = matrix_C[7:0];
 	reg [2:0] state;
 	reg [31:0] fetched_instruction;
 	
-	reg wr, start, start_memory, start_ALU; 
+	reg wr, start, start_memory, start_ALU, loaded, seletor; 
 	wire done, done_alu, done_mem;
 	or op_done(done, done_alu, done_mem);
 	
-	reg [199:0] matrix_A; //registradores p/ salvar valores
-	reg [199:0] matrix_B;
+	reg [7:0] adrs;
+	
+	wire [199:0] matrix_A; //registradores p/ salvar valores
+	wire [199:0] matrix_B;
 	wire [199:0] matrix_C;
-	wire [7:0] data_out;
+	wire [7:0] data_out, address_instruction, address;
+	reg [3:0] num;
 	
 	decoder(
 		fetched_instruction,
 		opcode,
-		address,
+		address_instruction,
 		data
 	);
 	
@@ -58,8 +63,9 @@ module top(
 		done_mem
 	);
 	
-	ula(
+	simple_ula(
 		clk,
+		start_ALU,
 		opcode,
 		data,
 		matrix_A,
@@ -68,12 +74,21 @@ module top(
 		done_alu
 	);
 	
+	br(
+		done,
+		data_out,
+		adrs,
+		matrix_A,
+		matrix_B	
+	);
 	
+	
+	assign address = seletor ? adrs : address_instruction;
 	
 	always @(posedge clk) begin
 		
 		//MUX para iniciar operacoes aritimeticas ou de memoria
-		if ((opcode == WRITE) | (opcode == READ)) begin
+		if ((opcode == WRITE) | (opcode == READ) | !loaded) begin
 			start_memory <= start;
 		end else begin
 			start_ALU <= start;
@@ -90,32 +105,62 @@ module top(
 			end
 			 
 			DECODE: begin
-				state <= EXECUTE;
-			end
-			 
-			EXECUTE: begin
-			
-				//done sera enviado da ALU ou Memoria, sinalizando que ja ouve a operacao
-				//start sera o sinal para comecar a operacao;
-				if (done) begin
-					start <= 0;
-					state <= FETCH;
+				if ((opcode == WRITE) | (opcode == READ)) begin
+					state <= MEMORY;
 				end else begin
-					start <= 1;
+					state <= EXECUTE;
 				end
-				
-				//certas operacoes precisam que certos sinais sejam enviados p/ os modulos
-				if (READ == opcode) begin
-					wr <= 0;
-				end else if (WRITE == opcode) begin
-					wr <= 1;
-				end else begin //PLACEHOLDER, ALTERAR DEPOIS
-					state <= FETCH;
-				end
-				
-				
 			end
 			
+			MEMORY: begin
+				wr <= (opcode == WRITE);	
+				if (opcode == READ) begin
+					seletor <= 0;
+					if (done) begin
+						start <= 0;
+						state <= FETCH;
+					end else begin
+						start <= 1;
+					end
+				end else begin
+					seletor <= 1;
+					if (done) begin
+						start <= 0;
+						if (adrs[3:0] < 12) begin
+							adrs[3:0] = adrs[3:0] + 1;
+							loaded <= 0;
+							state <= MEMORY;
+						end else if (adrs[4]) begin
+							adrs[3:0] = 0;
+							adrs[4] = 1;
+							loaded <= 0;
+							state <= MEMORY;
+						end else begin
+							loaded <= 1;
+							adrs <= 0;
+							state <= EXECUTE;
+						end
+					end else begin
+						loaded <= 0;
+						start <= 1;
+					end
+				
+				
+				end
+			end
+			
+			EXECUTE: begin
+				if (!loaded) state <= MEMORY;
+				else begin
+					if (done) begin
+						start <= 0;
+						loaded <= 0;
+						state <= FETCH;
+					end else begin
+						start <= 1;
+					end
+				end
+			end
 			default: state <= FETCH;
 			
 		endcase
