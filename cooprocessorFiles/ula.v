@@ -1,4 +1,4 @@
-module ula(
+module alu(
 	input wire clk	,
 	input wire [3:0] opcode,
 	input wire [7:0] data_escalar,
@@ -13,8 +13,15 @@ module ula(
 	reg signed [7:0] C [4:0][4:0];
 	reg clkDeterminante;
 	reg [24:0] equacaoA;
+	reg [7:0] linha;
 	
 	integer i, j, k;
+	
+	
+	function integer indice;
+        	input integer linha, coluna;
+        	indice = 8 * (coluna + 5 * linha);
+   endfunction
 
 	always @(posedge clk) begin
         for (i = 0; i < 5; i = i + 1) begin
@@ -23,6 +30,7 @@ module ula(
                 B[i][j] = matrizB[(i*5 + j)*8 +: 8];
             end
         end
+
 	
 		case(opcode)
 	
@@ -46,23 +54,20 @@ module ula(
 			
 			// Multiplicação
 			4'b0101: begin
-
-              for (i = 0; i < 5; i = i + 1) begin
-                  for (j = 0; j < 5; j = j + 1) begin
-                      for (k = 0; k < 5; k = k + 1) begin                     
-                          C[i][j] = C[i][j] + (A[i][k] * B[k][j]);
-                      end
-                  end
-              end
-
-              for (i = 0; i < 5; i = i + 1) begin
-                  for (j = 0; j < 5; j = j + 1) begin
-                      matriz_resultante[8*(i*5 + j) +: 8] = C[i][j];  
-                  end
-              end
-
-
-				done <= 1;
+				 for (j = 0; j < 5; j = j + 1) begin
+            				matriz_resultante[indice(linha, j) +: 8] = 0;
+            				for (i = 0; i < 5; i = i + 1) begin
+                				matriz_resultante[indice(linha, j) +: 8] = matriz_resultante[indice(linha, j) +: 8] +
+                    				matrizA[indice(linha, i) +: 8] * matrizB[indice(i, j) +: 8];
+            				end
+        			end
+        
+			        if (linha == 4) begin
+			            linha <= 0;
+			        end else begin
+			            linha <= linha + 1;
+			        end 
+				    done <= 1;
 			end 
 			
 			// Transposta
