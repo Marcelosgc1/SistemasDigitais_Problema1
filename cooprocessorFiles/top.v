@@ -32,7 +32,7 @@ module top(
 	reg [2:0] state;
 	reg [31:0] fetched_instruction;
 	
-	reg wr, start, start_memory, start_ALU, loaded, seletor; 
+	reg wr, start, start_memory, start_ALU, loaded, seletor = 0; 
 	wire done, done_alu, done_mem;
 	or op_done(done, done_alu, done_mem);
 	
@@ -43,6 +43,7 @@ module top(
 	wire [199:0] matrix_C;
 	wire [7:0] data_out, address_instruction, address;
 	reg [3:0] num;
+	wire [3:0] opcode;
 	
 	decoder(
 		fetched_instruction,
@@ -114,7 +115,7 @@ module top(
 			
 			MEMORY: begin
 				wr <= (opcode == WRITE);	
-				if (opcode == READ) begin
+				if (opcode == WRITE) begin
 					seletor <= 0;
 					if (done) begin
 						start <= 0;
