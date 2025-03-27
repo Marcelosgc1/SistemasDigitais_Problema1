@@ -41,10 +41,10 @@ module top(
 	wire [199:0] matrix_A; //registradores p/ salvar valores
 	wire [199:0] matrix_B;
 	wire [199:0] matrix_C;
-	wire [7:0] data_out, address_instruction, address;
+	wire [7:0]address_instruction, address;
 	reg [3:0] num;
 	wire [3:0] opcode;
-	wire [15:0] data;
+	wire [15:0] data, data_out;
 	
 	decoder(
 		fetched_instruction,
