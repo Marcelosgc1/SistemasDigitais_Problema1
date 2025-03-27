@@ -9,7 +9,7 @@ module decoder(input [31:0]instruction, output [3:0]opcode, output [7:0]adrs, ou
 	
 	assign adrs[0] = (!location[4] & !location[1] & location[0]) | 
 					(!location[4] & !location[3] & location[1]) | 
-					(!location[4] & !location[3] & !location[1]) | 
+					(location[4] & !location[3] & !location[1]) | 
 					(location[4] & location[1] & location[0]);
 	assign adrs[1] = (location[5] ^ location[2]) | 
 				  (!location[4] & !location[1] & location[0]) | 

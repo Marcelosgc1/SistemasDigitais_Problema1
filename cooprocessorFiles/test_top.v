@@ -4,7 +4,7 @@ module test_top(
 	output [7:0]leds
 );
 
-top(17'b10001000000000010, sw1, clk, leds);
+top(22'b1011111111000000000010, sw1, clk, leds);
 debounce(b,clk,c);
 
 

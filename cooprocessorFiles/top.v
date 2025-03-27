@@ -29,8 +29,8 @@ module top(
 					DET5 = 4'b1100;
 					
 	assign leds = matrix_C[7:0];
-	reg [2:0] state;
-	reg [31:0] fetched_instruction;
+	reg [2:0] state = FETCH;
+	reg [31:0] fetched_instruction = 0;
 	
 	reg wr, start, start_memory, start_ALU, loaded, seletor = 0; 
 	wire done, done_alu, done_mem;
@@ -44,6 +44,7 @@ module top(
 	wire [7:0] data_out, address_instruction, address;
 	reg [3:0] num;
 	wire [3:0] opcode;
+	wire [15:0] data;
 	
 	decoder(
 		fetched_instruction,
