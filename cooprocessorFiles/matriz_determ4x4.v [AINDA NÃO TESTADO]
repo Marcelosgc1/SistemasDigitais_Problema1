@@ -1,5 +1,5 @@
 //Determinante 4x4
-
+/*
 module matriz_determ4x4 (
 	input [199:0] matriz_A, 
 	output reg [31:0] det 
@@ -33,3 +33,107 @@ module matriz_determ4x4 (
 	end
 endmodule
 
+*/
+
+
+
+////////////////////////
+
+
+//Determinante 4x4
+
+module matriz_determ4x4 (
+	input wire [199:0] matriz_A,
+	input clk,
+	output reg [31:0] det 
+);
+
+	reg [7:0] mat [3:0][3:0]; 
+	reg [7:0] tp [3:0];
+	
+	reg [7:0] values [3:0][10:0];
+	
+	
+	
+	integer i, j;
+
+	function [31:0] det_3x3;
+		input [7:0] a, b, c, d, e, f, g, h, i;
+		begin
+			det_3x3 = a * (e * i - f * h) - 
+						 b * (d * i - f * g) + 
+						 c * (d * h - e * g);
+		end
+	endfunction
+
+	reg [31:0] tp0, tp1, tp2, tp3, tp4;
+	reg [4:0] count = 0;
+	
+	always @(posedge clk) begin
+		for (i = 0; i < 4; i = i + 1) begin
+			for (j = 0; j < 4; j = j + 1) begin
+				mat[i][j] = matriz_A[(i * 32) + (j * 8) +: 8];
+			end
+		end
+	/*	
+		tp0 = mat[0][0] * det_3x3(mat[1][1], mat[1][2], mat[1][3], mat[2][1], mat[2][2], mat[2][3], mat[3][1], mat[3][2], mat[3][3]);
+		tp1 =	mat[0][1] * det_3x3(mat[1][0], mat[1][2], mat[1][3], mat[2][0], mat[2][2], mat[2][3], mat[3][0], mat[3][2], mat[3][3]);
+		tp2 = mat[0][2] * det_3x3(mat[1][0], mat[1][1], mat[1][3], mat[2][0], mat[2][1], mat[2][3], mat[3][0], mat[3][1], mat[3][3]);
+		tp3 =	mat[0][3] * det_3x3(mat[1][0], mat[1][1], mat[1][2], mat[2][0], mat[2][1], mat[2][2], mat[3][0], mat[3][1], mat[3][2]);
+	*/
+		
+		values[0][1] = mat[0][0];
+		values[0][2] = mat[1][1];
+		values[0][3] = mat[1][2];
+		values[0][4] = mat[1][3];
+		values[0][5] = mat[2][1];
+		values[0][6] = mat[2][2];
+		values[0][7] = mat[2][3];
+		values[0][8] = mat[3][1];
+		values[0][9] = mat[3][2];
+		values[0][10] =  mat[3][3];
+		
+		values[1][1] =  mat[0][1];
+		values[1][2] = mat[1][0];
+		values[1][3] = mat[1][2];
+		values[1][4] = mat[1][3];
+		values[1][5] = mat[2][0];
+		values[1][6] = mat[2][2];
+		values[1][7] = mat[2][3];
+		values[1][8] = mat[3][0];
+		values[1][9] = mat[3][2];
+		values[1][10] = mat[3][3];
+		
+		//mat[1][0], mat[1][1], mat[1][3], mat[2][0], mat[2][1], mat[2][3], mat[3][0], mat[3][1], mat[3][3]);
+		values[2][1] = mat[0][2];
+		values[2][2] = mat[1][0];
+		values[2][3] = mat[1][1];
+		values[2][4] = mat[1][3];
+		values[2][5] = mat[2][0];
+		values[2][6] = mat[2][1];
+		values[2][7] = mat[2][3];
+		values[2][8] = mat[3][0];
+		values[2][9] = mat[3][1];
+		values[2][10] =  mat[3][3];
+		
+		//at[0][3] * det_3x3(mat[1][0], mat[1][1], mat[1][2], mat[2][0], mat[2][1], mat[2][2], mat[3][0], mat[3][1], mat[3][2]);
+		values[3][1] = mat[0][3];
+		values[3][2] = mat[1][0];
+		values[3][3] = mat[1][1];
+		values[3][4] = mat[1][2];
+		values[3][5] = mat[2][0];
+		values[3][6] = mat[2][1];
+		values[3][7] = mat[2][2];
+		values[3][8] = mat[3][0];
+		values[3][9] = mat[3][1];
+		values[3][10] =  mat[3][2];
+		
+		if(count < 4)begin
+			tp[count] = values[count][1] * det_3x3(values[count][2], values[count][3], values[count][4], values[count][5], values[count][6], values[count][7], values[count][8], values[count][9], values[count][10]);
+		end else begin
+			det = tp[0] - tp[1] + tp[2] - tp[3];
+		end
+	
+		count <= count + 1;
+	end
+endmodule
