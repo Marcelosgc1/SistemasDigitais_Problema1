@@ -22,18 +22,18 @@ module simple_ula(
 
 	always @(posedge clk) begin
 		if (!start) begin
-			done <= 0;
-		end
+			done = 0;
+		end else
 
 		if (start & !done) begin
 			case (opcode)
 				1: begin
-					matriz_resultante <= matriz_soma;
-					done <= 1;
+					matriz_resultante = matriz_soma;
+					done = 1;
 				end
 				
 				default: begin
-					done <= 1;
+					done = 1;
 				end
 			endcase
 		end

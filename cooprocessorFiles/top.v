@@ -44,7 +44,7 @@ module top(
 	wire [7:0]address_instruction, address;
 	reg [3:0] num;
 	wire [3:0] opcode;
-	wire [15:0] data, data_out;
+	wire [15:0] data, data_out, result_ula, data_to_write;
 	
 	decoder(
 		fetched_instruction,
@@ -57,7 +57,7 @@ module top(
 	
 	memory_mod(
 		address,
-		data,
+		data_to_write,
 		start_memory,
 		wr,
 		clk,
@@ -79,12 +79,14 @@ module top(
 	br(
 		done,
 		data_out,
-		adrs,
+		address,
+		matrix_C,
 		matrix_A,
-		matrix_B	
+		matrix_B,
+		result_ula
 	);
 	
-	
+	assign data_to_write = write_resul ? result_ula : data;
 	assign address = seletor ? adrs : address_instruction;
 	
 	always @(posedge clk) begin
@@ -118,7 +120,7 @@ module top(
 			
 			MEMORY: begin
 				wr <= ((opcode == WRITE) | write_resul);	
-				if (opcode == WRITE) begin
+				if ((opcode == WRITE) | (opcode == READ)) begin
 					seletor <= 0;
 					if (done) begin
 						start <= 0;
