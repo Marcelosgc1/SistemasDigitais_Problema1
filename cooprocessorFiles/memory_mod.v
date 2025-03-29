@@ -9,7 +9,7 @@ module memory_mod (
     output reg done  
 );  
 
-    reg [1:0] count;  
+    reg [2:0] count;  
     wire [15:0] ram_data_out;  
 
     ram16bits (  
@@ -22,7 +22,7 @@ module memory_mod (
 
     always @(posedge clk) begin  
         if (start) begin  
-            if (count < 3) begin  
+            if (count < 4) begin  
                 count <= count + 1;  
                 done <= 0;  
             end else begin  

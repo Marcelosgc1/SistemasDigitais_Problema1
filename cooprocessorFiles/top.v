@@ -10,7 +10,7 @@ module top(
 					FETCH = 3'b000,
 					DECODE = 3'b001,
 					EXECUTE = 3'b010,
-					MEMORY = 3'b011,
+					MEMORY = 3'b100,
 					
 					//MEM-OPERATIONS
 					READ = 4'b0001,
@@ -28,11 +28,11 @@ module top(
 					DET4 = 4'b1011,
 					DET5 = 4'b1100;
 					
-	assign leds = matrix_C[7:0];
+	assign leds = adrs;
 	reg [2:0] state = FETCH;
 	reg [31:0] fetched_instruction = 0;
 	
-	reg wr, start, start_memory, start_ALU, loaded, seletor = 0; 
+	reg wr, start, start_memory, start_ALU, loaded, seletor = 0, write_resul = 0; 
 	wire done, done_alu, done_mem;
 	or op_done(done, done_alu, done_mem);
 	
@@ -90,7 +90,7 @@ module top(
 	always @(posedge clk) begin
 		
 		//MUX para iniciar operacoes aritimeticas ou de memoria
-		if ((opcode == WRITE) | (opcode == READ) | !loaded) begin
+		if ((opcode == WRITE) | (opcode == READ) | !loaded | write_resul) begin
 			start_memory <= start;
 		end else begin
 			start_ALU <= start;
@@ -103,6 +103,8 @@ module top(
 				if (activate_instruction) begin	
 					fetched_instruction <= instruction;
 					state <= DECODE;
+				end else begin
+					state <= FETCH;
 				end
 			end
 			 
@@ -115,7 +117,7 @@ module top(
 			end
 			
 			MEMORY: begin
-				wr <= (opcode == WRITE);	
+				wr <= ((opcode == WRITE) | write_resul);	
 				if (opcode == WRITE) begin
 					seletor <= 0;
 					if (done) begin
@@ -132,14 +134,23 @@ module top(
 							adrs[3:0] = adrs[3:0] + 1;
 							loaded <= 0;
 							state <= MEMORY;
-						end else if (adrs[4]) begin
+						end else if (!(adrs[4] + adrs[5])) begin
 							adrs[3:0] = 0;
 							adrs[4] = 1;
 							loaded <= 0;
 							state <= MEMORY;
+						end else if (adrs[5]) begin
+							adrs = 0;
+							write_resul <= 0;
+							state <= FETCH;
+						end else if (write_resul) begin
+							adrs[4] = 0;
+							adrs[5] = 1;
+							adrs[3:0] = 0;
+							state <= MEMORY;
 						end else begin
 							loaded <= 1;
-							adrs <= 0;
+							seletor <= 0;
 							state <= EXECUTE;
 						end
 					end else begin
@@ -157,7 +168,8 @@ module top(
 					if (done) begin
 						start <= 0;
 						loaded <= 0;
-						state <= FETCH;
+						write_resul <= 1;
+						state <= MEMORY;
 					end else begin
 						start <= 1;
 					end

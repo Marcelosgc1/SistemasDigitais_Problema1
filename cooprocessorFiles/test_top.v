@@ -1,12 +1,39 @@
 module test_top(
 	input clk,
-	input sw1,
-	input sw2,
-	input sw3,
+	input bt1,
+	input bt0,
 	output [7:0]leds
 );
-	//INSERE MATRIZ A 
-	top(22'b10_11111111_00_000_000_0010, sw1, clk, leds);
+
+
+	parameter 	xA = 22'b10_11111111_00_000_000_0010,
+					yA = 22'b00_11111111_00_000_100_0010,
+					zA = 22'b10_00000000_00_001_001_0010,
+					xB = 22'b10_11111111_01_000_000_0010,
+					yB = 22'b00_11111111_01_000_100_0010,
+					zB = 22'b10_00000000_01_001_001_0010,
+					sum = 2'b11;
+
+
+	top(my_reg, db1, clk, leds);
+	
+	reg [21:0] my_reg;
+	reg [2:0] i = 0;
+	
+	debounce(bt0, clk, db0);
+	debounce(bt1, clk, db1);
+	
+	always @(posedge db0) begin
+		
+		if (i==6) i <= 0;
+		else i <= i + 1;
+	
+		my_reg <= all[i*22+:22];
+	end
+	
+	reg [154:0] all = {sum, xA, yA, zA, xB, yB, zB};
+	
+	/*
 	top(22'b10_11111111_00_000_010_0010, sw1, clk,  );
 	top(22'b10_11111111_00_000_100_0010, sw1, clk,  );
 	
@@ -48,7 +75,7 @@ module test_top(
 	
 	//top(22'b00_00000000_00_000_000_0010, sw1, clk,  );
 	
-	
+	*/
 	
 	
 	
