@@ -10,9 +10,8 @@ module simple_ula(
 );
 	
 	wire [199:0] matriz_soma;
-
+	//SOMA
 	genvar i;
- 
 	generate
 		for (i = 0; i<200; i = i + 8) begin : soma_matrizes
 			assign matriz_soma[i +: 8] = matrizA[i +: 8] + matrizB[i +: 8];
@@ -27,11 +26,13 @@ module simple_ula(
 
 		if (start & !done) begin
 			case (opcode)
-				1: begin
+				3: begin
 					matriz_resultante = matriz_soma;
 					done = 1;
 				end
-				
+				//subtracacao
+				//mult
+				//...
 				default: begin
 					done = 1;
 				end

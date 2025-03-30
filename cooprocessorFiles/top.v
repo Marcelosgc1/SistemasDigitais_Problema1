@@ -28,13 +28,15 @@ module top(
 					DET4 = 4'b1011,
 					DET5 = 4'b1100;
 					
-	assign leds = adrs;
+	
+	assign leds[5:0] = adrs[5:0];
+	assign leds[6] = done_pulse;
+	assign leds[7] = done;
 	reg [2:0] state = FETCH;
 	reg [31:0] fetched_instruction = 0;
 	
-	reg wr, start, start_memory, start_ALU, loaded, seletor = 0, write_resul = 0; 
-	wire done, done_alu, done_mem;
-	or op_done(done, done_alu, done_mem);
+	reg wr, start, start_memory, start_ALU, loaded, seletor = 0, write_resul = 0, last_done; 
+	wire done, done_alu, done_mem, done_pulse;
 	
 	reg [7:0] adrs;
 	
@@ -85,11 +87,16 @@ module top(
 		matrix_B,
 		result_ula
 	);
-	
+	assign done_pulse = done & !last_done;
+	assign done = (loaded & !write_resul) ? done_alu : done_mem;
 	assign data_to_write = write_resul ? result_ula : data;
 	assign address = seletor ? adrs : address_instruction;
 	
 	always @(posedge clk) begin
+		
+		//level to pulse do sinal de 'done' concluido 
+		last_done <= done;
+		
 		
 		//MUX para iniciar operacoes aritimeticas ou de memoria
 		if ((opcode == WRITE) | (opcode == READ) | !loaded | write_resul) begin
@@ -122,7 +129,7 @@ module top(
 				wr <= ((opcode == WRITE) | write_resul);	
 				if ((opcode == WRITE) | (opcode == READ)) begin
 					seletor <= 0;
-					if (done) begin
+					if (done_pulse) begin
 						start <= 0;
 						state <= FETCH;
 					end else begin
@@ -130,7 +137,7 @@ module top(
 					end
 				end else begin
 					seletor <= 1;
-					if (done) begin
+					if (done_pulse) begin
 						start <= 0;
 						if (adrs[3:0] < 12) begin
 							adrs[3:0] = adrs[3:0] + 1;
@@ -167,7 +174,7 @@ module top(
 			EXECUTE: begin
 				if (!loaded) state <= MEMORY;
 				else begin
-					if (done) begin
+					if (done_pulse) begin
 						start <= 0;
 						loaded <= 0;
 						write_resul <= 1;

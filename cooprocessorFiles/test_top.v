@@ -20,8 +20,8 @@ module test_top(
 	reg [21:0] my_reg;
 	reg [2:0] i = 0;
 	
-	debounce(bt0, clk, db0);
-	debounce(bt1, clk, db1);
+	debounce(!bt0, clk, db0);
+	debounce(!bt1, clk, db1);
 	
 	always @(posedge db0) begin
 		
