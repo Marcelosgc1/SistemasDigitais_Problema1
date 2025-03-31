@@ -2,7 +2,7 @@ module top(
 	input [31:0] instruction,
 	input activate_instruction,
 	input clk,
-	output [7:0] leds
+	output [15:0] leds
 );
 	
 
@@ -28,14 +28,17 @@ module top(
 					DET4 = 4'b1011,
 					DET5 = 4'b1100;
 					
-	
+	/*
 	assign leds[5:0] = adrs[5:0];
 	assign leds[6] = done_pulse;
 	assign leds[7] = done;
+	*/
+	assign leds=result_ula;
 	reg [2:0] state = FETCH;
 	reg [31:0] fetched_instruction = 0;
+	reg [1:0] count_br;
 	
-	reg wr, start, start_memory, start_ALU, loaded, seletor = 0, write_resul = 0, last_done; 
+	reg wr, start, start_memory, start_ALU, loaded, seletor = 0, write_resul = 0, last_done, clkb; 
 	wire done, done_alu, done_mem, done_pulse;
 	
 	reg [7:0] adrs;
@@ -91,7 +94,18 @@ module top(
 	assign done = (loaded & !write_resul) ? done_alu : done_mem;
 	assign data_to_write = write_resul ? result_ula : data;
 	assign address = seletor ? adrs : address_instruction;
-	
+	/*
+	always @(posedge clk) begin
+		if (c==2) begin
+			clkb <= 1;
+			c <= 0;
+		end
+		else begin
+			c<=c+1;
+			clkb <= 0;
+		end
+	end
+	*/
 	always @(posedge clk) begin
 		
 		//level to pulse do sinal de 'done' concluido 
@@ -110,61 +124,71 @@ module top(
 		case (state)
 			FETCH: begin
 				if (activate_instruction) begin	
-					fetched_instruction <= instruction;
-					state <= DECODE;
+					fetched_instruction = instruction;
+					state = DECODE;
 				end else begin
-					state <= FETCH;
+					state = FETCH;
 				end
 			end
 			 
 			DECODE: begin
 				if ((opcode == WRITE) | (opcode == READ)) begin
-					state <= MEMORY;
+					state = MEMORY;
 				end else begin
-					state <= EXECUTE;
+					state = EXECUTE;
 				end
 			end
 			
 			MEMORY: begin
-				wr <= ((opcode == WRITE) | write_resul);	
 				if ((opcode == WRITE) | (opcode == READ)) begin
-					seletor <= 0;
+					seletor = 0;
 					if (done_pulse) begin
-						start <= 0;
-						state <= FETCH;
+						start = 0;
+						state = FETCH;
+						wr = 0;
 					end else begin
-						start <= 1;
+						wr = (opcode == WRITE);
+						start = 1;
 					end
 				end else begin
-					seletor <= 1;
+					seletor = 1;
 					if (done_pulse) begin
-						start <= 0;
-						if (adrs[3:0] < 12) begin
+						start = 0;
+						if (count_br < 2) begin
+							count_br = count_br + 1;
+						end else if (adrs[3:0] < 12) begin
 							adrs[3:0] = adrs[3:0] + 1;
-							loaded <= 0;
-							state <= MEMORY;
+							loaded = 0;
+							count_br = 0;
+							state = MEMORY;
 						end else if (!(adrs[4] + adrs[5])) begin
 							adrs[3:0] = 0;
 							adrs[4] = 1;
-							loaded <= 0;
-							state <= MEMORY;
+							loaded = 0;
+							count_br = 0;
+							state = MEMORY;
 						end else if (adrs[5]) begin
+							wr = 0;
 							adrs = 0;
-							write_resul <= 0;
-							state <= FETCH;
+							write_resul = 0;
+							count_br = 0;
+							state = FETCH;
 						end else if (write_resul) begin
 							adrs[4] = 0;
 							adrs[5] = 1;
 							adrs[3:0] = 0;
-							state <= MEMORY;
+							wr = 1;
+							count_br = 0;
+							state = MEMORY;
 						end else begin
-							loaded <= 1;
-							seletor <= 0;
-							state <= EXECUTE;
+							loaded = 1;
+							seletor = 0;
+							count_br = 0;
+							state = EXECUTE;
 						end
 					end else begin
-						loaded <= 0;
-						start <= 1;
+						loaded = 0;
+						start = 1;
 					end
 				
 				
@@ -172,19 +196,19 @@ module top(
 			end
 			
 			EXECUTE: begin
-				if (!loaded) state <= MEMORY;
+				if (!loaded) state = MEMORY;
 				else begin
 					if (done_pulse) begin
-						start <= 0;
-						loaded <= 0;
-						write_resul <= 1;
-						state <= MEMORY;
+						start = 0;
+						loaded = 0;
+						write_resul = 1;
+						state = MEMORY;
 					end else begin
-						start <= 1;
+						start = 1;
 					end
 				end
 			end
-			default: state <= FETCH;
+			default: state = FETCH;
 			
 		endcase
 	end
