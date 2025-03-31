@@ -2,7 +2,7 @@
 
 <h2>Descrição do Projeto</h2>
 <p>
-  Para elaborção do projeto foi uilizado o kit de desenvolvimento De1-SoC de processador Cyclone V para a leitura e escrita dos procedimentos na memória RAM desse kit. O programa consiste em criar um coprocessador para lidar com matrizes quadradas de tamanho 2x2 até 5x5, afim de reduzir a tensão sobre o processador principal para o aumento de desempenho. As operações com matrizes são algo primordial para o universo computacional, para lidar com diversos tipos de paradgmias como processsamento de imagens, criptografias, telecomunicações, etc. Desse modo, é possível utilizar esse repositório para esses fins computacionais.  
+  Para elaboração do projeto foi utilizado o kit de desenvolvimento De1-SoC de processador Cyclone V para a leitura e escrita dos procedimentos na memória RAM desse kit. O programa consiste em criar um coprocessador para lidar com matrizes quadradas de tamanho 2x2 até 5x5, a fim de reduzir a tensão sobre o processador principal para o aumento de desempenho. As operações com matrizes são algo primordial para o universo computacional, pois elas lidam com diversos tipos de paradigmas como processamento de imagens, criptografias, telecomunicações, etc. Desse modo, é possível utilizar esse repositório para esses fins de desenvolvimento.  
 
   O coprocessador é capaz de lidar com as seguintes operações:
 
