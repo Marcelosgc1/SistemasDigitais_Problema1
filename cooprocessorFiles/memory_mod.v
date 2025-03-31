@@ -20,23 +20,23 @@ module memory_mod (
         ram_data_out
     );
 
-    always @(posedge clk) begin  
-        if (start) begin  
-            if (count < 3) begin  
-                count <= count + 1;  
-                done <= 0;  
-            end else begin  
-                if (wr) begin  
-                    done <= 1;  
-                end else begin  
-                    data_out <= ram_data_out;  
-                    done <= 1;  
-                end  
-            end  
-        end else begin  
-            count <= 0;  
-            done <= 0;  
-        end  
-    end  
+	always @(posedge clk) begin  
+		if (start) begin
+			if (wr) begin 
+				if (count < 3) begin  
+					count <= count + 1;  
+					done <= 0;  
+				end else begin  
+					done <= 1;  
+				end
+			end else begin  
+				data_out <= ram_data_out;  
+				done <= 1;  
+			end
+		end else begin  
+			count <= 0;  
+			done <= 0;  
+		end  
+	end  
 
 endmodule
