@@ -38,7 +38,7 @@ module top(
 	reg [31:0] fetched_instruction = 0;
 	reg [1:0] count_br;
 	
-	reg wr, start, start_memory, start_ALU, loaded, seletor = 0, write_resul = 0, last_done, clkb; 
+	reg wr, start, start_memory, start_ALU, loaded, seletor = 0, write_resul = 0, last_done; 
 	wire done, done_alu, done_mem, done_pulse;
 	
 	reg [7:0] adrs;
@@ -94,18 +94,7 @@ module top(
 	assign done = (loaded & !write_resul) ? done_alu : done_mem;
 	assign data_to_write = write_resul ? result_ula : data;
 	assign address = seletor ? adrs : address_instruction;
-	/*
-	always @(posedge clk) begin
-		if (c==2) begin
-			clkb <= 1;
-			c <= 0;
-		end
-		else begin
-			c<=c+1;
-			clkb <= 0;
-		end
-	end
-	*/
+	
 	always @(posedge clk) begin
 		
 		//level to pulse do sinal de 'done' concluido 
@@ -130,7 +119,7 @@ module top(
 					state = FETCH;
 				end
 			end
-			 
+			
 			DECODE: begin
 				if ((opcode == WRITE) | (opcode == READ)) begin
 					state = MEMORY;
