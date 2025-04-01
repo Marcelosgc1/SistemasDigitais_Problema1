@@ -59,5 +59,48 @@ Sumário
   
 </div>
 
-
+<div id="fetch">
+  <h2>Estado de FETCH</h2>
   
+  
+</div>
+
+<div id="decode">
+  <h2>Estado de DECODE</h2>
+  
+  
+</div>
+
+
+<div id="execute">
+  <h2>Estado de EXECUTE</h2>
+  
+  
+</div>
+  
+<div id="memory">
+  <h2>Estado de MEMORY</h2>
+  
+  
+</div>
+
+<div id="ula">
+  <h2>Unidade Lógica e Aritmética (ULA)</h2>
+  <p>
+  O seu papel essencial é realizar diversas operações matemáticas e lógicas em dígitos binários, sendo os elementos básicos da informática. A ULA é crucial não só em cálculos simples, mas também nas decisões que acontecem dentro da unidade central de processamento. A ULA recebe do banco de registradores duas matrizes, opcode e um sinal de start, assim obviamente o opcode será qual operação será realizada. As instruções referente a operação são as seguintes: 
+   <li>
+    <code>0011</code> : Soma
+    <code>0100</code> : Subtração
+    <code>0101</code> : Multiplicação
+    <code>0111</code> : Oposta
+    <code>1000</code> : Multiplicação escalar
+    <code>1001</code> : Determinante 2x2
+    <code>1010</code> : Determinante 3x3
+    <code>1011</code> : Determinante 4x4
+    <code>1100</code> : Determinante 5x5 
+   </li>
+  Como é possível analisar, é necessário para operação de determinante distinguir o tamanho da matriz, pois nas outras operações é trabalho com o tamanho máximo, de maneira que se for enviado uma matriz de tamanho menor que o máximo estimulado o resultado ainda sairá correto, no caso da determinante o resultado sairá como errado nesse cenário. 
+    
+  </p>
+</div>
+
