@@ -5,8 +5,8 @@ so mudar o módulo de determinante para o tamanho desejado
 
 //AVISO!!! USAR A RAM 1-PORT PARA 256BITS DE ENTRADA E SAÍDA!!!!
 
-module main_determin_test (
-	input wire rst,
+module dinossauro (
+	input wire rst, 
 	input wire sw,
 	input wire clk,
 	output reg [7:0] leds
@@ -17,7 +17,7 @@ module main_determin_test (
 	reg clk3;
 	
 	reg [199:0] matriz_A;
-	wire [7:0] det;
+	wire [31:0] det;
 	
 	reg read_finished = 0;
 	reg write_enable = 0;
@@ -28,7 +28,7 @@ module main_determin_test (
 	
 	wire [255:0] data;
 
-	ram_1port_256bits (
+	RamGigante (
 	  address,
 	  clk,
 	  det,
@@ -36,8 +36,7 @@ module main_determin_test (
 	  data
 	);
 	
-	
-	matriz_determ4x4 (
+	matriz_determ5x5 (
 	  matriz_A,
 	  det
 	);
