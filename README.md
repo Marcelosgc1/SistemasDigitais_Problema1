@@ -52,8 +52,7 @@ Sumário
 
 <div id="maquina-de-estados">
   <h2>Máquina de Estados</h2>
-  Na arquitetura de uma unidade de processamento central (CPU) é utilizado o ciclo Fetch-Decode-Execute (FDE) para executar instruções, nesse modelo o processador tem três estados busca, decodificação e execução, dessa forma foi utilizado esse modelo com a criação do estado de memória para lidar com todo esse paradigma.
-
+  Na arquitetura de uma unidade de processamento central (CPU) é utilizado o ciclo Fetch-Decode-Execute (FDE) para executar instruções, nesse modelo o processador tem três estados, busca, decodificação e execução, dessa forma foi utilizado esse modelo no projeto com a adição do estado MEMORY para lidar com todas operações feitas com a memória. 
 
   O módulo responsavel nesse desenvolvimento é o `top.v` 
   
@@ -117,7 +116,7 @@ Sumário
     </li>
   </p>
    <p>
-  Como é possível analisar, é necessário para operação de determinante distinguir o tamanho da matriz, pois nas outras operações é trabalho com o tamanho máximo, de maneira que se for enviado uma matriz de tamanho menor que o máximo estimulado o resultado ainda sairá correto, no caso da determinante o resultado sairá como errado nesse cenário. 
+  Como é possível analisar é necessário para operação de determinante distinguir o tamanho da matriz, pois para as outras operações é trabalhado considerando que sempre irá obter o tamanho máximo, de maneira que se for enviado uma matriz de tamanho menor que o máximo estimulado o resultado ainda sairá correto, no caso da determinante o resultado sairá como errado nesse cenário. 
   </p>    
   
 </div>
