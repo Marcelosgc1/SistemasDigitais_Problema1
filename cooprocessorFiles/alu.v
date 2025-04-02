@@ -11,7 +11,7 @@ module alu(
 	reg signed [7:0] A [4:0][4:0];
 	reg signed [7:0] B [4:0][4:0];
 	reg signed [7:0] C [4:0][4:0];
-	reg [199:0] soma, subtracao;
+	reg [199:0] soma, subtracao, multiplicacao, transposta;
 	reg clkDeterminante;
 	reg [24:0] equacaoA;
 	reg [7:0] linha;
@@ -28,8 +28,8 @@ module alu(
 	
 	matriz_soma(matrizA, matrizB, soma);
 	matriz_subtracao(matrizA, matrizB, subtracao);
-	matriz_multiplicacao(clk, start_multiplicacao, matrizA, matrizB, matriz_resultante, done_multiplicacao);
-	matriz_transposta(clk, start_transposta, matrizA, matrizB, matriz_resultante, done_transposta);
+	matriz_multiplicacao(clk, start_multiplicacao, matrizA, matrizB, multiplicacao, done_multiplicacao);
+	matriz_transposta(clk, start_transposta, matrizA, matrizB, transposta, done_transposta);
 	
 
 	always @(posedge clk) begin
@@ -58,26 +58,15 @@ module alu(
 			
 			
 			// Multiplicação
-			4'b0101: begin
-				 for (j = 0; j < 5; j = j + 1) begin
-            				matriz_resultante[indice(linha, j) +: 8] = 0;
-            				for (i = 0; i < 5; i = i + 1) begin
-                				matriz_resultante[indice(linha, j) +: 8] = matriz_resultante[indice(linha, j) +: 8] +
-                    				matrizA[indice(linha, i) +: 8] * matrizB[indice(i, j) +: 8];
-            				end
-        			end
-        
-			        if (linha == 4) begin
-			            linha <= 0;
-			        end else begin
-			            linha <= linha + 1;
-			        end 
-					done <= 1;
+			4'b0101: begin        
+				matriz_resultante <= multiplicacao;
+				done <= done_multiplicacao;
 			end 
 			
 			// Transposta
 			4'b0110: begin
-				
+				matriz_resultante <= transposta;
+				done <= 1;
 			end
 			
 			// Matriz oposta
