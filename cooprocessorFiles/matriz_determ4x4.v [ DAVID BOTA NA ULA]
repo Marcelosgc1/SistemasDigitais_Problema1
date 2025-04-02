@@ -1,7 +1,9 @@
 module matriz_determ4x4 (
     input wire [199:0] matriz_A,
     input clk,
-    output reg [31:0] det
+	 input start,
+	 output reg done,
+    output reg [7:0] det
 );
 
     wire [7:0] mat [3:0][3:0]; 
@@ -9,7 +11,7 @@ module matriz_determ4x4 (
     genvar i, j;
     reg [4:0] count = 0;
 
-    function [31:0] det_3x3;
+    function [7:0] det_3x3;
         input [7:0] a, b, c, d, e, f, g, h, i;
         begin
             det_3x3 = a * (e * i - f * h) -
@@ -26,16 +28,24 @@ module matriz_determ4x4 (
 	 endgenerate
 
     always @(posedge clk) begin
-        if (count < 4) begin
-            tp[count] = mat[0][count] * det_3x3(
-                mat[1][(count+1)%4], mat[1][(count+2)%4], mat[1][(count+3)%4],
-                mat[2][(count+1)%4], mat[2][(count+2)%4], mat[2][(count+3)%4],
-                mat[3][(count+1)%4], mat[3][(count+2)%4], mat[3][(count+3)%4]
-            );
-        end else begin
-            det = tp[0] - tp[1] + tp[2] - tp[3];
-        end
-
-        count <= count + 1;
+		  if(start) begin
+			  if (count < 4) begin
+					tp[count] = mat[0][count] * det_3x3(
+						 mat[1][(count+1)%4], mat[1][(count+2)%4], mat[1][(count+3)%4],
+						 mat[2][(count+1)%4], mat[2][(count+2)%4], mat[2][(count+3)%4],
+						 mat[3][(count+1)%4], mat[3][(count+2)%4], mat[3][(count+3)%4]
+					);
+			  end else begin
+					det = tp[0] - tp[1] + tp[2] - tp[3];
+					done = 1;
+			  end
+			  
+			  count <= count + 1;
+			  
+		  end else begin
+			done = 0;
+			det = 0;
+			count = 0;
+		  end
     end
 endmodule
