@@ -4,6 +4,7 @@
 !*.v
 !*.qip
 !*/
+!*.jpg
 
 !.gitignore
 !*.qsf
