@@ -4,6 +4,7 @@ module alu(
 	input wire [7:0] data_escalar,
 	input wire [199:0] matrizA,
 	input wire [199:0] matrizB,
+	input wire start,
 	output reg [199:0] matriz_resultante,
 	output reg done
 );
@@ -28,8 +29,8 @@ module alu(
 	
 	matriz_soma(matrizA, matrizB, soma);
 	matriz_subtracao(matrizA, matrizB, subtracao);
-	matriz_multiplicacao(clk, start_multiplicacao, matrizA, matrizB, multiplicacao, done_multiplicacao);
-	matriz_transposta(clk, start_transposta, matrizA, matrizB, transposta, done_transposta);
+	matriz_multiplicacao(clk, start, matrizA, matrizB, multiplicacao, done_multiplicacao);
+	matriz_transposta(clk, start, matrizA, matrizB, transposta, done_transposta);
 	
 
 	always @(posedge clk) begin
