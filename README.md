@@ -53,8 +53,13 @@ Sumário
 <div id="maquina-de-estados">
   <h2>Máquina de Estados</h2>
   Na arquitetura de uma unidade de processamento central (CPU) é utilizado o ciclo Fetch-Decode-Execute (FDE) para executar instruções, nesse modelo o processador tem três estados, busca, decodificação e execução, dessa forma foi utilizado esse modelo no projeto com a adição do estado MEMORY para lidar com todas operações feitas com a memória. 
-
-  O módulo responsavel nesse desenvolvimento é o `top.v` 
+<div w=full align=center>
+  <br>
+  <img src="images/marcelo_para.jpg">
+</div>
+  
+  <br>
+  O módulo responsavel nesse desenvolvimento é o <code>top.v</code>
   
 </div>
 
