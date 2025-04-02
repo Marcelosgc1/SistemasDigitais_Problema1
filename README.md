@@ -102,6 +102,9 @@ Sumário
       <code>0101</code> : Multiplicação
     </li>
     <li>
+      <code>0110</code> : Transposta
+    </li>
+    <li>
       <code>0111</code> : Oposta
     </li>
     <li>
