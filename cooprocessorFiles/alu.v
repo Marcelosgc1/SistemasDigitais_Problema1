@@ -8,7 +8,7 @@ module alu(
 	output reg [199:0] matriz_resultante,
 	output reg done
 );
-	wire [199:0] soma, subtracao, multiplicacao, transposta;
+	wire [199:0] soma, subtracao, multiplicacao, transposta,oposta;
 	reg start_multiplicacao,start_determinante;
 	wire done_determinante, done_multiplicacao, done_transposta; 
 	
@@ -16,9 +16,9 @@ module alu(
 	
 	matriz_soma(matrizA, matrizB, soma);
 	matriz_subtracao(matrizA, matrizB, subtracao);
-	matriz_multi(clk, start, matrizA, matrizB, multiplicacao, done_multiplicacao);
+	matriz_multi(matrizA, matrizB, clk, start, multiplicacao, done_multiplicacao);
 	matriz_transposta(clk, start, matrizA, matrizB, transposta, done_transposta);
-	
+	matriz_oposta(matrizA,matrizB,oposta);
 	
 	
 
@@ -56,16 +56,15 @@ module alu(
 					done <= 1;
 				end
 				
-			// Matriz oposta
+				// Matriz oposta
+				
+				4'b0111: begin
+					matriz_resultante <= opostas;
+					done <= 1;
+				end 
+				
+				
 			/*
-			4'b0111: begin
-				for (i = 0; i < 256; i = i + 8) begin : oposta_matriz
-					reg signed [7:0] q_a = matrizA[i +: 8];  
-					assign matriz_resultante[i +: 8] = -q_a;
-				end
-				done <= 1;
-			end 
-			
 			
 			
 			// Multiplicação escalar
