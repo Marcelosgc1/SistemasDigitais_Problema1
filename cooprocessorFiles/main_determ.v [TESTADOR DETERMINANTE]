@@ -30,7 +30,7 @@ module main_determ (
 	
 	wire [255:0] data;
 
-	ram256bits (
+	Ram256bits (
 	  address,
 	  clk,
 	  det,
@@ -75,11 +75,11 @@ module main_determ (
 				end
 				1: begin
 					 matriz_A <= data; // Bota a matriz A no registrador
+					 start <= 1;
 					 count <= count + 1;
 				end
 				2: begin
 					 address <= 1;
-					 start <= 1;
 					 count <= count + 1;
 				end
 				3: begin
