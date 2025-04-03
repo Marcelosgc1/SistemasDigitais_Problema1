@@ -17,7 +17,7 @@ module alu(
 	matriz_soma(matrizA, matrizB, soma);
 	matriz_subtracao(matrizA, matrizB, subtracao);
 	matriz_multi(matrizA, matrizB, clk, start, multiplicacao, done_multiplicacao);
-	matriz_transposta(clk, start, matrizA, matrizB, transposta, done_transposta);
+	matriz_transposta(matrizA, matrizB, transposta);
 	matriz_oposta(matrizA,matrizB,oposta);
 	
 	
@@ -59,7 +59,7 @@ module alu(
 				// Matriz oposta
 				
 				4'b0111: begin
-					matriz_resultante <= opostas;
+					matriz_resultante <= oposta;
 					done <= 1;
 				end 
 				

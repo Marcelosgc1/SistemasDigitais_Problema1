@@ -1,5 +1,4 @@
-module matriz_transposta(clk, matrizA, matrizB, matriz_resultante);
-	input clk;
+module matriz_transposta(matrizA, matrizB, matriz_resultante);
 	input [199:0] matrizA;
 	input [199:0] matrizB;
 	output wire [199:0] matriz_resultante;
