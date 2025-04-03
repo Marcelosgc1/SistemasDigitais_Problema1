@@ -33,7 +33,7 @@ module top(
 	assign leds[6] = done_pulse;
 	assign leds[7] = done;
 	*/
-	assign leds=result_ula;
+	assign leds=data_out;
 	reg [2:0] state = FETCH;
 	reg [31:0] fetched_instruction = 0;
 	reg [1:0] count_br;

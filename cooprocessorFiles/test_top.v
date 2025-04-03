@@ -2,7 +2,10 @@ module test_top(
 	input clk,
 	input bt1,
 	input bt0,
-	output [7:0]leds
+	output [6:0]seg1, 
+	output [6:0]seg2, 
+	output [6:0]seg3, 
+	output [6:0]seg4 
 );
 
 
@@ -22,10 +25,19 @@ module test_top(
 					s = 22'b0000000000000000000100;
 
 
-	top(my_reg, db1, clk, leds);
 	
+	wire [15:0] nums;
 	reg [21:0] my_reg;
 	reg [3:0] i = 0;
+
+	top(my_reg, db1, clk, nums);
+
+	
+	decod7seg(nums[3:0],seg1);
+	decod7seg(nums[7:4],seg2);
+	decod7seg(nums[11:8],seg3);
+	decod7seg(nums[15:12],seg4);
+	
 	
 	debounce(!bt0, clk, db0);
 	debounce(!bt1, clk, db1);

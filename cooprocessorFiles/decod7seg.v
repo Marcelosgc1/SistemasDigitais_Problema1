@@ -18,7 +18,7 @@ assign seg[1] = (b&c&!d) +
 (a&b&!d) +
 (!a&b&!c&d);
 
-assign seg[2] = (a&b!d) +
+assign seg[2] = (a&b&!d) +
 (a&b&c) +
 (!a&!b&c&!d);
 
