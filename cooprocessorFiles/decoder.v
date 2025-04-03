@@ -25,7 +25,7 @@ module decoder(input [31:0]instruction, output [3:0]opcode, output [7:0]adrs, ou
 	assign adrs[7] = 0;
 	
 	assign data = 	opcode[3] ? 
-						instruction[4+:16] :
-						instruction[12+:16];
+						{instruction[11:4],instruction[19:12]} :
+						{instruction[19:12],instruction[27:20]} ;
 
 endmodule

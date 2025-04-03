@@ -15,22 +15,25 @@ module matriz_multi (clk, start_multiplicacao, matriz_a, matriz_b, matriz_result
         indice = 8 * (coluna + 5 * linha);
     endfunction
 
-    always @(posedge clk) begin
-		if(start_multiplicacao) begin
-		  for (j = 0; j < 5; j = j + 1) begin
+	always @(posedge clk) begin
+		if (!start_multiplicacao) begin
+			matriz_resultante = 0;
+			done_multiplicacao = 0;
+			linha = 0;
+		end else if (start_multiplicacao & !done_multiplicacao) begin
+			for (j = 0; j < 5; j = j + 1) begin
 				matriz_resultante[indice(linha, j) +: 8] = 0;
 				for (i = 0; i < 5; i = i + 1) begin
-					 matriz_resultante[indice(linha, j) +: 8] = matriz_resultante[indice(linha, j) +: 8] +
-						  matriz_a[indice(linha, i) +: 8] * matriz_b[indice(i, j) +: 8];
+					matriz_resultante[indice(linha, j) +: 8] = matriz_resultante[indice(linha, j) +: 8] +
+					(matriz_a[indice(linha, i) +: 8] * matriz_b[indice(i, j) +: 8]);
 				end
-		  end
-		  
-		  if (linha == 4) begin
-				linha <= 0;
-				done_multiplicacao <= 1;
-		  end else begin
-				linha <= linha + 1;
-		  end
+			end
+
+			if (linha == 4) begin
+				done_multiplicacao = 1;
+			end else begin
+				linha = linha + 1;
+			end
 		end
-    end
+	end
 endmodule
