@@ -1,10 +1,10 @@
 module simple_ula(
 	input clk,
-	input start,
 	input wire [3:0] opcode,
 	input wire [7:0] data_escalar,
 	input wire [199:0] matrizA,
 	input wire [199:0] matrizB,
+	input start,
 	output reg [199:0] matriz_resultante,
 	output reg done
 );

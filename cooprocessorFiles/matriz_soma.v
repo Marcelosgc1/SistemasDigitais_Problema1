@@ -6,8 +6,8 @@ module matriz_soma(matrizA, matrizB, matriz_resultante);
 	genvar i;
 	
 	generate
-		for (i = 0; i < 256; i = i + 8) begin : subtracao_matrizes
-			assign matriz_resultante[i+7 +: i] = matrizA[i+7 +: i] + matrizB[i+7 +: i];
+		for (i = 0; i < 25; i = i + 1) begin : soma_matrizes
+			assign matriz_resultante[i*8 +: 8] = matrizA[i*8 +: 8] + matrizB[i*8 +: 8];
 		end
 		
 	endgenerate

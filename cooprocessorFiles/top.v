@@ -70,13 +70,13 @@ module top(
 		done_mem
 	);
 	
-	simple_ula(
+	alu(
 		clk,
-		start_ALU,
 		opcode,
 		data,
 		matrix_A,
 		matrix_B,
+		start_ALU,
 		matrix_C,
 		done_alu
 	);
