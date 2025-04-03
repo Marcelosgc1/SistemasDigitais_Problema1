@@ -14,7 +14,7 @@ module matriz_multi (
 
 	always @(posedge clock) begin
 		 if(start) begin
-				integer i;
+		         integer i;
 			 for (i = 0; i < 5; i = i + 1) begin
 				  temp[i] = (matriz_a[(linha * 40) + 7 -: 8]   * matriz_b[(i * 8) +: 8]) +
 								(matriz_a[(linha * 40) + 15 -: 8]  * matriz_b[(i * 8) + 40 +: 8]) +
