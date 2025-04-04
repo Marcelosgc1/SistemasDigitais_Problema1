@@ -9,10 +9,9 @@ module alu(
 	output reg done
 );
 	wire [199:0] soma, subtracao, multiplicacao, transposta,oposta,escalar;
-	wire [7:0] determinante4x4;
+	wire [7:0] determinante4x4, determinante3x3, determinante2x2;
 	reg start_multiplicacao,start_determinante;
 	wire done_determinante, done_multiplicacao, done_transposta; 
-	
 	
 	
 	matriz_soma(matrizA, matrizB, soma);
@@ -22,6 +21,8 @@ module alu(
 	matriz_oposta(matrizA,matrizB,oposta);
 	matriz_determ4x4(matrizA,clk,start,done4x4,determinante4x4);
 	matriz_escalar(data_escalar, matrizA, escalar);
+	matriz_determ2x2(matrizA, clk, determinante2x2);
+	matriz_determ3x3(matrizA, clk, determinante3x3);
 
 	always @(posedge clk) begin
 		if (!start) begin
@@ -74,34 +75,19 @@ module alu(
 					done <= 1;
 				end 
 			
-			/*
-			// Determinante 2x2
-			4'b1001: begin
-				assign matriz_resultante = (matrizA[7:0] * matrizA[31:24]) - (matrizA[15:8] - matrizA[23:16]); 
-				done <= 1;
-			end
 			
-			// Determinante 3x3
-			4'b1010: begin 
-			
-				// Dois pulsos de clock para fazer a operação 
-				
-				if(!clkDeterminante) begin
-					assign equacaoA = (matrizA[7:0]*matrizA[39:32]*matrizA[71:64]) + (matrizA[15:8]*matrizA[47:40]*matrizA[55:48]) + (matrizA[23:16]*matrizA[31:24]*matrizA[63:56]) 					
-				end else begin
-					assign matriz_resultante = equacaoA - ((matrizA[15:8]*matrizA[31:24]*matrizA[71:64]) + (matrizA[7:0]*matrizA[47:40]*matrizA[63:56]) + (matrizA[23:16]*matrizA[39:32]*matrizA[55:48]));
-					clkDeterminante <= 0;
+				// Determinante 2x2
+				4'b1001: begin
+					matriz_resultante <= determinante2x2;
 					done <= 1;
-				end 
-					clkDeterminante <= 1;
-				
-				
-				// Um pulso de clock para fazer a operação
-				assign matriz_resultante = (matrizA[7:0]*matrizA[39:32]*matrizA[71:64]) + (matrizA[15:8]*matrizA[47:40]*matrizA[55:48]) + (matrizA[23:16]*matrizA[31:24]*matrizA[63:56]) 
-					- ((matrizA[15:8]*matrizA[31:24]*matrizA[71:64]) + (matrizA[7:0]*matrizA[47:40]*matrizA[63:56]) + (matrizA[23:16]*matrizA[39:32]*matrizA[55:48]));
-					done <= 1; 
-			end
-			*/
+				end
+			
+				// Determinante 3x3
+				4'b1010: begin 
+					matriz_resultante <= determinante3x3;
+					done <= 1;
+				end
+			
 			
 				// Determinante 4x4
 				4'b1011: begin
