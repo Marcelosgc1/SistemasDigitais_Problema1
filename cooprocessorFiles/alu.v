@@ -21,7 +21,7 @@ module alu(
 	matriz_transposta(matrizA, matrizB, transposta);
 	matriz_oposta(matrizA,matrizB,oposta);
 	matriz_determ4x4(matrizA,clk,start,done4x4,determinante4x4);
-	matriz_mul_escalar(matrizA,data_escalar,escalar);
+	matriz_escalar(data_escalar, matrizA, escalar);
 
 	always @(posedge clk) begin
 		if (!start) begin
