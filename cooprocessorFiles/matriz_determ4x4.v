@@ -21,8 +21,8 @@ module matriz_determ4x4 (
     endfunction
 	 
 	 generate begin
-        for (i = 0; i < 4; i = i + 1) begin : adad
-            for (j = 0; j < 4; j = j + 1) begin : asdasd
+        for (i = 0; i < 5; i = i + 1) begin : adad
+            for (j = 0; j < 5; j = j + 1) begin : asdasd
                 assign mat[i][j] = matriz_A[(i * 40) + (j * 8) +: 8];
 			end end end
 	 endgenerate
