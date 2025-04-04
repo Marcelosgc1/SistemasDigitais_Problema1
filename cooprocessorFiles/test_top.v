@@ -26,7 +26,8 @@ module test_top(
 					m = 22'b0000000000000000000101,
 					t = 22'b0000000000000000000110,
 					o = 22'b0000000000000000000111,
-					ms2 = 22'b000000000000000010_1000;
+					ms2 = 22'b000000000000000010_1000,
+					det4 = 22'b000000000000000010_1011;
 
 
 	
@@ -54,7 +55,7 @@ module test_top(
 		my_reg <= all[i*22+:22];
 	end
 	
-	reg [1000:0] all = {s,zD, yD, xD, zC,yC,xC,o,t,m,sum, xA, yA, zA, xB, yB, zB};
+	reg [1000:0] all = {det4,s,zD, yD, xD, zC,yC,xC,o,t,ms2,m,sum, xA, yA, zA, xB, yB, zB};
 	
 	
 endmodule
