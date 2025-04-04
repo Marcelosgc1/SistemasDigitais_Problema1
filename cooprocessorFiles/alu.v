@@ -8,7 +8,8 @@ module alu(
 	output reg [199:0] matriz_resultante,
 	output reg done
 );
-	wire [199:0] soma, subtracao, multiplicacao, transposta,oposta;
+	wire [199:0] soma, subtracao, multiplicacao, transposta,oposta,escalar;
+	wire [7:0] determinante4x4;
 	reg start_multiplicacao,start_determinante;
 	wire done_determinante, done_multiplicacao, done_transposta; 
 	
@@ -19,8 +20,8 @@ module alu(
 	matriz_multi(matrizA, matrizB, clk, start, multiplicacao, done_multiplicacao);
 	matriz_transposta(matrizA, matrizB, transposta);
 	matriz_oposta(matrizA,matrizB,oposta);
-	
-	
+	matriz_determ4x4(matrizA,clk,start,done4x4,determinante4x4);
+	matriz_mul_escalar(matrizA,data_escalar,escalar);
 
 	always @(posedge clk) begin
 		if (!start) begin
@@ -64,17 +65,16 @@ module alu(
 				end 
 				
 				
+			
+			
+			
+				// Multiplicação escalar
+				4'b1000: begin
+					matriz_resultante <= escalar;
+					done <= 1;
+				end 
+			
 			/*
-			
-			
-			// Multiplicação escalar
-			4'b1000: begin
-				for (i = 0; i < 256; i = i + 8) begin : subtracao_matrizes
-					assign matriz_resultante[i+7 +: 8] = data_escalar * matrizA[i+7 +: 8];
-				end
-				done <= 1;
-			end 
-			
 			// Determinante 2x2
 			4'b1001: begin
 				assign matriz_resultante = (matrizA[7:0] * matrizA[31:24]) - (matrizA[15:8] - matrizA[23:16]); 
@@ -101,17 +101,21 @@ module alu(
 					- ((matrizA[15:8]*matrizA[31:24]*matrizA[71:64]) + (matrizA[7:0]*matrizA[47:40]*matrizA[63:56]) + (matrizA[23:16]*matrizA[39:32]*matrizA[55:48]));
 					done <= 1; 
 			end
+			*/
 			
-			// Determinante 4x4
-			4'b1011: begin
-				done <= 1;
-			end
-			
-			// Determinante 5x5
-			4'b1100: begin
-				done <= 1;
-			end
+				// Determinante 4x4
+				4'b1011: begin
+					matriz_resultante <= determinante4x4;
+					done <= done4x4;
+				end
+				
+				/*
+				// Determinante 5x5
+				4'b1100: begin
+					done <= 1;
+				end
 				*/
+				
 				default: begin
 					done <= 1;
 				end 
