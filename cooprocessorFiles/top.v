@@ -2,7 +2,7 @@ module top(
 	input [31:0] instruction,
 	input activate_instruction,
 	input clk,
-	output [15:0] leds
+	output [15:0] data_read
 );
 	
 
@@ -33,7 +33,7 @@ module top(
 	assign leds[6] = done_pulse;
 	assign leds[7] = done;
 	*/
-	assign leds=data_out;
+	assign data_read = data_out;
 	reg [2:0] state = FETCH;
 	reg [31:0] fetched_instruction = 0;
 	reg [1:0] count_br;
@@ -47,7 +47,6 @@ module top(
 	wire [199:0] matrix_B;
 	wire [199:0] matrix_C;
 	wire [7:0]address_instruction, address;
-	reg [3:0] num;
 	wire [3:0] opcode;
 	wire [15:0] data, data_out, result_ula, data_to_write;
 	
