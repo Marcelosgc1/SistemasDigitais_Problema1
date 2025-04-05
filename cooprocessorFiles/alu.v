@@ -9,7 +9,7 @@ module alu(
 	output reg done
 );
 	wire [199:0] soma, subtracao, multiplicacao, transposta,oposta,escalar;
-	wire [7:0] determinante4x4, determinante3x3, determinante2x2;
+	wire [7:0] determinante5x5, determinante4x4, determinante3x3, determinante2x2;
 	reg start_multiplicacao,start_determinante;
 	wire done_determinante, done_multiplicacao, done_transposta; 
 	
@@ -19,10 +19,13 @@ module alu(
 	matriz_multi(matrizA, matrizB, clk, start, multiplicacao, done_multiplicacao);
 	matriz_transposta(matrizA, matrizB, transposta);
 	matriz_oposta(matrizA,matrizB,oposta);
-	matriz_determ4x4(matrizA,clk,start,done4x4,determinante4x4);
 	matriz_escalar(data_escalar, matrizA, escalar);
+	
 	matriz_determ2x2(matrizA, clk, determinante2x2);
 	matriz_determ3x3(matrizA, clk, determinante3x3);
+	matriz_determ4x4(matrizA,clk,start,done4x4,determinante4x4);
+	matriz_determ5x5(matrizA,clk,start,done5x5,determinante5x5);
+	
 
 	always @(posedge clk) begin
 		if (!start) begin
@@ -95,12 +98,13 @@ module alu(
 					done <= done4x4;
 				end
 				
-				/*
+				
 				// Determinante 5x5
 				4'b1100: begin
-					done <= 1;
+					matriz_resultante <= determinante5x5;
+					done <= done5x5;
 				end
-				*/
+				
 				
 				default: begin
 					done <= 1;
