@@ -39,7 +39,7 @@
 
 set_global_assignment -name FAMILY "Cyclone V"
 set_global_assignment -name DEVICE 5CSEMA5F31C6
-set_global_assignment -name TOP_LEVEL_ENTITY main
+set_global_assignment -name TOP_LEVEL_ENTITY test_top
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 23.1STD.1
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "08:26:35  MARCH 15, 2025"
 set_global_assignment -name LAST_QUARTUS_VERSION "23.1std.1 Lite Edition"
@@ -54,28 +54,60 @@ set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_
 set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_symbol
 set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_signal_integrity
 set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_boundary_scan
-set_location_assignment PIN_AB12 -to operation[0]
-set_location_assignment PIN_AC12 -to operation[1]
-set_location_assignment PIN_V16 -to leds[0]
-set_location_assignment PIN_W16 -to leds[1]
-set_location_assignment PIN_V17 -to leds[2]
-set_location_assignment PIN_V18 -to leds[3]
-set_location_assignment PIN_W17 -to leds[4]
-set_location_assignment PIN_W19 -to leds[5]
-set_location_assignment PIN_Y19 -to leds[6]
-set_location_assignment PIN_W20 -to leds[7]
 set_location_assignment PIN_AF14 -to clk
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_location_assignment PIN_AA14 -to bt0
+set_location_assignment PIN_AA15 -to bt1
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_location_assignment PIN_AE12 -to start_operation
-set_location_assignment PIN_Y21 -to wren
-set_global_assignment -name VERILOG_FILE matrix_transposition.v
-set_global_assignment -name VERILOG_FILE matriz_soma.v
-set_global_assignment -name QIP_FILE ram1port.qip
-set_global_assignment -name VERILOG_FILE main.v
-set_global_assignment -name QIP_FILE ram1port256bits.qip
-set_global_assignment -name VERILOG_FILE matrix_subtraction.v
-set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
-set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_location_assignment PIN_AH28 -to seg1[6]
+set_location_assignment PIN_AG28 -to seg1[5]
+set_location_assignment PIN_AF28 -to seg1[4]
+set_location_assignment PIN_AG27 -to seg1[3]
+set_location_assignment PIN_AE28 -to seg1[2]
+set_location_assignment PIN_AE27 -to seg1[1]
+set_location_assignment PIN_AE26 -to seg1[0]
+set_location_assignment PIN_AD27 -to seg2[6]
+set_location_assignment PIN_AF30 -to seg2[5]
+set_location_assignment PIN_AF29 -to seg2[4]
+set_location_assignment PIN_AG30 -to seg2[3]
+set_location_assignment PIN_AH30 -to seg2[2]
+set_location_assignment PIN_AH29 -to seg2[1]
+set_location_assignment PIN_AJ29 -to seg2[0]
+set_location_assignment PIN_AC30 -to seg3[6]
+set_location_assignment PIN_AC29 -to seg3[5]
+set_location_assignment PIN_AD30 -to seg3[4]
+set_location_assignment PIN_AC28 -to seg3[3]
+set_location_assignment PIN_AD29 -to seg3[2]
+set_location_assignment PIN_AE29 -to seg3[1]
+set_location_assignment PIN_AB23 -to seg3[0]
+set_location_assignment PIN_AB22 -to seg4[6]
+set_location_assignment PIN_AB25 -to seg4[5]
+set_location_assignment PIN_AB28 -to seg4[4]
+set_location_assignment PIN_AC25 -to seg4[3]
+set_location_assignment PIN_AD25 -to seg4[2]
+set_location_assignment PIN_AC27 -to seg4[1]
+set_location_assignment PIN_AD26 -to seg4[0]
+set_global_assignment -name VERILOG_FILE controle/br.v
+set_global_assignment -name VERILOG_FILE controle/decoder.v
+set_global_assignment -name VERILOG_FILE controle/top.v
+set_global_assignment -name VERILOG_FILE memoria/memory_mod.v
+set_global_assignment -name QIP_FILE memoria/ram16bits.qip
+set_global_assignment -name VERILOG_FILE ula/alu.v
+set_global_assignment -name VERILOG_FILE ula/matriz_soma.v
+set_global_assignment -name VERILOG_FILE ula/matriz_subtracao.v
+set_global_assignment -name VERILOG_FILE ula/matriz_transposta.v
+set_global_assignment -name VERILOG_FILE ula/matriz_multi.v
+set_global_assignment -name VERILOG_FILE ula/matriz_escalar.v
+set_global_assignment -name VERILOG_FILE ula/matriz_oposta.v
+set_global_assignment -name VERILOG_FILE ula/matriz_determ2x2.v
+set_global_assignment -name VERILOG_FILE ula/matriz_determ3x3.v
+set_global_assignment -name VERILOG_FILE ula/matriz_determ4x4.v
+set_global_assignment -name VERILOG_FILE ula/matriz_determ5x5.v
+set_global_assignment -name VERILOG_FILE testes/debounce.v
+set_global_assignment -name VERILOG_FILE testes/decod7seg.v
+set_global_assignment -name VERILOG_FILE testes/test_top.v
+set_global_assignment -name VERILOG_FILE memoria/ram16bits.v
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
