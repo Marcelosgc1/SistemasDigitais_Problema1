@@ -2,7 +2,7 @@
 
 <h2>Descrição do Projeto</h2>
 <p>
-  Para elaboração do projeto foi utilizado o kit de desenvolvimento De1-SoC de processador Cyclone V para a leitura e escrita dos procedimentos na memória RAM desse kit. O programa consiste em criar um coprocessador para lidar com matrizes quadradas de tamanho 2x2 até 5x5, a fim de reduzir a tensão sobre o processador principal para o aumento de desempenho. As operações com matrizes são algo primordial para o universo computacional, pois elas lidam com diversos tipos de paradigmas como processamento de imagens, criptografias, telecomunicações, etc. Desse modo, é possível utilizar esse repositório para esses fins de desenvolvimento.  
+  Para a elaboração do projeto, foi utilizado o kit de desenvolvimento DE1-SoC com o processador Cyclone V, permitindo a leitura e escrita de dados diretamente na memória RAM do dispositivo. O objetivo do programa é implementar um coprocessador dedicado ao processamento de matrizes quadradas, variando de 2x2 até 5x5, com o intuito de aliviar a carga do processador principal e, assim, aumentar o desempenho geral do sistema.As operações com matrizes são fundamentais no contexto computacional, pois estão presentes em diversas aplicações, como processamento de imagens, criptografia, telecomunicações, entre outras. Dessa forma, este repositório pode ser utilizado como base para projetos que envolvam esses tipos de aplicações. 
 
   O coprocessador é capaz de lidar com as seguintes operações:
 
@@ -20,7 +20,7 @@ Sumário
 =================
 <!--ts-->
    * [Caminho de Dados](#caminho-de-dados)
-   * [Arquitetura da Instrução](#instrucao)
+   * [Arquitetura do Conjunto de Instruções](#instrucao)
    * [Máquina de Estados](#maquina-de-estados)
       * [FETCH](#fetch)
       * [DECODE](#decode)
@@ -44,11 +44,58 @@ Sumário
 </div>
 
 <div id="instrucao">
-  <h2>Arquitetura da Instrução</h2>
-
-
-  
+  <h2>Arquitetura do Conjunto de Instruções</h2>
+   <p>
+    A ISA (Arquitetura do Conjunto de Instruções) define as instruções que o processador reconhece e executa, incluindo operações, tipos de dados e modos de endereçamento. Neste projeto, cada instrução         possui 28 bits, organizados respectivamente da seguinte maneira:
+  </p>
+  <table border="1" align="center">
+    <tr>
+        <td>Identificador</td>
+        <td>Linha</td>
+        <td>Coluna</td>
+        <td>Dado</td>
+        <td>Opcode</td>
+    </tr>
+    <tr>
+      <td>2 bits</td>
+      <td>3 bits</td>
+      <td>3 bits</td>
+      <td>16 bits</td>
+      <td>4 bits</td>
+    </tr>
+  </table>
+   <p>
+    O identificador indica ao coprocessador qual matriz está sendo utilizada na operação, conforme a tabela a seguir:
+  </p>
+  <table border="1" align="center">
+    <tr>
+      <td>Matriz A</td>
+      <td>Matriz B</td>
+      <td>Matriz C</td>
+    </tr>
+    <tr>
+      <td>00</td>
+      <td>01</td>
+      <td>10</td>
+    </tr>
+  </table>
+  <p>
+    A linha e a coluna são utilizadas para identificar a posição específica da matriz que está sendo acessada durante a operação, conforme a tabela a seguir: 
+  </p>
+  <table border="1" align="center">
+    <tr>
+      <td>Linha</td>
+      <td>Coluna</td>
+      <td>Posição da Matriz</td>
+    </tr>
+    <tr><td>000</td><td>000</td><td>[0][0]</td></tr>
+    <tr><td>000</td><td>001</td><td>[0][1]</td></tr>
+    <tr><td>000</td><td>010</td><td>[0][2]</td></tr>
+    <tr><td>000</td><td>011</td><td>[0][3]</td></tr>
+    <tr><td>000</td><td>100</td><td>[0][4]</td></tr>
+  </table>
 </div>
+
 
 <div id="maquina-de-estados">
   <h2>Máquina de Estados</h2>
