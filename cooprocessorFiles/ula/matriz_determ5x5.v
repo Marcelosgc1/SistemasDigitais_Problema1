@@ -4,26 +4,26 @@ module matriz_determ5x5(input [199:0] matrix, input clk, input start, output reg
 	wire [7:0] det_temp;
 	reg [7:0] item_temp;
 	reg [2:0] count = 0;
-	reg start2, last_done;
+	reg start4x4, last_done;
 	
 	matriz_determ4x4(
 		matrix_temp,
 		clk,
-		start2,
-		done2,
+		start4x4,
+		done4x4,
 		det_temp
 	);
 
 
-	and(done_pulse, !last_done, done2);
+	and(done_pulse, !last_done, done4x4); //done_pulse e o resultado do level to pulse
 		
 	always @(posedge clk) begin;
 	
-		last_done <= done2;
+		last_done <= done4x4; //last_done salva o ultimo estado de done4x4, para fazer o level to pulse
 		
 		//mux matrix
 		case (count)
-			//Monta matrizes 4x4 dependendo do contador
+			//Monta matrizes 4x4 dependendo do contador atual, para calcular sua determinante
 			0: matrix_temp <= {
 			8'b00000000,matrix[160+32 +: 8],matrix[160+24 +: 8],matrix[160+16 +: 8],matrix[160+8 +: 8],
 			8'b00000000,matrix[120+32 +: 8],matrix[120+24 +: 8],matrix[120+16 +: 8],matrix[120+8 +: 8],
@@ -56,7 +56,7 @@ module matriz_determ5x5(input [199:0] matrix, input clk, input start, output reg
 		endcase
 		
 		
-		//mux num
+		//mux p/ o numero que vai multiplicar a 4x4
 		case (count) 
 			0: item_temp <= matrix[0+:8];
 			1: item_temp <= matrix[8+:8];
@@ -67,35 +67,38 @@ module matriz_determ5x5(input [199:0] matrix, input clk, input start, output reg
 	
 	
 	
-		
+		//estado de IDLE, aguarda sinal p/ comecar operacao
 		if (!start) begin
 			done <= 0;
-			start2 <= 0;
+			start4x4 <= 0;
 			count <= 0;
 			det <= 0;
-		end else
-
+		end 
 		
-		if (!done_pulse) begin
-			start2 <= 1;
-		end else
+		//checa se operacao da 5x5 foi completada, se foi, manda sinal de done
+		else if (count == 5) begin
+			done <= 1;
+		end
 		
+		//checa se a operacao da 4x4 (parcial) foi feita realizada, 
+		//se nao, manda sinal de start para o modulo, ate ser concluida
+		else if (!done_pulse) begin
+			start4x4 <= 1;
+		end 
 		
-		if (count != 5) begin
+		//quando a operacao parcial da 4x4 eh realizada
+		//o resultado e soma ou subtrai o resultado parcial da det 5x5
+		
+		else begin
 			if(count == 1 | count == 3) begin
 				det <= det - (item_temp * det_temp);
 			end else begin
 				det <= det + (item_temp * det_temp);
 			end
-		
 			count <= count + 1;
-			start2 <= 0;
+			start4x4 <= 0;		//reinicia sinal de start p/ mod 4x4
 		end
 		
-		
-		else begin
-			done <= 1;
-		end
 		
 		
 		
