@@ -50,17 +50,19 @@ Sumário
   </p>
   <table border="1" align="center">
     <tr>
+        <td>Número 0</td>
+        <td>Número 1</td>
         <td>Identificador</td>
         <td>Linha</td>
         <td>Coluna</td>
-        <td>Dado</td>
         <td>Opcode</td>
     </tr>
     <tr>
+      <td>8 bits</td>
+      <td>8 bits</td>
       <td>2 bits</td>
       <td>3 bits</td>
       <td>3 bits</td>
-      <td>16 bits</td>
       <td>4 bits</td>
     </tr>
   </table>
