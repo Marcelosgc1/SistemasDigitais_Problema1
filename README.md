@@ -82,7 +82,9 @@ Sumário
     </tr>
   </table>
   <p>
-    A linha e a coluna são utilizadas para identificar a posição específica da matriz que está sendo acessada durante a operação, conforme a tabela a seguir: 
+   A linha e a coluna são utilizadas para identificar a posição específica da matriz que está sendo acessada durante a operação. No entanto, como cada instrução armazena dois valores simultaneamente, só é possível inserir elementos em posições pares de linha ou coluna. Ou seja, ao adicionar um elemento na posição [0][0], o programa automaticamente insere também um segundo elemento na posição seguinte, [0][1].
+  Dessa forma, para adicionar um número em uma posição ímpar (por exemplo, [0][3]), é necessário inserir os dois elementos a partir da posição imediatamente anterior, ou seja, em [0][2]. O primeiro valor será armazenado em [0][2] e o segundo, em [0][3].
+  Essa lógica pode ser visualizada mais claramente na tabela a seguir:
   </p>
   <table border="1" align="center">
     <tr>
@@ -90,11 +92,11 @@ Sumário
       <td>Coluna</td>
       <td>Posição da Matriz</td>
     </tr>
-    <tr><td>000</td><td>000</td><td>[0][0]</td></tr>
-    <tr><td>000</td><td>001</td><td>[0][1]</td></tr>
-    <tr><td>000</td><td>010</td><td>[0][2]</td></tr>
-    <tr><td>000</td><td>011</td><td>[0][3]</td></tr>
-    <tr><td>000</td><td>100</td><td>[0][4]</td></tr>
+    <tr><td>000</td><td>000</td><td>[0][0] e [0][1]</td></tr>
+    <tr><td>000</td><td>001</td><td>Não é possível acessar</td></tr>
+    <tr><td>000</td><td>010</td><td>[0][2] e [0][3]</td></tr>
+    <tr><td>000</td><td>011</td><td>Não é possível acessar</td></tr>
+    <tr><td>000</td><td>100</td><td>[0][4] e [0][5]</td></tr>
   </table>
 </div>
 
