@@ -62,7 +62,7 @@ module matriz_determ5x5(input [199:0] matrix, input clk, input start, output reg
 			1: item_temp <= matrix[8+:8];
 			2: item_temp <= matrix[16+:8];
 			3: item_temp <= matrix[24+:8];
-			4: item_temp <= matrix[36+:8];	
+			4: item_temp <= matrix[32+:8];	
 		endcase
 	
 	
