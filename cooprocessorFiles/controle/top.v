@@ -28,20 +28,15 @@ module top(
 					DET4 = 4'b1011,
 					DET5 = 4'b1100;
 					
-	/*
-	assign leds[5:0] = adrs[5:0];
-	assign leds[6] = done_pulse;
-	assign leds[7] = done;
-	*/
 	assign data_read = data_out;
 	reg [2:0] state = FETCH;
 	reg [31:0] fetched_instruction = 0;
 	reg [1:0] count_br;
 	
-	reg wr, start, start_memory, start_ALU, loaded, seletor = 0, write_resul = 0, last_done; 
+	reg wr, start, start_memory, start_ALU, loaded, implict_memory = 0, write_resul = 0, last_done; 
 	wire done, done_alu, done_mem, done_pulse;
 	
-	reg [7:0] adrs;
+	reg [7:0] count_mem;
 	
 	wire [199:0] matrix_A; //registradores p/ salvar valores
 	wire [199:0] matrix_B;
@@ -56,8 +51,6 @@ module top(
 		address_instruction,
 		data
 	);
-	
-	//PLACEHOLDER
 	
 	memory_mod(
 		address,
@@ -92,7 +85,7 @@ module top(
 	assign done_pulse = done & !last_done;
 	assign done = (loaded & !write_resul) ? done_alu : done_mem;
 	assign data_to_write = write_resul ? result_ula : data;
-	assign address = seletor ? adrs : address_instruction;
+	assign address = implict_memory ? count_mem : address_instruction;
 	
 	always @(posedge clk) begin
 		
@@ -110,7 +103,9 @@ module top(
 	
 		//MEF
 		case (state)
+			//Estado de busca
 			FETCH: begin
+				//quando recebe activate_instruction, muda de estado
 				if (activate_instruction) begin	
 					fetched_instruction = instruction;
 					state = DECODE;
@@ -119,6 +114,7 @@ module top(
 				end
 			end
 			
+			//redireciona estado para de memoria ou operacao de matriz
 			DECODE: begin
 				if ((opcode == WRITE) | (opcode == READ)) begin
 					state = MEMORY;
@@ -127,9 +123,11 @@ module top(
 				end
 			end
 			
+			//Estado para operacoes de memoria
 			MEMORY: begin
+				//operacao explicita de memoria
 				if ((opcode == WRITE) | (opcode == READ)) begin
-					seletor = 0;
+					implict_memory = 0;
 					if (done_pulse) begin
 						start = 0;
 						state = FETCH;
@@ -138,39 +136,46 @@ module top(
 						wr = (opcode == WRITE);
 						start = 1;
 					end
+					
+				//operacao implicita de memoria
+				//salva/carrega valores da memoria em registradores para operar matrizes
 				end else begin
-					seletor = 1;
+					implict_memory = 1;
+					//aguarda modulo de memoria completar leitura
 					if (done_pulse) begin
 						start = 0;
+						//aguarda banco de registrador ser escrito
 						if (count_br < 2) begin
 							count_br = count_br + 1;
-						end else if (adrs[3:0] < 12) begin
-							adrs[3:0] = adrs[3:0] + 1;
+						//comeca a contar cada endereco de memoria
+						end else if (count_mem[3:0] < 12) begin
+							count_mem[3:0] = count_mem[3:0] + 1;
 							loaded = 0;
 							count_br = 0;
 							state = MEMORY;
-						end else if (!(adrs[4] + adrs[5])) begin
-							adrs[3:0] = 0;
-							adrs[4] = 1;
+						end else if (!(count_mem[4] + count_mem[5])) begin
+							count_mem[3:0] = 0;
+							count_mem[4] = 1;
 							loaded = 0;
 							count_br = 0;
 							state = MEMORY;
-						end else if (adrs[5]) begin
+						end else if (count_mem[5]) begin
 							wr = 0;
-							adrs = 0;
+							count_mem = 0;
 							write_resul = 0;
 							count_br = 0;
 							state = FETCH;
 						end else if (write_resul) begin
-							adrs[4] = 0;
-							adrs[5] = 1;
-							adrs[3:0] = 0;
+							count_mem[4] = 0;
+							count_mem[5] = 1;
+							count_mem[3:0] = 0;
 							wr = 1;
 							count_br = 0;
 							state = MEMORY;
+						//matrizes carregadas
 						end else begin
 							loaded = 1;
-							seletor = 0;
+							implict_memory = 0;
 							count_br = 0;
 							state = EXECUTE;
 						end
@@ -183,19 +188,25 @@ module top(
 				end
 			end
 			
+			//realiza operacoes de matriz
 			EXECUTE: begin
+				//manda carregar matrizes
 				if (!loaded) state = MEMORY;
 				else begin
+					//manda escrever na memoria
 					if (done_pulse) begin
 						start = 0;
 						loaded = 0;
 						write_resul = 1;
 						state = MEMORY;
+						
+					//aguarda alu terminar operacao
 					end else begin
 						start = 1;
 					end
 				end
 			end
+			
 			default: state = FETCH;
 			
 		endcase

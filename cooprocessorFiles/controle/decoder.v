@@ -1,3 +1,5 @@
+//decodificador
+
 module decoder(input [31:0]instruction, output [3:0]opcode, output [7:0]adrs, output [15:0]data);
 
 	assign opcode = instruction[3:0];
@@ -32,7 +34,7 @@ module decoder(input [31:0]instruction, output [3:0]opcode, output [7:0]adrs, ou
 	assign adrs[7] = 0;
 
 	assign data = opcode[3] ?
-						{instruction[11:4]} :
-						{instruction[19:12],instruction[27:20]} ;
+						{instruction[11:4]} : 							//num multiplicacao escalar
+						{instruction[19:12],instruction[27:20]};	//dados para escrita
 
 endmodule
