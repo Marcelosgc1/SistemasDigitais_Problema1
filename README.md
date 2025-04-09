@@ -154,25 +154,45 @@ Sumário
 
 <div id="fetch">
   <h2>Estado de FETCH</h2>
-  
-  
+  No estado de fetch, o processador inicia o ciclo de execução buscando a próxima instrução que deve ser executada. Essa instrução está armazenada na memória, e o endereço onde ela se encontra é mantido em um registrador especial chamado contador de programa, ou PC (Program Counter). Durante o fetch, o processador utiliza o valor do PC para acessar a memória e ler o conteúdo presente naquele endereço, que corresponde à instrução a ser executada.
+
+Uma vez que a instrução é lida da memória, ela é transferida para o registrador de instrução, conhecido como IR (Instruction Register). Esse registrador serve como um local temporário para armazenar a instrução enquanto o processador se prepara para decodificá-la e executá-la nos próximos estados do ciclo.
+
+Após carregar a instrução no IR, o processador incrementa o valor do PC para que ele aponte para a próxima instrução na memória. Esse incremento depende do tamanho das instruções na arquitetura em questão, no caso desse reporsitório é utilizado instruções de 4 bytes, assim o PC é incrementado em 4 unidades. Com isso, o estado de fetch termina e o processador está pronto para passar ao estado de decodificação da instrução.
 </div>
 
 <div id="decode">
   <h2>Estado de DECODE</h2>
+  No estado de decode, o processador interpreta a instrução que foi buscada durante o estado de fetch. Essa instrução já está armazenada no registrador de instrução (IR), e agora precisa ser analisada para que o processador entenda qual operação deve ser realizada, quais registradores estão envolvidos e, se necessário, quais dados adicionais precisarão ser acessados. Durante a decodificação, a unidade de controle do processador lê os bits da instrução e os divide em campos específicos, nesse caso dois números, identificador, linha, coluna e opcode. Com base nesses campos, o processador entende, por exemplo, se deve realizar uma operação aritmética entre matrizes, carregar ou ler um valor da memória.
   
-  
+Nesse estado, também ocorre a preparação para a execução. Além disso, a unidade de controle configura os sinais necessários para que os próximos estágios do ciclo funcionem corretamente, como habilitar a unidade aritmética, preparar acesso à memória ou configurar os caminhos de dados dentro da CPU. Assim, o estado de decode é essencial para traduzir a instrução binária em ações concretas que o processador pode executar. Ele prepara todos os componentes internos do processador para que a próxima etapa, a execução, aconteça de forma correta e eficiente.
 </div>
 
 <div id="memory">
   <h2>Estado de MEMORY</h2>
-  
+  O estado de MEMORY possui dois tipos de acesso, explícito e implícito. O explícito é para operações de leitura e escrita na memória, enquanto o implícito é para operações aritméticas realizadas na memória
+
+ Esse estado só é ativado quando a instrução decodificada requer interação com a memória principal, como no caso de carregar um valor de um endereço específico para um registrador, ou armazenar um valor de um registrador em um determinado endereço da memória.
+
+<!-- 
+Durante uma instrução de leitura, o processador utiliza o endereço de memória que foi calculado no estágio anteriore e o envia à memória para buscar o dado correspondente. Esse dado, uma vez retornado pela memória, é armazenado temporariamente em um registrador interno para que possa ser transferido para o registrador de destino no estado seguinte, geralmente chamado de write-back.
+
+No caso de uma instrução de escrita, o processo é semelhante, mas ao invés de ler um dado da memória, o processador envia para a memória tanto o endereço onde o dado deve ser escrito quanto o valor a ser armazenado. A memória então grava esse valor no local indicado.
+-->
+
+Esse estado é importante porque separa claramente as operações de acesso à memória do restante do ciclo de instrução, o que facilita o controle e evita conflitos no uso dos barramentos e da lógica interna do processador. Ele garante que leitura e escrita sejam feitas de forma organizada e segura, respeitando o tempo necessário para que a memória responda corretamente a essas operações.
   
 </div>
 
 <div id="execute">
   <h2>Estado de EXECUTE</h2>
-  
+  O estado de execute, nesse projeto, é responsável por realizar operações aritméticas com matrizes, como soma, subtração e multiplicação. Ele só é iniciado após a conclusão do estado de memory, que garante que as matrizes envolvidas na operação tenham sido corretamente carregadas da memória principal para os registradores internos do processador.
+
+Quando o estado de execute é ativado, as matrizes já estão disponíveis, e a ULA (Unidade Lógica e Aritmética) começa a operar sobre elas de acordo com o tipo de instrução que foi decodificada anteriormente. Por exemplo, se a instrução indica uma soma de matrizes, os elementos correspondentes de cada matriz são somados posição a posição. No caso de uma multiplicação, o processador realiza a operação linha por coluna, seguindo as regras padrão da multiplicação matricial.
+
+Esse estado é responsável por coordenar o uso da unidade de processamento para garantir que todas as operações entre as matrizes ocorram corretamente, lidando com os índices, o armazenamento temporário de resultados parciais, e o controle do fluxo entre os elementos. Ao final do estado de execute, a matriz resultante da operação está pronta para ser armazenada de volta na memória, caso a instrução exija, o que será feito no próximo estado.
+
+Assim, o estado de execute é o núcleo do processamento matemático do sistema, sendo acionado apenas quando os dados estão carregados e prontos, garantindo eficiência e organização na execução das operações com matrizes.
   
 </div>
   
