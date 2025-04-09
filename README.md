@@ -210,3 +210,31 @@ Assim, o estado de execute é o núcleo do processamento matemático do sistema,
   </p>      
 </div>
 
+<div id="teste">
+  <h2>Testes</h2>
+  <p>  
+      
+ <p><strong>Como executar os testes:</strong></p>
+
+<pre style="background-color:#1e1e1e; color:#d4d4d4; padding:1em; border-radius:5px;">
+<code>
+<span style="color:#569cd6;">cd</span> git clone https://github.com/Marcelosgc1/SistemasDigitais_Problema1.git
+</code>
+</pre>
+
+  
+  No quartus, vá em File -> Open Project... e selecione cooprocessor.qpf
+  No quartus, vá em Tools -> In-System Memory Content Editor
+  Em "File" selecione o arquivo cooprocessorFiles/output_files/MI_SD.sof
+  Conecte a placa DE1-SoC ao dispositivo, atráves do JTAG
+  Vá em "Setup..." e selecione a entrada
+  Em "Device" dê Scan Chain e selecione a opção com [5CSE]
+  Pressione o botão com ícone de seta para baixo, para programar a placa.
+  
+  Este é o programa de testes, o top-level corresponde ao arquivo testes/test_top
+  Utilize KEY0 para mudar a instrução e KEY1 para enviar a instrução selecionada
+    
+  </p>
+
+  
+</div>
