@@ -27,6 +27,16 @@ Sumário
       * [EXECUTE](#execute)
       * [MEMORY](#memory)
    * [Unidade Lógica e Aritmética (ULA)](#ula)
+      * [SOMA](#soma)
+      * [SUBTRACAO](#subtracao)
+      * [TRANSPOSTA](#transposta)
+      * [OPOSTA](#oposta)
+      * [MULTIPLICAÇÃO ESCALAR](#escalar)
+      * [MULTIPLICACAO](#multiplicacao)
+      * [DETERMINANTE 2X2](#deter2x2)
+      * [DETERMINANTE 3X3](#deter3x3)
+      * [DETERMINANTE 4X4](#deter4x4)
+      * [DETERMINANTE 5x5](#deter5x5)
    * [Testes](#testes) 
    * [Referências](#referencias)
 <!--te-->
@@ -100,7 +110,7 @@ Sumário
     <tr><td>000</td><td>001</td><td>Não é possível acessar</td></tr>
     <tr><td>000</td><td>010</td><td>[0][2] e [0][3]</td></tr>
     <tr><td>000</td><td>011</td><td>Não é possível acessar</td></tr>
-    <tr><td>000</td><td>100</td><td>[0][4] e [0][5]</td></tr>
+    <tr><td>000</td><td>100</td><td>[0][4] e [1][0]</td></tr>
   </table>
   <p>
     O opcode é para indicar ao programa qual função ele deve executar, de forma que a LEITURA e a ESCRITA são operações feitas na memória enquanto as outras são referentes a operações aritméticas, nesse projeto ele possui os seguintes comandos:    
@@ -153,7 +163,7 @@ Sumário
 
 <div id="fetch">
   <h2>Estado de FETCH</h2>
-  No estado de fetch, o processador inicia o ciclo de execução buscando a próxima instrução que deve ser executada. Essa instrução está armazenada na memória, e o endereço onde ela se encontra é mantido em um registrador especial chamado contador de programa, ou PC (Program Counter). Durante o fetch, o processador utiliza o valor do PC para acessar a memória e ler o conteúdo presente naquele endereço, que corresponde à instrução a ser executada.
+  No estado de fetch, o processador inicia o ciclo de execução buscando a próxima instrução que deve ser executada. A instrução é recebida via barramento de dados, ao receber o sinal de <code>activate instructor</code>.
 
 Uma vez que a instrução é lida da memória, ela é transferida para o registrador de instrução, conhecido como IR (Instruction Register). Esse registrador serve como um local temporário para armazenar a instrução enquanto o processador se prepara para decodificá-la e executá-la nos próximos estados do ciclo.
 
@@ -196,11 +206,18 @@ Assim, o estado de execute é o núcleo do processamento matemático do sistema,
   No desenvolvimento do projeto, a ULA recebe duas matrizes, um opcode e um sinal de start. As instruções referentes às operações estão descritas no tópico <code>Arquitetura do Conjunto de Instruções</code>.
   </p>
   <p>
-  Para a operação de determinante, é fundamental analisar e distinguir corretamente o tamanho da matriz. Isso porque, diferentemente de outras operações, que são projetadas para lidar com o tamanho máximo previsto permitindo que, mesmo que uma matriz menor seja enviada, o resultado ainda seja correto , no caso do cálculo do determinante, utilizar uma matriz com tamanho inferior ao esperado pode resultar em um valor incorreto.<br>A seguir, será descrito o funcionamento de cada operação em detalhe.
-  <h4>OPERAÇÃO DE SOMA</h4> 
-  A operação de soma 
-  <img src="https://miro.medium.com/v2/resize:fit:1400/0*lIQzQBCzlC3mTAMH.gif">
+  Para a operação de determinante, é fundamental analisar e distinguir corretamente o tamanho da matriz. Isso porque, diferentemente de outras operações, que são projetadas para lidar com o tamanho máximo previsto permitindo que, mesmo que uma matriz menor seja enviada, o resultado ainda seja correto , no caso do cálculo do determinante, utilizar uma matriz com tamanho inferior ao esperado pode resultar em um valor incorreto. Dessa forma, as matrizes são vetores de 200 bits (tamanho máximo), assim os cálculos são realizados de 8 em 8 bits, que é o tamanho de um número nesse desenvolvimento.<br>Algumas operações foi possível realizar com apenas um ciclo de clock devido a simplicidade de operação. A seguir, será descrito o funcionamento das operações realizadas com um ciclo em detalhe.
+  
   </p>      
+</div>
+
+<div id="soma">
+  <h2>OPERAÇÃO DE SOMA</h2> 
+  A operação de soma de matrizes é feita da seguinte maneira:
+    <div align="center"><br>
+      <img src="https://miro.medium.com/v2/resize:fit:752/0*IbKGWNecJlWQlK-o.gif">
+    </div><br>
+  No reporsitório é feita dessa maneira, somando os 8 bits da matrizA com o da matrizB nas mesmas posições. Isso é realizado através de laço de repetição <code>for</code> que realiza a soma de 8 em 8 bits e salvando em uma matrizC.
 </div>
 
 <div id="teste">
@@ -211,7 +228,7 @@ Assim, o estado de execute é o núcleo do processamento matemático do sistema,
 
 <pre style="background-color:#1e1e1e; color:#d4d4d4; padding:1em; border-radius:5px;">
 <code>
-<span style="color:#569cd6;">cd</span> git clone https://github.com/Marcelosgc1/SistemasDigitais_Problema1.git
+<span style="color:#569cd6;"></span>git clone https://github.com/Marcelosgc1/SistemasDigitais_Problema1.git
 </code>
 </pre>
 
