@@ -28,7 +28,6 @@ Sumário
       * [MEMORY](#memory)
    * [Unidade Lógica e Aritmética (ULA)](#ula)
    * [Testes](#testes) 
-   * [Resultados](#resultados)
    * [Referências](#referencias)
 <!--te-->
 <div id="caminho-de-dados">
@@ -172,15 +171,7 @@ Nesse estado, também ocorre a preparação para a execução. Além disso, a un
   <h2>Estado de MEMORY</h2>
   O estado de MEMORY possui dois tipos de acesso, explícito e implícito. O explícito é para operações de leitura e escrita na memória, enquanto o implícito é para operações aritméticas realizadas na memória
 
- Esse estado só é ativado quando a instrução decodificada requer interação com a memória principal, como no caso de carregar um valor de um endereço específico para um registrador, ou armazenar um valor de um registrador em um determinado endereço da memória.
-
-<!-- 
-Durante uma instrução de leitura, o processador utiliza o endereço de memória que foi calculado no estágio anteriore e o envia à memória para buscar o dado correspondente. Esse dado, uma vez retornado pela memória, é armazenado temporariamente em um registrador interno para que possa ser transferido para o registrador de destino no estado seguinte, geralmente chamado de write-back.
-
-No caso de uma instrução de escrita, o processo é semelhante, mas ao invés de ler um dado da memória, o processador envia para a memória tanto o endereço onde o dado deve ser escrito quanto o valor a ser armazenado. A memória então grava esse valor no local indicado.
--->
-
-Esse estado é importante porque separa claramente as operações de acesso à memória do restante do ciclo de instrução, o que facilita o controle e evita conflitos no uso dos barramentos e da lógica interna do processador. Ele garante que leitura e escrita sejam feitas de forma organizada e segura, respeitando o tempo necessário para que a memória responda corretamente a essas operações.
+ Esse estado só é ativado quando a instrução decodificada requer interação com a memória principal, como no caso de carregar um valor de um endereço específico para um registrador, ou armazenar um valor de um registrador em um determinado endereço da memória.Ele é importante porque separa claramente as operações de acesso à memória do restante do ciclo de instrução, o que facilita o controle e evita conflitos no uso dos barramentos e da lógica interna do processador, assim garante que leitura e escrita sejam feitas de forma organizada e segura, respeitando o tempo necessário para que a memória responda corretamente a essas operações.
   
 </div>
 
@@ -207,6 +198,8 @@ Assim, o estado de execute é o núcleo do processamento matemático do sistema,
   <p>
   Para a operação de determinante, é fundamental analisar e distinguir corretamente o tamanho da matriz. Isso porque, diferentemente de outras operações, que são projetadas para lidar com o tamanho máximo previsto permitindo que, mesmo que uma matriz menor seja enviada, o resultado ainda seja correto , no caso do cálculo do determinante, utilizar uma matriz com tamanho inferior ao esperado pode resultar em um valor incorreto.<br>A seguir, será descrito o funcionamento de cada operação em detalhe.
   <h4>OPERAÇÃO DE SOMA</h4> 
+  A operação de soma 
+  <img src="https://miro.medium.com/v2/resize:fit:1400/0*lIQzQBCzlC3mTAMH.gif">
   </p>      
 </div>
 
@@ -233,7 +226,40 @@ Assim, o estado de execute é o núcleo do processamento matemático do sistema,
   
   Este é o programa de testes, o top-level corresponde ao arquivo testes/test_top
   Utilize KEY0 para mudar a instrução e KEY1 para enviar a instrução selecionada
-    
+  
+  Ordem das instruções do teste:<br>
+  [abstração]<br>
+  
+  WRITE   2,1,A,0,0<br>
+  WRITE   0,2,A,0,4<br>
+  WRITE   1,0,A,1,1<br>
+  WRITE   3,4,B,0,0<br>
+  WRITE   0,2,B,0,4<br>
+  WRITE   1,0,B,1,1<br>
+  ADD<br>
+  SUB<br>
+  MULT<br>
+  TRANS<br>
+  OPOS<br>
+  MS        5<br>
+  WRITE   3,1,A,0,0<br>
+  WRITE   1,1,A,0,2<br>
+  WRITE   1,4,A,0,4<br>
+  WRITE   2,1,A,1,1<br>
+  WRITE   1,1,A,1,3<br>
+  WRITE   1,3,A,2,0<br>
+  WRITE   1,1,A,2,2<br>
+  WRITE   3,1,A,2,4<br>
+  WRITE   1,1,A,3,1<br>
+  WRITE   3,1,A,3,3<br>
+  WRITE   1,1,A,4,0<br>
+  WRITE   1,1,A,4,2<br>
+  WRITE   1,0,A,4,4<br>
+  DT2<br>
+  DT3<br>
+  DT4<br>
+  DT5<br>
+  READ    C,0,0<br>
   </p>
 
   
