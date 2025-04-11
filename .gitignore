@@ -3,8 +3,9 @@
 
 !*.v
 !*.qip
-!*/
 !*.jpg
+!*.png
+!*/
 
 !.gitignore
 !*.qsf
