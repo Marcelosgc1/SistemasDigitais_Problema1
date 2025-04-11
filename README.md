@@ -4,6 +4,10 @@
 <p>
   Para a elaboração do projeto, foi utilizado o kit de desenvolvimento DE1-SoC com o processador Cyclone V, permitindo a leitura e escrita de dados diretamente na memória RAM do dispositivo. O objetivo do programa é implementar um coprocessador dedicado ao processamento de matrizes quadradas, variando de 2x2 até 5x5. As operações com matrizes são fundamentais no contexto computacional, pois estão presentes em diversas aplicações, como processamento de imagens, criptografia, telecomunicações, entre outras. Dessa forma, este repositório pode ser utilizado como base para projetos que envolvam esses tipos de aplicações. 
 
+  <div align="center">
+    <img src="images/fpga.jpg">
+  </div>
+  
   O coprocessador é capaz de lidar com as seguintes operações:
 
   * Soma
@@ -46,7 +50,9 @@ Sumário
     O caminho de dados é uma unidade funcional dentro de um processador que executa operações de processamento de dados usando componentes como unidades lógicas aritméticas, barramentos, multiplexadores e     registradores. É responsável por executar instruções e manipular dados no processador. O diagrama do caminho de dados do projeto é mostrado logo abaixo:
   <div w=full align=center>
     <br>
-    <img src="images/datapath.jpg">
+    <div align="center">
+      <img src="images/datapath.png">
+    </div>
   </div>
   </p>
 
@@ -165,6 +171,10 @@ Sumário
   <h2>Estado de FETCH</h2>
   No estado de fetch, o processador inicia o ciclo de execução buscando a próxima instrução que deve ser executada. A instrução é recebida via barramento de dados, ao receber o sinal de <code>activate instructor</code>.
 
+  <br><div align="center">
+    <img src="images/fetch.png">
+  </div>
+
 Uma vez que a instrução é lida da memória, ela é transferida para o registrador de instrução, conhecido como IR (Instruction Register). Esse registrador serve como um local temporário para armazenar a instrução enquanto o processador se prepara para decodificá-la e executá-la nos próximos estados do ciclo.
 
 Após carregar a instrução no IR, o processador incrementa o valor do PC para que ele aponte para a próxima instrução na memória. Esse incremento depende do tamanho das instruções na arquitetura em questão, no caso desse reporsitório é utilizado instruções de 4 bytes, assim o PC é incrementado em 4 unidades. Com isso, o estado de fetch termina e o processador está pronto para passar ao estado de decodificação da instrução.
@@ -173,13 +183,21 @@ Após carregar a instrução no IR, o processador incrementa o valor do PC para 
 <div id="decode">
   <h2>Estado de DECODE</h2>
   No estado de decode, o processador interpreta a instrução que foi buscada durante o estado de fetch. Essa instrução já está armazenada no registrador de instrução (IR), e agora precisa ser analisada para que o processador entenda qual operação deve ser realizada, quais registradores estão envolvidos e, se necessário, quais dados adicionais precisarão ser acessados. Durante a decodificação, a unidade de controle do processador lê os bits da instrução e os divide em campos específicos, nesse caso dois números, identificador, linha, coluna e opcode. Com base nesses campos, o processador entende, por exemplo, se deve realizar uma operação aritmética entre matrizes, carregar ou ler um valor da memória.
+
+  <br><div align="center">
+    <img src="images/decode.png">
+  </div>
   
 Nesse estado, também ocorre a preparação para a execução. Além disso, a unidade de controle configura os sinais necessários para que os próximos estágios do ciclo funcionem corretamente, como habilitar a unidade aritmética, preparar acesso à memória ou configurar os caminhos de dados dentro da CPU. Assim, o estado de decode é essencial para traduzir a instrução binária em ações concretas que o processador pode executar. Ele prepara todos os componentes internos do processador para que a próxima etapa, a execução, aconteça de forma correta e eficiente.
 </div>
 
 <div id="memory">
   <h2>Estado de MEMORY</h2>
-  O estado de MEMORY possui dois tipos de acesso, explícito e implícito. O explícito é para operações de leitura e escrita na memória, enquanto o implícito é para operações aritméticas realizadas na memória
+  O estado de MEMORY possui dois tipos de acesso, explícito e implícito. O explícito é para operações de leitura e escrita na memória, enquanto o implícito é para operações aritméticas realizadas na memória.
+
+  <br><div align="center">
+    <img src="images/memory.png">
+  </div>
 
  Esse estado só é ativado quando a instrução decodificada requer interação com a memória principal, como no caso de carregar um valor de um endereço específico para um registrador, ou armazenar um valor de um registrador em um determinado endereço da memória.Ele é importante porque separa claramente as operações de acesso à memória do restante do ciclo de instrução, o que facilita o controle e evita conflitos no uso dos barramentos e da lógica interna do processador, assim garante que leitura e escrita sejam feitas de forma organizada e segura, respeitando o tempo necessário para que a memória responda corretamente a essas operações.
   
@@ -188,6 +206,10 @@ Nesse estado, também ocorre a preparação para a execução. Além disso, a un
 <div id="execute">
   <h2>Estado de EXECUTE</h2>
   O estado de execute, nesse projeto, é responsável por realizar operações aritméticas com matrizes, como soma, subtração e multiplicação. Ele só é iniciado após a conclusão do estado de memory, que garante que as matrizes envolvidas na operação tenham sido corretamente carregadas da memória principal para os registradores internos do processador.
+
+  <br><div align="center">
+    <img src="images/execute.png">
+  </div>
 
 Quando o estado de execute é ativado, as matrizes já estão disponíveis, e a ULA (Unidade Lógica e Aritmética) começa a operar sobre elas de acordo com o tipo de instrução que foi decodificada anteriormente. Por exemplo, se a instrução indica uma soma de matrizes, os elementos correspondentes de cada matriz são somados posição a posição. No caso de uma multiplicação, o processador realiza a operação linha por coluna, seguindo as regras padrão da multiplicação matricial.
 
@@ -217,8 +239,58 @@ Assim, o estado de execute é o núcleo do processamento matemático do sistema,
     <div align="center"><br>
       <img src="https://miro.medium.com/v2/resize:fit:752/0*IbKGWNecJlWQlK-o.gif">
     </div><br>
+    <strong>Imagem Retirada do Site Medium</strong><br>
   No reporsitório é feita dessa maneira, somando os 8 bits da matrizA com o da matrizB nas mesmas posições. Isso é realizado através de laço de repetição <code>for</code> que realiza a soma de 8 em 8 bits e salvando em uma matrizC.
 </div>
+
+<div id="subtracao">
+  <h2>OPERAÇÃO DE SUBTRAÇÃO</h2>
+  A operação de subtração segue quase a mesma linha que a operação de soma, com o porém de que ao invés do sinal de "+" utilizaremos o sinal de "-" na operação.
+</div>
+
+<div id="transposta">
+  <h2>OPERAÇÃO DE TRANSPOSTA</h2>
+  <div align="center"><br>
+    <img src="">  
+  </div><br>
+  <strong>Figura Retirada do Site Loekvandenouweland</strong><br>
+  Para a realização de matriz transposta é feito sem nenhuma porta lógica, pois como a transposição consiste em inverter as linhas com as colunas da matriz original, assim é alterado apenas a posição dos fios da matriz.
+</div>
+
+<div id="oposta">
+  <h2>OPERAÇÃO DE OPOSTA</h2>
+  <img src="">
+  A matriz oposta consiste em alterar o sinal de cada número da matriz com um "-", ou seja multiplicando o número por -1, assim transformando o número no seu oposto. Por exemplo, um número 4 é transformado em -4.
+</div>
+
+<div id="deter2x2">
+  <h2>OPERAÇÃO DE DETERMINANTE 2X2 e 3X3</h2>
+    Nas operações de determinante o vetor da matriz A é inserida em uma outra matriz bidimensional com intuito de facilitar essas operações. Dessa forma, 
+</div
+
+<h3>Agora serão discutidas as operações que exigem múltiplos ciclos de clock.</h3>
+<div id="multiplicacao">
+  <h2>OPERAÇÃO DE MULTIPLICAÇÃO</h2>
+  A multiplicação a cada ciclo de clock ela multiplica cada linha da matriz A por todas as colunas da matriz B, no próximo ciclo de clock ele repete o processo para próximo linha.
+</div>
+
+<div id="deter4x4">
+  <h2>OPERAÇÃO DE DETERMINANTE 4X4</h2>
+A determinante 4x4 é calculada com base na expansão por cofatores (Lei de Laplace), utilizando como base a primeira linha da matriz. A cada ciclo de clock, o módulo calcula a multiplicação entre um elemento da primeira linha e o determinante de uma submatriz 3x3 correspondente, obtida ao eliminar a linha e a coluna desse elemento.
+
+O cálculo da determinante 3x3 é feito por uma function det_3x3, que executa a operação de forma puramente combinacional (ou seja, paralela e sem depender do clock). O resultado dessa multiplicação é armazenado em um registrador (tp[i]) para ser usado posteriormente.
+
+Após quatro ciclos (um para cada elemento da primeira linha), o módulo aplica a Lei de Laplace para somar e subtrair os valores dos cofatores conforme o padrão de sinais alternados (+ - + -), resultando no valor final da determinante 4x4. O sinal de done é ativado indicando o término da operação.
+
+Esse método permite dividir o cálculo em etapas simples e sequenciais, aproveitando o paralelismo da function 3x3 e utilizando poucos recursos de hardware (por exemplo, apenas um multiplicador por ciclo).
+</div>
+
+<div id="deter5x5">
+  <h2>OPERAÇÃO DE DETERMINANTE 5X5</h2>
+ A determinante 5x5 utiliza o mesmo princípio de expansão por cofatores aplicado na determinante 4x4. No entanto, em vez de usar uma function, este módulo instancia o módulo matriz_determ4x4 para calcular as determinantes das submatrizes 4x4. Isso permite reutilizar o mesmo hardware (como blocos DSP, que realizam multiplicações de forma eficiente), evitando aumentar o consumo de recursos lógicos.
+
+Dessa forma, o módulo 5x5 executa o cálculo da determinante de maneira sequencial, utilizando ciclos de clock. A cada ciclo, ele monta uma submatriz 4x4 correspondente à expansão em relação à primeira linha da matriz 5x5, calcula sua determinante e multiplica pelo respectivo elemento da linha. A operação de soma ou subtração é feita conforme a posição do cofator (seguindo o padrão de sinais alternados). Esse processo é repetido cinco vezes (uma para cada elemento da primeira linha), resultando no valor final da determinante 5x5 após cinco iterações.</div>
+
 
 <div id="teste">
   <h2>Testes</h2>
@@ -281,3 +353,5 @@ Assim, o estado de execute é o núcleo do processamento matemático do sistema,
 
   
 </div>
+
+<h2 id="referencias">Refrências</h2>
