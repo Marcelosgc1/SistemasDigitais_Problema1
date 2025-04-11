@@ -239,6 +239,7 @@ Assim, o estado de execute é o núcleo do processamento matemático do sistema,
     <div align="center"><br>
       <img src="https://miro.medium.com/v2/resize:fit:752/0*IbKGWNecJlWQlK-o.gif">
     </div><br>
+    <strong>Imagem Retirada do Site Medium</strong><br>
   No reporsitório é feita dessa maneira, somando os 8 bits da matrizA com o da matrizB nas mesmas posições. Isso é realizado através de laço de repetição <code>for</code> que realiza a soma de 8 em 8 bits e salvando em uma matrizC.
 </div>
 
@@ -249,9 +250,10 @@ Assim, o estado de execute é o núcleo do processamento matemático do sistema,
 
 <div id="transposta">
   <h2>OPERAÇÃO DE TRANSPOSTA</h2>
-  <div>
+  <div align="center"><br>
     <img src="">  
-  </div>
+  </div><br>
+  <strong>Figura Retirada do Site Loekvandenouweland</strong><br>
   Para a realização de matriz transposta é feito sem nenhuma porta lógica, pois como a transposição consiste em inverter as linhas com as colunas da matriz original, assim é alterado apenas a posição dos fios da matriz.
 </div>
 
@@ -269,18 +271,25 @@ Assim, o estado de execute é o núcleo do processamento matemático do sistema,
 <h3>Agora serão discutidas as operações que exigem múltiplos ciclos de clock.</h3>
 <div id="multiplicacao">
   <h2>OPERAÇÃO DE MULTIPLICAÇÃO</h2>
-  
+  A multiplicação a cada ciclo de clock ela multiplica cada linha da matriz A por todas as colunas da matriz B, no próximo ciclo de clock ele repete o processo para próximo linha.
 </div>
 
 <div id="deter4x4">
   <h2>OPERAÇÃO DE DETERMINANTE 4X4</h2>
-  
+A determinante 4x4 é calculada com base na expansão por cofatores (Lei de Laplace), utilizando como base a primeira linha da matriz. A cada ciclo de clock, o módulo calcula a multiplicação entre um elemento da primeira linha e o determinante de uma submatriz 3x3 correspondente, obtida ao eliminar a linha e a coluna desse elemento.
+
+O cálculo da determinante 3x3 é feito por uma function det_3x3, que executa a operação de forma puramente combinacional (ou seja, paralela e sem depender do clock). O resultado dessa multiplicação é armazenado em um registrador (tp[i]) para ser usado posteriormente.
+
+Após quatro ciclos (um para cada elemento da primeira linha), o módulo aplica a Lei de Laplace para somar e subtrair os valores dos cofatores conforme o padrão de sinais alternados (+ - + -), resultando no valor final da determinante 4x4. O sinal de done é ativado indicando o término da operação.
+
+Esse método permite dividir o cálculo em etapas simples e sequenciais, aproveitando o paralelismo da function 3x3 e utilizando poucos recursos de hardware (por exemplo, apenas um multiplicador por ciclo).
 </div>
 
 <div id="deter5x5">
   <h2>OPERAÇÃO DE DETERMINANTE 5X5</h2>
-  
-</div>
+ A determinante 5x5 utiliza o mesmo princípio de expansão por cofatores aplicado na determinante 4x4. No entanto, em vez de usar uma function, este módulo instancia o módulo matriz_determ4x4 para calcular as determinantes das submatrizes 4x4. Isso permite reutilizar o mesmo hardware (como blocos DSP, que realizam multiplicações de forma eficiente), evitando aumentar o consumo de recursos lógicos.
+
+Dessa forma, o módulo 5x5 executa o cálculo da determinante de maneira sequencial, utilizando ciclos de clock. A cada ciclo, ele monta uma submatriz 4x4 correspondente à expansão em relação à primeira linha da matriz 5x5, calcula sua determinante e multiplica pelo respectivo elemento da linha. A operação de soma ou subtração é feita conforme a posição do cofator (seguindo o padrão de sinais alternados). Esse processo é repetido cinco vezes (uma para cada elemento da primeira linha), resultando no valor final da determinante 5x5 após cinco iterações.</div>
 
 
 <div id="teste">
@@ -344,3 +353,5 @@ Assim, o estado de execute é o núcleo do processamento matemático do sistema,
 
   
 </div>
+
+<h2 id="referencias">Refrências</h2>
