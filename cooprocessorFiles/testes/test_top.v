@@ -68,7 +68,7 @@ module test_top(
 
 	//reg [4000:0] all = {det5,det4,det3, det2,zE,yE,xE,zD, yD, xD,zxC,zzC,zCc,zC,yC,xxC,xC,s,o,t,ms5,m,sum, xA, yA, zA, xB, yB, zB};
 
-	reg [4000:0] all = {read0, det5, det4, det3, det2, wmc12, wmc11, wmc10, wmc9, wmc8, wmc7, wmc6, wmc5, wmc4, wmc3, wmc2, wmc1, wmc0, opos, trans, mult, sub, soma, wmb2, wmb1, wmb0, wma2, wma1, wma0};
+	reg [4000:0] all = {read0, det5, det4, det3, det2, wmc12, wmc11, wmc10, wmc9, wmc8, wmc7, wmc6, wmc5, wmc4, wmc3, wmc2, wmc1, wmc0, ms5, opos, trans, mult, sub, soma, wmb2, wmb1, wmb0, wma2, wma1, wma0};
 
 
 endmodule

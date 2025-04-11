@@ -27,8 +27,17 @@ Sumário
       * [EXECUTE](#execute)
       * [MEMORY](#memory)
    * [Unidade Lógica e Aritmética (ULA)](#ula)
+      * [SOMA](#soma)
+      * [SUBTRACAO](#subtracao)
+      * [TRANSPOSTA](#transposta)
+      * [OPOSTA](#oposta)
+      * [MULTIPLICAÇÃO ESCALAR](#escalar)
+      * [MULTIPLICACAO](#multiplicacao)
+      * [DETERMINANTE 2X2](#deter2x2)
+      * [DETERMINANTE 3X3](#deter3x3)
+      * [DETERMINANTE 4X4](#deter4x4)
+      * [DETERMINANTE 5x5](#deter5x5)
    * [Testes](#testes) 
-   * [Resultados](#resultados)
    * [Referências](#referencias)
 <!--te-->
 <div id="caminho-de-dados">
@@ -101,7 +110,7 @@ Sumário
     <tr><td>000</td><td>001</td><td>Não é possível acessar</td></tr>
     <tr><td>000</td><td>010</td><td>[0][2] e [0][3]</td></tr>
     <tr><td>000</td><td>011</td><td>Não é possível acessar</td></tr>
-    <tr><td>000</td><td>100</td><td>[0][4] e [0][5]</td></tr>
+    <tr><td>000</td><td>100</td><td>[0][4] e [1][0]</td></tr>
   </table>
   <p>
     O opcode é para indicar ao programa qual função ele deve executar, de forma que a LEITURA e a ESCRITA são operações feitas na memória enquanto as outras são referentes a operações aritméticas, nesse projeto ele possui os seguintes comandos:    
@@ -154,25 +163,37 @@ Sumário
 
 <div id="fetch">
   <h2>Estado de FETCH</h2>
-  
-  
+  No estado de fetch, o processador inicia o ciclo de execução buscando a próxima instrução que deve ser executada. A instrução é recebida via barramento de dados, ao receber o sinal de <code>activate instructor</code>.
+
+Uma vez que a instrução é lida da memória, ela é transferida para o registrador de instrução, conhecido como IR (Instruction Register). Esse registrador serve como um local temporário para armazenar a instrução enquanto o processador se prepara para decodificá-la e executá-la nos próximos estados do ciclo.
+
+Após carregar a instrução no IR, o processador incrementa o valor do PC para que ele aponte para a próxima instrução na memória. Esse incremento depende do tamanho das instruções na arquitetura em questão, no caso desse reporsitório é utilizado instruções de 4 bytes, assim o PC é incrementado em 4 unidades. Com isso, o estado de fetch termina e o processador está pronto para passar ao estado de decodificação da instrução.
 </div>
 
 <div id="decode">
   <h2>Estado de DECODE</h2>
+  No estado de decode, o processador interpreta a instrução que foi buscada durante o estado de fetch. Essa instrução já está armazenada no registrador de instrução (IR), e agora precisa ser analisada para que o processador entenda qual operação deve ser realizada, quais registradores estão envolvidos e, se necessário, quais dados adicionais precisarão ser acessados. Durante a decodificação, a unidade de controle do processador lê os bits da instrução e os divide em campos específicos, nesse caso dois números, identificador, linha, coluna e opcode. Com base nesses campos, o processador entende, por exemplo, se deve realizar uma operação aritmética entre matrizes, carregar ou ler um valor da memória.
   
-  
+Nesse estado, também ocorre a preparação para a execução. Além disso, a unidade de controle configura os sinais necessários para que os próximos estágios do ciclo funcionem corretamente, como habilitar a unidade aritmética, preparar acesso à memória ou configurar os caminhos de dados dentro da CPU. Assim, o estado de decode é essencial para traduzir a instrução binária em ações concretas que o processador pode executar. Ele prepara todos os componentes internos do processador para que a próxima etapa, a execução, aconteça de forma correta e eficiente.
 </div>
 
 <div id="memory">
   <h2>Estado de MEMORY</h2>
-  
+  O estado de MEMORY possui dois tipos de acesso, explícito e implícito. O explícito é para operações de leitura e escrita na memória, enquanto o implícito é para operações aritméticas realizadas na memória
+
+ Esse estado só é ativado quando a instrução decodificada requer interação com a memória principal, como no caso de carregar um valor de um endereço específico para um registrador, ou armazenar um valor de um registrador em um determinado endereço da memória.Ele é importante porque separa claramente as operações de acesso à memória do restante do ciclo de instrução, o que facilita o controle e evita conflitos no uso dos barramentos e da lógica interna do processador, assim garante que leitura e escrita sejam feitas de forma organizada e segura, respeitando o tempo necessário para que a memória responda corretamente a essas operações.
   
 </div>
 
 <div id="execute">
   <h2>Estado de EXECUTE</h2>
-  
+  O estado de execute, nesse projeto, é responsável por realizar operações aritméticas com matrizes, como soma, subtração e multiplicação. Ele só é iniciado após a conclusão do estado de memory, que garante que as matrizes envolvidas na operação tenham sido corretamente carregadas da memória principal para os registradores internos do processador.
+
+Quando o estado de execute é ativado, as matrizes já estão disponíveis, e a ULA (Unidade Lógica e Aritmética) começa a operar sobre elas de acordo com o tipo de instrução que foi decodificada anteriormente. Por exemplo, se a instrução indica uma soma de matrizes, os elementos correspondentes de cada matriz são somados posição a posição. No caso de uma multiplicação, o processador realiza a operação linha por coluna, seguindo as regras padrão da multiplicação matricial.
+
+Esse estado é responsável por coordenar o uso da unidade de processamento para garantir que todas as operações entre as matrizes ocorram corretamente, lidando com os índices, o armazenamento temporário de resultados parciais, e o controle do fluxo entre os elementos. Ao final do estado de execute, a matriz resultante da operação está pronta para ser armazenada de volta na memória, caso a instrução exija, o que será feito no próximo estado.
+
+Assim, o estado de execute é o núcleo do processamento matemático do sistema, sendo acionado apenas quando os dados estão carregados e prontos, garantindo eficiência e organização na execução das operações com matrizes.
   
 </div>
   
@@ -185,8 +206,78 @@ Sumário
   No desenvolvimento do projeto, a ULA recebe duas matrizes, um opcode e um sinal de start. As instruções referentes às operações estão descritas no tópico <code>Arquitetura do Conjunto de Instruções</code>.
   </p>
   <p>
-  Para a operação de determinante, é fundamental analisar e distinguir corretamente o tamanho da matriz. Isso porque, diferentemente de outras operações, que são projetadas para lidar com o tamanho máximo previsto permitindo que, mesmo que uma matriz menor seja enviada, o resultado ainda seja correto , no caso do cálculo do determinante, utilizar uma matriz com tamanho inferior ao esperado pode resultar em um valor incorreto.<br>A seguir, será descrito o funcionamento de cada operação em detalhe.
-  <h4>OPERAÇÃO DE SOMA</h4> 
+  Para a operação de determinante, é fundamental analisar e distinguir corretamente o tamanho da matriz. Isso porque, diferentemente de outras operações, que são projetadas para lidar com o tamanho máximo previsto permitindo que, mesmo que uma matriz menor seja enviada, o resultado ainda seja correto , no caso do cálculo do determinante, utilizar uma matriz com tamanho inferior ao esperado pode resultar em um valor incorreto. Dessa forma, as matrizes são vetores de 200 bits (tamanho máximo), assim os cálculos são realizados de 8 em 8 bits, que é o tamanho de um número nesse desenvolvimento.<br>Algumas operações foi possível realizar com apenas um ciclo de clock devido a simplicidade de operação. A seguir, será descrito o funcionamento das operações realizadas com um ciclo em detalhe.
+  
   </p>      
 </div>
 
+<div id="soma">
+  <h2>OPERAÇÃO DE SOMA</h2> 
+  A operação de soma de matrizes é feita da seguinte maneira:
+    <div align="center"><br>
+      <img src="https://miro.medium.com/v2/resize:fit:752/0*IbKGWNecJlWQlK-o.gif">
+    </div><br>
+  No reporsitório é feita dessa maneira, somando os 8 bits da matrizA com o da matrizB nas mesmas posições. Isso é realizado através de laço de repetição <code>for</code> que realiza a soma de 8 em 8 bits e salvando em uma matrizC.
+</div>
+
+<div id="teste">
+  <h2>Testes</h2>
+  <p>  
+      
+ <p><strong>Como executar os testes:</strong></p>
+
+<pre style="background-color:#1e1e1e; color:#d4d4d4; padding:1em; border-radius:5px;">
+<code>
+<span style="color:#569cd6;"></span>git clone https://github.com/Marcelosgc1/SistemasDigitais_Problema1.git
+</code>
+</pre>
+
+  
+  No quartus, vá em File -> Open Project... e selecione cooprocessor.qpf
+  No quartus, vá em Tools -> In-System Memory Content Editor
+  Em "File" selecione o arquivo cooprocessorFiles/output_files/MI_SD.sof
+  Conecte a placa DE1-SoC ao dispositivo, atráves do JTAG
+  Vá em "Setup..." e selecione a entrada
+  Em "Device" dê Scan Chain e selecione a opção com [5CSE]
+  Pressione o botão com ícone de seta para baixo, para programar a placa.
+  
+  Este é o programa de testes, o top-level corresponde ao arquivo testes/test_top
+  Utilize KEY0 para mudar a instrução e KEY1 para enviar a instrução selecionada
+  
+  Ordem das instruções do teste:<br>
+  [abstração]<br>
+  
+  WRITE   2,1,A,0,0<br>
+  WRITE   0,2,A,0,4<br>
+  WRITE   1,0,A,1,1<br>
+  WRITE   3,4,B,0,0<br>
+  WRITE   0,2,B,0,4<br>
+  WRITE   1,0,B,1,1<br>
+  ADD<br>
+  SUB<br>
+  MULT<br>
+  TRANS<br>
+  OPOS<br>
+  MS        5<br>
+  WRITE   3,1,A,0,0<br>
+  WRITE   1,1,A,0,2<br>
+  WRITE   1,4,A,0,4<br>
+  WRITE   2,1,A,1,1<br>
+  WRITE   1,1,A,1,3<br>
+  WRITE   1,3,A,2,0<br>
+  WRITE   1,1,A,2,2<br>
+  WRITE   3,1,A,2,4<br>
+  WRITE   1,1,A,3,1<br>
+  WRITE   3,1,A,3,3<br>
+  WRITE   1,1,A,4,0<br>
+  WRITE   1,1,A,4,2<br>
+  WRITE   1,0,A,4,4<br>
+  DT2<br>
+  DT3<br>
+  DT4<br>
+  DT5<br>
+  READ    C,0,0<br>
+  </p>
+
+  
+</div>
