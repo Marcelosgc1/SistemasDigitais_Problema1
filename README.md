@@ -263,13 +263,8 @@ Assim, o estado de execute é o núcleo do processamento matemático do sistema,
 
 <div id="deter2x2">
   <h2>OPERAÇÃO DE DETERMINANTE 2X2 e 3X3</h2>
-    Nessa operação é inserido o vetor da matriz, em uma matriz bidimensional  
-</div>
-
-<div id="deter3X3">
-  <h2>OPERAÇÃO DE DETERMINANTE 3X3</h2>
-  
-</div>
+    Nas operações de determinante o vetor da matriz A é inserida em uma outra matriz bidimensional com intuito de facilitar essas operações. Dessa forma, 
+</div
 
 <h3>Agora serão discutidas as operações que exigem múltiplos ciclos de clock.</h3>
 <div id="multiplicacao">
