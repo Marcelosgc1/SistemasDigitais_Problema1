@@ -1,16 +1,16 @@
 //MULTIPLICAÇAO 20 ADP BLOCK
 
 module matriz_multi (
-  input signed [199:0] matriz_a,
-  input signed [199:0] matriz_b, 
+  input signed [199:0] matriz_a, // Matriz A (5x5, 8 bits por elemento)
+  input signed [199:0] matriz_b, // Matriz B (5x5, 8 bits por elemento)
   input clock,
   input wire start,
-  output reg signed [199:0] matriz_c = 0,
-  output reg done
+  output reg signed [199:0] matriz_c = 0, // Resultado da multiplicação
+  output reg done // Sinal de conclusão
 );
 
-	reg [2:0] linha = 0; 
-	reg signed [15:0] temp [0:4];     
+	reg [2:0] linha = 0; // Índice da linha atual
+	reg signed [15:0] temp [0:4]; // Armazena resultado parcial da linha
 
 	always @(posedge clock) begin
 		 if(start) begin
@@ -24,12 +24,12 @@ module matriz_multi (
 			 end
 			 
 			 for (i = 0; i < 5; i = i + 1) begin
-				  matriz_c[(linha * 40) + (i * 8) + 7 -: 8] <= temp[i][7:0];
+				  matriz_c[(linha * 40) + (i * 8) + 7 -: 8] <= temp[i][7:0]; // Atribui resultado à matriz C
 			 end
 
 			 if (linha == 4) begin
 				  linha <= 0;
-				  done <= 1;
+				  done <= 1; // Fim da multiplicação
 			 end else begin
 				  linha <= linha + 1;
 				  done <= 0;
