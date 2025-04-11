@@ -159,7 +159,7 @@ Sumário
   Na arquitetura de uma unidade de processamento central (CPU) é utilizado o ciclo Fetch-Decode-Execute (FDE) para executar instruções, nesse modelo o processador tem três estados, busca, decodificação e execução, dessa forma foi utilizado esse modelo no projeto com a adição do estado MEMORY para lidar com todas operações feitas com a memória. 
 <div w=full align=center>
   <br>
-  <img src="images/states.jpg">
+  <img src="images/imagem_2025-04-11_144754119.png">
 </div>
   
   <br>
@@ -237,9 +237,10 @@ Assim, o estado de execute é o núcleo do processamento matemático do sistema,
   <h2>OPERAÇÃO DE SOMA</h2> 
   A operação de soma de matrizes é feita da seguinte maneira:
     <div align="center"><br>
-      <img src="https://miro.medium.com/v2/resize:fit:752/0*IbKGWNecJlWQlK-o.gif">
+      <img src="images/soma_matriz.gif"><br>
+      <strong>Imagem Retirada do Site Medium</strong><br>
     </div><br>
-    <strong>Imagem Retirada do Site Medium</strong><br>
+    
   No reporsitório é feita dessa maneira, somando os 8 bits da matrizA com o da matrizB nas mesmas posições. Isso é realizado através de laço de repetição <code>for</code> que realiza a soma de 8 em 8 bits e salvando em uma matrizC.
 </div>
 
@@ -251,27 +252,32 @@ Assim, o estado de execute é o núcleo do processamento matemático do sistema,
 <div id="transposta">
   <h2>OPERAÇÃO DE TRANSPOSTA</h2>
   <div align="center"><br>
-    <img src="">  
+    <img src="images/transposta_matriz.gif"><br>
+    <strong>Figura Retirada do Site Loekvandenouweland</strong><br>
   </div><br>
-  <strong>Figura Retirada do Site Loekvandenouweland</strong><br>
+ 
   Para a realização de matriz transposta é feito sem nenhuma porta lógica, pois como a transposição consiste em inverter as linhas com as colunas da matriz original, assim é alterado apenas a posição dos fios da matriz.
 </div>
 
 <div id="oposta">
   <h2>OPERAÇÃO DE OPOSTA</h2>
-  <img src="">
   A matriz oposta consiste em alterar o sinal de cada número da matriz com um "-", ou seja multiplicando o número por -1, assim transformando o número no seu oposto. Por exemplo, um número 4 é transformado em -4.
 </div>
 
 <div id="deter2x2">
   <h2>OPERAÇÃO DE DETERMINANTE 2X2 e 3X3</h2>
-    Nas operações de determinante o vetor da matriz A é inserida em uma outra matriz bidimensional com intuito de facilitar essas operações. Dessa forma, 
+    Nas operações de determinante o vetor da matriz A é inserida em uma outra matriz bidimensional com intuito de facilitar essas operações. Dessa forma, é feito a operação da diagonal principal subtraindo com a diagonal secundária.
 </div
 
 <h3>Agora serão discutidas as operações que exigem múltiplos ciclos de clock.</h3>
 <div id="multiplicacao">
   <h2>OPERAÇÃO DE MULTIPLICAÇÃO</h2>
   A multiplicação a cada ciclo de clock ela multiplica cada linha da matriz A por todas as colunas da matriz B, no próximo ciclo de clock ele repete o processo para próximo linha.
+  <div align="center"><br>
+      <img src="images/multiplicacao_matriz.gif"><br>
+      <strong>Imagem Retirada do Site Medium</strong><br>
+    </div><br>
+  
 </div>
 
 <div id="deter4x4">
