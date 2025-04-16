@@ -6,7 +6,8 @@ module alu(
 	input wire [199:0] matrizB,
 	input wire start,
 	output reg [199:0] matriz_resultante,
-	output reg done
+	output reg done,
+	output reg overflow
 );
 	wire [199:0] soma, subtracao, multiplicacao, transposta,oposta,escalar;
 	wire [7:0] determinante5x5, determinante4x4, determinante3x3, determinante2x2;
@@ -14,8 +15,8 @@ module alu(
 	wire done_determinante, done_multiplicacao, done_transposta; 
 	
 	
-	matriz_soma(matrizA, matrizB, soma);
-	matriz_subtracao(matrizA, matrizB, subtracao);
+	matriz_soma(matrizA, matrizB, soma, overSoma);
+	matriz_subtracao(matrizA, matrizB, subtracao, overSub);
 	matriz_multi(matrizA, matrizB, clk, start, multiplicacao, done_multiplicacao);
 	matriz_transposta(matrizA, matrizB, transposta);
 	matriz_oposta(matrizA,matrizB,oposta);
@@ -39,6 +40,7 @@ module alu(
 				4'b0011: begin				 
 					matriz_resultante <= soma;
 					done <= 1;
+					overflow <= overSoma;
 				end
 				
 				
@@ -46,6 +48,7 @@ module alu(
 				4'b0100: begin
 					matriz_resultante <= subtracao;
 					done <= 1;
+					overflow <= overSub;
 				end
 				
 				
