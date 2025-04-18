@@ -17,10 +17,10 @@ module alu(
 	
 	matriz_soma(matrizA, matrizB, soma, overSoma);
 	matriz_subtracao(matrizA, matrizB, subtracao, overSub);
-	matriz_multi(matrizA, matrizB, clk, start, multiplicacao, done_multiplicacao);
+	matriz_multi(matrizA, matrizB, clk, start, multiplicacao, done_multiplicacao, overMul);
 	matriz_transposta(matrizA, matrizB, transposta);
 	matriz_oposta(matrizA,matrizB,oposta);
-	matriz_escalar(data_escalar, matrizA, escalar);
+	matriz_escalar(data_escalar, matrizA, escalar,overEsc);
 	
 	matriz_determ2x2(matrizA, clk, determinante2x2);
 	matriz_determ3x3(matrizA, clk, determinante3x3);
@@ -56,12 +56,14 @@ module alu(
 				4'b0101: begin        
 					matriz_resultante <= multiplicacao;
 					done <= done_multiplicacao;
+					overflow <= overMul;
 				end 
 				
 				// Transposta
 				4'b0110: begin
 					matriz_resultante <= transposta;
 					done <= 1;
+					overflow <= 0;
 				end
 				
 				// Matriz oposta
@@ -69,6 +71,7 @@ module alu(
 				4'b0111: begin
 					matriz_resultante <= oposta;
 					done <= 1;
+					overflow <= 0;
 				end 
 				
 				
@@ -79,6 +82,7 @@ module alu(
 				4'b1000: begin
 					matriz_resultante <= escalar;
 					done <= 1;
+					overflow <= overEsc;
 				end 
 			
 			
