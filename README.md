@@ -6,7 +6,7 @@
 
   <div align="center">
     <img src="images/fpga.jpg"><br>
-    <strong>Imagem do Site da Altera</strong><br>
+    <strong>Imagem do Site da Altera</strong><br><br>
   </div>
   
   O coprocessador é capaz de lidar com as seguintes operações:
