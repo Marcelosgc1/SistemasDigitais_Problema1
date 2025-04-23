@@ -1,10 +1,12 @@
 module matriz_determ2x2(
     input wire [199:0] matriz_A, // Matriz 5x5 codificada como vetor linear
     input clk,
-    output wire [7:0] det // Determinante 2x2
+    output wire [7:0] det, // Determinante 2x2
+	 output wire overflow
 );
 
     wire [7:0] mat [4:0][4:0]; // Matriz 5x5 de elementos 8 bits
+	 wire [16:0] temp;
     genvar i, j;
 
     generate begin
@@ -15,8 +17,9 @@ module matriz_determ2x2(
         end
     end endgenerate
 
-    assign det = (mat[0][0] * mat[1][1]) - (mat[1][0] * mat[0][1]); // Determinante 2x2
-
+    assign temp = (mat[0][0] * mat[1][1]) - (mat[1][0] * mat[0][1]); // Determinante 2x2
+	 assign overflow = !(!(|temp[16:7]) | (&temp[16:7]));
+	 assign det = temp[7:0];
     // a b
     // c d
 

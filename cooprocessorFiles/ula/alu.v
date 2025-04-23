@@ -19,13 +19,13 @@ module alu(
 	matriz_subtracao(matrizA, matrizB, subtracao, overSub);
 	matriz_multi(matrizA, matrizB, clk, start, multiplicacao, done_multiplicacao, overMul);
 	matriz_transposta(matrizA, matrizB, transposta);
-	matriz_oposta(matrizA,matrizB,oposta);
-	matriz_escalar(data_escalar, matrizA, escalar,overEsc);
+	matriz_oposta(matrizA, matrizB, oposta);
+	matriz_escalar(data_escalar, matrizA, escalar, overEsc);
 	
-	matriz_determ2x2(matrizA, clk, determinante2x2);
-	matriz_determ3x3(matrizA, clk, determinante3x3);
-	matriz_determ4x4(matrizA,clk,start,done4x4,determinante4x4);
-	matriz_determ5x5(matrizA,clk,start,done5x5,determinante5x5);
+	matriz_determ2x2(matrizA, clk, determinante2x2, overD2);
+	matriz_determ3x3(matrizA, clk, determinante3x3, overD3);
+	matriz_determ4x4(matrizA, clk, start, done4x4, determinante4x4, overD4);
+	matriz_determ5x5(matrizA, clk, start, done5x5, determinante5x5, overD5);
 	
 
 	always @(posedge clk) begin
@@ -90,12 +90,14 @@ module alu(
 				4'b1001: begin
 					matriz_resultante <= determinante2x2;
 					done <= 1;
+					overflow <= overD2;
 				end
 			
 				// Determinante 3x3
 				4'b1010: begin 
 					matriz_resultante <= determinante3x3;
 					done <= 1;
+					overflow <= overD3;
 				end
 			
 			
@@ -103,6 +105,7 @@ module alu(
 				4'b1011: begin
 					matriz_resultante <= determinante4x4;
 					done <= done4x4;
+					overflow <= overD4;
 				end
 				
 				
@@ -110,6 +113,7 @@ module alu(
 				4'b1100: begin
 					matriz_resultante <= determinante5x5;
 					done <= done5x5;
+					overflow <= overD5;
 				end
 				
 				

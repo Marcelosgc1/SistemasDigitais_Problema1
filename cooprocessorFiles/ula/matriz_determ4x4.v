@@ -3,15 +3,17 @@ module matriz_determ4x4 (
     input clk,
     input start,
     output reg done, // Indica fim do cálculo
-    output reg [7:0] det // Determinante 4x4
+    output reg [7:0] det, // Determinante 4x4
+	 output overflow
 );
 
     wire [7:0] mat [4:0][4:0]; // Matriz 5x5
-    reg [31:0] tp [3:0]; // Termos temporários
+    reg [33:0] tp [3:0]; // Termos temporários
     genvar i, j;
     reg [4:0] count = 0; // Contador
-
-    function [7:0] det_3x3; // Função para determinante 3x3
+	 wire [36:0] temp;
+	 
+    function [25:0] det_3x3; // Função para determinante 3x3
         input [7:0] a, b, c, d, e, f, g, h, i;
         begin
             det_3x3 = a * (e * i - f * h) -
@@ -27,7 +29,10 @@ module matriz_determ4x4 (
             end
         end
     end endgenerate
-
+	 
+	 assign temp = tp[0] - tp[1] + tp[2] - tp[3]; // Soma dos cofatores
+	 assign overflow = !(!(|temp[36:7]) | (&temp[36:7]));
+	 
     always @(posedge clk) begin
         if(start) begin
             if (count < 4) begin
@@ -37,7 +42,7 @@ module matriz_determ4x4 (
                     mat[3][(count+1)%4], mat[3][(count+2)%4], mat[3][(count+3)%4]
                 ); // Expansão por cofatores
             end else begin
-                det = tp[0] - tp[1] + tp[2] - tp[3]; // Soma dos cofatores
+					 det = temp[7:0];
                 done = 1;
             end
 

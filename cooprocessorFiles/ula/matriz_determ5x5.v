@@ -1,19 +1,22 @@
-module matriz_determ5x5(input [199:0] matrix, input clk, input start, output reg done, output reg [7:0] det);
+module matriz_determ5x5(input [199:0] matrix, input clk, input start, output reg done, output [7:0] determinant, output reg overflow);
 
 	reg [199:0] matrix_temp;
 	wire [7:0] det_temp;
 	reg [7:0] item_temp;
 	reg [2:0] count = 0;
 	reg start4x4, last_done;
+	reg [19:0] det;
 	
 	matriz_determ4x4(
 		matrix_temp,
 		clk,
 		start4x4,
 		done4x4,
-		det_temp
+		det_temp,
+		over4
 	);
-
+	
+	assign determinant = det[7:0];
 
 	and(done_pulse, !last_done, done4x4); //done_pulse e o resultado do level to pulse
 		
@@ -73,30 +76,36 @@ module matriz_determ5x5(input [199:0] matrix, input clk, input start, output reg
 			start4x4 <= 0;
 			count <= 0;
 			det <= 0;
+			overflow <= 0;
 		end 
 		
 		//checa se operacao da 5x5 foi completada, se foi, manda sinal de done
-		else if (count == 5) begin
-			done <= 1;
-		end
-		
-		//checa se a operacao da 4x4 (parcial) foi feita realizada, 
-		//se nao, manda sinal de start para o modulo, ate ser concluida
-		else if (!done_pulse) begin
-			start4x4 <= 1;
-		end 
-		
-		//quando a operacao parcial da 4x4 eh realizada
-		//o resultado e soma ou subtrai o resultado parcial da det 5x5
-		
 		else begin
-			if(count == 1 | count == 3) begin
-				det <= det - (item_temp * det_temp);
-			end else begin
-				det <= det + (item_temp * det_temp);
+		
+			overflow <= overflow | over4 | (!(!(|det[19:7]) | (&det[19:7])));
+		
+			if (count == 5) begin
+				done <= 1;
 			end
-			count <= count + 1;
-			start4x4 <= 0;		//reinicia sinal de start p/ mod 4x4
+			
+			//checa se a operacao da 4x4 (parcial) foi feita realizada, 
+			//se nao, manda sinal de start para o modulo, ate ser concluida
+			else if (!done_pulse) begin
+				start4x4 <= 1;
+			end 
+			
+			//quando a operacao parcial da 4x4 eh realizada
+			//o resultado e soma ou subtrai o resultado parcial da det 5x5
+			
+			else begin
+				if(count == 1 | count == 3) begin
+					det <= det - (item_temp * det_temp);
+				end else begin
+					det <= det + (item_temp * det_temp);
+				end
+				count <= count + 1;
+				start4x4 <= 0;		//reinicia sinal de start p/ mod 4x4
+			end
 		end
 		
 		
