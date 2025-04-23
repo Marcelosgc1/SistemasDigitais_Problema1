@@ -2,10 +2,11 @@
 
 <h2>Descrição do Projeto</h2>
 <p>
-  Para a elaboração do projeto, foi utilizado o kit de desenvolvimento DE1-SoC com o processador Cyclone V, permitindo a leitura e escrita de dados diretamente na memória RAM do dispositivo. O objetivo do programa é implementar um coprocessador dedicado ao processamento de matrizes quadradas, variando de 2x2 até 5x5. As operações com matrizes são fundamentais no contexto computacional, pois estão presentes em diversas aplicações, como processamento de imagens, criptografia, telecomunicações, entre outras. Dessa forma, este repositório pode ser utilizado como base para projetos que envolvam esses tipos de aplicações. 
+  Para a elaboração do projeto, foi utilizado o kit de desenvolvimento DE1-SoC com o processador Cyclone V, permitindo a leitura e escrita de dados diretamente na memória RAM do dispositivo, o ambiente de desenvolvimento utilizado foi o Quartus Lite na versão 23.1 e para linguagem de descrição de hardware foi lidado com Verilog. O objetivo do programa é implementar um coprocessador dedicado ao processamento de matrizes quadradas, variando de 2x2 até 5x5. As operações com matrizes são fundamentais no contexto computacional, pois estão presentes em diversas aplicações, como processamento de imagens, criptografia, telecomunicações, entre outras. Dessa forma, este repositório pode ser utilizado como base para projetos que envolvam esses tipos de aplicações. 
 
   <div align="center">
-    <img src="images/fpga.jpg">
+    <img src="images/fpga.jpg"><br>
+    <strong>Imagem do Site da Altera</strong><br>
   </div>
   
   O coprocessador é capaz de lidar com as seguintes operações:
@@ -37,8 +38,7 @@ Sumário
       * [OPOSTA](#oposta)
       * [MULTIPLICAÇÃO ESCALAR](#escalar)
       * [MULTIPLICACAO](#multiplicacao)
-      * [DETERMINANTE 2X2](#deter2x2)
-      * [DETERMINANTE 3X3](#deter3x3)
+      * [DETERMINANTE 2X2 e 3x3](#deter2x2)
       * [DETERMINANTE 4X4](#deter4x4)
       * [DETERMINANTE 5x5](#deter5x5)
    * [Testes](#testes) 
@@ -55,8 +55,40 @@ Sumário
     </div>
   </div>
   </p>
+  <div>
+    
+  1. Buffer (Entrada de Instruções - 32 bits)  
+  - Recebe uma instrução de 32 bits vinda da memória de instruções.
+  - Essa instrução é enviada para o Decoder.
+  
+  2. Decoder (Decodificador)  
+  - Interpreta a instrução: identifica quais registradores serão usados, se haverá operação aritmética, acesso à memória etc.
+  - Envia sinais de controle para os outros blocos, principalmente para a ULA, Banco de Registradores e Memória.
+  
+  3. Controle  
+  - Gera sinais de controle com base na instrução decodificada. Define o comportamento dos blocos, como:  
+  - Qual operação a ULA vai realizar  
+  - Se o dado vai ser lido ou escrito na memória  
+  
+  4. Banco de Registradores  
+  - Contém os registradores.
+  - Fornece dois operandos de entrada para a ULA.
+  - Pode armazenar o resultado da ULA ou da memória.
+  
+  5. ULA (Unidade Lógica e Aritmética)  
+  - Executa operações aritméticas/lógicas com os dados dos registradores.
+  - O resultado pode ir para:
+  - O Banco de Registradores (se for uma instrução do tipo R)
+  - A Memória (se for uma instrução do tipo store)
+  
+  6. Multiplexador (Mux) 
+  - Decide entre o dado vindo da ULA ou de um registrador para enviar à Memória.
+  
+  7. Memória
+  - Usada para load e store.
+  - Pode fornecer um dado para o Banco de Registradores (load) ou receber um dado dele (store).
 
-
+  </div>
   
 </div>
 
@@ -83,6 +115,40 @@ Sumário
       <td>4 bits</td>
     </tr>
   </table>
+  <p>
+    Essa instrução funciona para quase todas as operações, com exceção da operação de leitura na memória e multplicação por escalar. Dessa forma, a instrução dessas operações é feita da seguinte maneira:
+    <br><h3>Leitura na Memória:</h3><br>
+    <table border="1" align="center">
+      <tr>
+        <td>Identificador</td>
+        <td>Linha</td>
+        <td>Coluna</td>
+        <td>Opcode</td>
+      </tr>
+      <tr>
+        <td>2 bits</td>
+        <td>3 bits</td>
+        <td>3 bits</td>
+        <td>4 bits</td>
+      </tr>
+    </table>
+    <br><h3>Multiplicação por escalar:</h3><br>
+     <table border="1" align="center">
+      <tr>
+        <td>Número 0</td>
+        <td>Número 1</td>
+        <td>Número Escalar</td>
+        <td>Opcode</td>
+      </tr>
+      <tr>
+        <td>8 bits</td>
+        <td>8 bits</td>
+        <td>8 bits</td>
+        <td>4 bits</td>
+      </tr>
+    </table>
+  </p>
+  <br>
   <p>
     O Número 0 e o Número 1 são os números enviados para matriz, logo é possível perceber que a cada instrução são encaminhados dois números por vez. 
   </p>
@@ -162,9 +228,6 @@ Sumário
   <img src="images/imagem_2025-04-11_144754119.png">
 </div>
   
-  <br>
-  O módulo responsável nesse desenvolvimento é o <code>top.v</code>
-  
 </div>
 
 <div id="fetch">
@@ -238,7 +301,7 @@ Assim, o estado de execute é o núcleo do processamento matemático do sistema,
   A operação de soma de matrizes é feita da seguinte maneira:
     <div align="center"><br>
       <img src="images/soma_matriz.gif"><br>
-      <strong>Imagem Retirada do Site Medium</strong><br>
+      <strong>Imagem do Site Medium</strong><br>
     </div><br>
     
   No reporsitório é feita dessa maneira, somando os 8 bits da matrizA com o da matrizB nas mesmas posições. Isso é realizado através de laço de repetição <code>for</code> que realiza a soma de 8 em 8 bits e salvando em uma matrizC.
@@ -253,7 +316,7 @@ Assim, o estado de execute é o núcleo do processamento matemático do sistema,
   <h2>OPERAÇÃO DE TRANSPOSTA</h2>
   <div align="center"><br>
     <img src="images/transposta_matriz.gif"><br>
-    <strong>Figura Retirada do Site Loekvandenouweland</strong><br>
+    <strong>Imagem do Site Loekvandenouweland</strong><br>
   </div><br>
  
   Para a realização de matriz transposta é feito sem nenhuma porta lógica, pois como a transposição consiste em inverter as linhas com as colunas da matriz original, assim é alterado apenas a posição dos fios da matriz.
@@ -262,6 +325,11 @@ Assim, o estado de execute é o núcleo do processamento matemático do sistema,
 <div id="oposta">
   <h2>OPERAÇÃO DE OPOSTA</h2>
   A matriz oposta consiste em alterar o sinal de cada número da matriz com um "-", ou seja multiplicando o número por -1, assim transformando o número no seu oposto. Por exemplo, um número 4 é transformado em -4.
+</div>
+
+<div id="escalar">
+  <h2>OPERAÇÃO DE MULTPLICAÇÃO POR ESCALAR</h2>
+  A multiplicação por escalar é feita multiplicando cada elemento da matriz pelo número escalar, ou seja, pega o escalar e multiplica por cada valor individual da matriz, mantendo a estrutura (número de linhas e colunas) igual.
 </div>
 
 <div id="deter2x2">
@@ -275,7 +343,7 @@ Assim, o estado de execute é o núcleo do processamento matemático do sistema,
   A multiplicação a cada ciclo de clock ela multiplica cada linha da matriz A por todas as colunas da matriz B, no próximo ciclo de clock ele repete o processo para próximo linha.
   <div align="center"><br>
       <img src="images/multiplicacao_matriz.gif"><br>
-      <strong>Imagem Retirada do Site Medium</strong><br>
+      <strong>Imagem do Site Medium</strong><br>
     </div><br>
   
 </div>
@@ -360,4 +428,18 @@ Dessa forma, o módulo 5x5 executa o cálculo da determinante de maneira sequenc
   
 </div>
 
-<h2 id="referencias">Refrências</h2>
+<div>
+  <h2 id="referencias">Referências</h2>
+  PATTERSON, D. A.; HENNESSY, J. L. Computer organization and design : the hardware/software interface, ARM edition / Computer organization and design : the hardware/software interface, ARM edition.<br>
+  
+‌  FPGAcademy. Disponível em: <https://fpgacademy.org>.<br>
+‌
+  Cyclone V Device Overview. Disponível em: <https://www.intel.com/content/www/us/en/docs/programmable/683694/current/cyclone-v-device-overview.html>.<br>
+
+  TECHNOLOGIES, T. Terasic - SoC Platform - Cyclone - DE1-SoC Board. Disponível em: <https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=836>.<br>
+
+  RECOGNA NLP. Bases Matemáticas da Computação Quântica: Álgebra Linear, Superposição e Entrelaçamento. Disponível em: <https://medium.com/@recogna.nlp/bases-matem%C3%A1ticas-da-computa%C3%A7%C3%A3o-qu%C3%A2ntica-%C3%A1lgebra-linear-superposi%C3%A7%C3%A3o-e-entrela%C3%A7amento-7d8b10dda10f>. <br>
+
+  Matrix transpose in Python. Disponível em: <https://www.loekvandenouweland.com/content/matrix-transpose-in-python.html>. 
+‌
+</div>
