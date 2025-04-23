@@ -2,8 +2,7 @@ module top(
 	input [31:0] instruction,
 	input activate_instruction,
 	input clk,
-	output [15:0] data_read,
-	output overflow
+	output [15:0] data_read
 );
 	
 
@@ -71,8 +70,7 @@ module top(
 		matrix_B,
 		start_ALU,
 		matrix_C,
-		done_alu,
-		overflow
+		done_alu
 	);
 	
 	br(
