@@ -116,39 +116,8 @@ Sumário
     </tr>
   </table>
   <p>
-    Essa instrução funciona para quase todas as operações, com exceção da operação de leitura na memória e multplicação por escalar. Dessa forma, a instrução dessas operações é feita da seguinte maneira:
-    <br><h3>Leitura na Memória:</h3><br>
-    <table border="1" align="center">
-      <tr>
-        <td>Identificador</td>
-        <td>Linha</td>
-        <td>Coluna</td>
-        <td>Opcode</td>
-      </tr>
-      <tr>
-        <td>2 bits</td>
-        <td>3 bits</td>
-        <td>3 bits</td>
-        <td>4 bits</td>
-      </tr>
-    </table>
-    <br><h3>Multiplicação por escalar:</h3><br>
-     <table border="1" align="center">
-      <tr>
-        <td>Número 0</td>
-        <td>Número 1</td>
-        <td>Número Escalar</td>
-        <td>Opcode</td>
-      </tr>
-      <tr>
-        <td>8 bits</td>
-        <td>8 bits</td>
-        <td>8 bits</td>
-        <td>4 bits</td>
-      </tr>
-    </table>
+    Essa é a formatação para instruções de memória, ou seja, tanto escrita como leitura, contudo na leitura o número 0 e número 1 são ignorados. Entretanto para a operações aritméticas a formatação estará adiante.
   </p>
-  <br>
   <p>
     O Número 0 e o Número 1 são os números enviados para matriz, logo é possível perceber que a cada instrução são encaminhados dois números por vez. 
   </p>
@@ -184,6 +153,18 @@ Sumário
     <tr><td>000</td><td>011</td><td>Não é possível acessar</td></tr>
     <tr><td>000</td><td>100</td><td>[0][4] e [1][0]</td></tr>
   </table>
+    <br><h3>Operações aritiméticas:</h3><br>
+     <table border="1" align="center">
+      <tr>
+        <td>Número Escalar</td>
+        <td>Opcode</td>
+      </tr>
+      <tr>
+        <td>8 bits</td>
+        <td>4 bits</td>
+      </tr>
+    </table>
+    <br> Embora ela forneça um campo para o número escalar, esse espaço é usado apenas para multiplicação por escalar, já que as outras operações só necessitam do opcode. <br>
   <p>
     O opcode é para indicar ao programa qual função ele deve executar, de forma que a LEITURA e a ESCRITA são operações feitas na memória enquanto as outras são referentes a operações aritméticas, nesse projeto ele possui os seguintes comandos:    
   </p>
