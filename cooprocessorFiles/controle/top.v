@@ -2,7 +2,8 @@ module top(
 	input [31:0] instruction,
 	input activate_instruction,
 	input clk,
-	output [15:0] data_read
+	output [15:0] data_read,
+	output wait_signal
 );
 	
 
@@ -82,6 +83,8 @@ module top(
 		matrix_B,
 		result_ula
 	);
+	
+	assign wait_signal = state != FETCH;
 	assign done_pulse = done & !last_done;
 	assign done = (loaded & !write_resul) ? done_alu : done_mem;
 	assign data_to_write = write_resul ? result_ula : data;
