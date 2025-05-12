@@ -5,7 +5,8 @@ module test_top(
 	output [6:0]seg1,
 	output [6:0]seg2,
 	output [6:0]seg3,
-	output [6:0]seg4
+	output [6:0]seg4,
+	output [15:0]nums
 );
 
 							// 	N0, 	N1,   ID,LIN,COL, OP
@@ -41,8 +42,6 @@ module test_top(
 					read0 = 22'b0000000000_10_000_000_0001;
 
 
-
-	wire [15:0] nums;
 	reg [21:0] my_reg;
 	reg [4:0] i = 0;
 

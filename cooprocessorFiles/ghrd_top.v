@@ -333,17 +333,16 @@ wire [31:0] ins;
 wire [15:0] dat;
 wire ai, wait_s;  
 
-assign LEDR = ins[9:0];
+assign LEDR = {ai,wait_s};
 assign HEX0 = ins[16:10];
 assign HEX1 = ins[23:17];
 assign HEX2 = ins[30:24];
 assign HEX3 = dat[6:0];
 assign HEX4 = dat[13:7];
-//assign HEX5 = dat[6:0];
+assign HEX5 = wait_s;
 
-top(ins, ai, debounced_bt,dat,wait_s);
-my_debounce(KEY[0], CLOCK_50, debounced_bt);
-  
+top(ins, ai, CLOCK_50, dat, wait_s);
+
 // Source/Probe megawizard instance
 hps_reset hps_reset_inst (
     .source_clk (CLOCK_50),
