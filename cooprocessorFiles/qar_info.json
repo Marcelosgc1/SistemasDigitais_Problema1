@@ -1,7 +1,0 @@
-{
-	"common_dir" : "/home/marcelo/Downloads/my_first_hps-fpga_base/",
-	"acds_version" : "Version 23.1std.1",
-	"platform" : "linux",
-	"os" : "Ubuntu 24.04.1",
-	"qpf" : "soc_system.qpf"
-}

@@ -55,8 +55,8 @@ module test_top(
 	decod7seg(nums[15:12],seg4);
 
 
-	debounce(!bt0, clk, db0);
-	debounce(!bt1, clk, db1);
+	my_debounce(!bt0, clk, db0);
+	my_debounce(!bt1, clk, db1);
 
 	always @(posedge db0) begin
 

@@ -13,7 +13,7 @@
    {
       datum _sortIndex
       {
-         value = "6";
+         value = "7";
          type = "int";
       }
    }
@@ -47,6 +47,32 @@
       {
          value = "1";
          type = "int";
+      }
+   }
+   element intr_capturer_0
+   {
+      datum _sortIndex
+      {
+         value = "6";
+         type = "int";
+      }
+   }
+   element intr_capturer_0.avalon_slave_0
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+      datum _tags
+      {
+         value = "";
+         type = "String";
+      }
+      datum baseAddress
+      {
+         value = "196608";
+         type = "String";
       }
    }
    element jtag_uart
@@ -86,7 +112,7 @@
          type = "String";
       }
    }
-   element pio_activate_instruction
+   element pio_ACTIVATE
    {
       datum _sortIndex
       {
@@ -94,39 +120,15 @@
          type = "int";
       }
    }
-   element pio_activate_instruction.s1
+   element pio_ACTIVATE.s1
    {
       datum baseAddress
       {
-         value = "48";
+         value = "32";
          type = "String";
       }
    }
-   element pio_data
-   {
-      datum _sortIndex
-      {
-         value = "8";
-         type = "int";
-      }
-   }
-   element pio_data.s1
-   {
-      datum baseAddress
-      {
-         value = "16";
-         type = "String";
-      }
-   }
-   element pio_instruction
-   {
-      datum _sortIndex
-      {
-         value = "7";
-         type = "int";
-      }
-   }
-   element pio_wait
+   element pio_DATA
    {
       datum _sortIndex
       {
@@ -134,11 +136,35 @@
          type = "int";
       }
    }
-   element pio_wait.s1
+   element pio_DATA.s1
    {
       datum baseAddress
       {
-         value = "32";
+         value = "16";
+         type = "String";
+      }
+   }
+   element pio_INSTR
+   {
+      datum _sortIndex
+      {
+         value = "8";
+         type = "int";
+      }
+   }
+   element pio_WAITSIGNAL
+   {
+      datum _sortIndex
+      {
+         value = "11";
+         type = "int";
+      }
+   }
+   element pio_WAITSIGNAL.s1
+   {
+      datum baseAddress
+      {
+         value = "48";
          type = "String";
       }
    }
@@ -177,14 +203,24 @@
  <parameter name="hideFromIPCatalog" value="false" />
  <parameter name="lockedInterfaceDefinition" value="" />
  <parameter name="maxAdditionalLatency" value="1" />
- <parameter name="projectName" value="cooprocessor.qpf" />
+ <parameter name="projectName" value="soc_system.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="0" />
  <parameter name="testBenchDutName" value="" />
  <parameter name="timeStamp" value="0" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
+ <interface
+   name="act_ins"
+   internal="pio_ACTIVATE.external_connection"
+   type="conduit"
+   dir="end" />
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
+ <interface
+   name="data"
+   internal="pio_DATA.external_connection"
+   type="conduit"
+   dir="end" />
  <interface
    name="hps_0_f2h_cold_reset_req"
    internal="hps_0.f2h_cold_reset_req"
@@ -212,28 +248,18 @@
    dir="start" />
  <interface name="hps_0_h2f_user0_clock" internal="hps_0.h2f_user0_clock" />
  <interface name="hps_0_hps_io" internal="hps_0.hps_io" type="conduit" dir="end" />
+ <interface
+   name="instrucao"
+   internal="pio_INSTR.external_connection"
+   type="conduit"
+   dir="end" />
  <interface name="memory" internal="hps_0.memory" type="conduit" dir="end" />
- <interface
-   name="pio_activate_instruction"
-   internal="pio_activate_instruction.external_connection"
-   type="conduit"
-   dir="end" />
- <interface
-   name="pio_data"
-   internal="pio_data.external_connection"
-   type="conduit"
-   dir="end" />
- <interface
-   name="pio_instruction"
-   internal="pio_instruction.external_connection"
-   type="conduit"
-   dir="end" />
- <interface
-   name="pio_wait"
-   internal="pio_wait.external_connection"
-   type="conduit"
-   dir="end" />
  <interface name="reset" internal="clk_0.clk_in_reset" type="reset" dir="end" />
+ <interface
+   name="wait_s"
+   internal="pio_WAITSIGNAL.external_connection"
+   type="conduit"
+   dir="end" />
  <module name="clk_0" kind="clock_source" version="23.1" enabled="1">
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="clockFrequencyKnown" value="true" />
@@ -799,6 +825,14 @@
   <parameter name="USE_PLI" value="0" />
  </module>
  <module
+   name="intr_capturer_0"
+   kind="intr_capturer"
+   version="100.99.98.97"
+   enabled="1">
+  <parameter name="AUTO_INTERRUPT_RECEIVER_INTERRUPTS_USED" value="4" />
+  <parameter name="NUM_INTR" value="32" />
+ </module>
+ <module
    name="jtag_uart"
    kind="altera_avalon_jtag_uart"
    version="23.1"
@@ -850,7 +884,7 @@
   <parameter name="writable" value="true" />
  </module>
  <module
-   name="pio_activate_instruction"
+   name="pio_ACTIVATE"
    kind="altera_avalon_pio"
    version="23.1"
    enabled="1">
@@ -867,7 +901,7 @@
   <parameter name="simDrivenValue" value="0" />
   <parameter name="width" value="1" />
  </module>
- <module name="pio_data" kind="altera_avalon_pio" version="23.1" enabled="1">
+ <module name="pio_DATA" kind="altera_avalon_pio" version="23.1" enabled="1">
   <parameter name="bitClearingEdgeCapReg" value="false" />
   <parameter name="bitModifyingOutReg" value="false" />
   <parameter name="captureEdge" value="false" />
@@ -881,11 +915,7 @@
   <parameter name="simDrivenValue" value="0" />
   <parameter name="width" value="16" />
  </module>
- <module
-   name="pio_instruction"
-   kind="altera_avalon_pio"
-   version="23.1"
-   enabled="1">
+ <module name="pio_INSTR" kind="altera_avalon_pio" version="23.1" enabled="1">
   <parameter name="bitClearingEdgeCapReg" value="false" />
   <parameter name="bitModifyingOutReg" value="false" />
   <parameter name="captureEdge" value="false" />
@@ -899,7 +929,11 @@
   <parameter name="simDrivenValue" value="0" />
   <parameter name="width" value="32" />
  </module>
- <module name="pio_wait" kind="altera_avalon_pio" version="23.1" enabled="1">
+ <module
+   name="pio_WAITSIGNAL"
+   kind="altera_avalon_pio"
+   version="23.1"
+   enabled="1">
   <parameter name="bitClearingEdgeCapReg" value="false" />
   <parameter name="bitModifyingOutReg" value="false" />
   <parameter name="captureEdge" value="false" />
@@ -951,7 +985,7 @@
    kind="avalon"
    version="23.1"
    start="hps_0.h2f_lw_axi_master"
-   end="pio_instruction.s1">
+   end="pio_INSTR.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
   <parameter name="defaultConnection" value="false" />
@@ -960,7 +994,7 @@
    kind="avalon"
    version="23.1"
    start="hps_0.h2f_lw_axi_master"
-   end="pio_data.s1">
+   end="pio_DATA.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0010" />
   <parameter name="defaultConnection" value="false" />
@@ -969,7 +1003,7 @@
    kind="avalon"
    version="23.1"
    start="hps_0.h2f_lw_axi_master"
-   end="pio_wait.s1">
+   end="pio_ACTIVATE.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0020" />
   <parameter name="defaultConnection" value="false" />
@@ -978,7 +1012,7 @@
    kind="avalon"
    version="23.1"
    start="hps_0.h2f_lw_axi_master"
-   end="pio_activate_instruction.s1">
+   end="pio_WAITSIGNAL.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0030" />
   <parameter name="defaultConnection" value="false" />
@@ -990,6 +1024,15 @@
    end="jtag_uart.avalon_jtag_slave">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x00020000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="23.1"
+   start="fpga_only_master.master"
+   end="intr_capturer_0.avalon_slave_0">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x00030000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -1031,23 +1074,24 @@
    start="clk_0.clk"
    end="fpga_only_master.clk" />
  <connection kind="clock" version="23.1" start="clk_0.clk" end="jtag_uart.clk" />
+ <connection kind="clock" version="23.1" start="clk_0.clk" end="pio_INSTR.clk" />
+ <connection kind="clock" version="23.1" start="clk_0.clk" end="pio_DATA.clk" />
+ <connection kind="clock" version="23.1" start="clk_0.clk" end="pio_ACTIVATE.clk" />
  <connection
    kind="clock"
    version="23.1"
    start="clk_0.clk"
-   end="pio_instruction.clk" />
- <connection kind="clock" version="23.1" start="clk_0.clk" end="pio_data.clk" />
- <connection kind="clock" version="23.1" start="clk_0.clk" end="pio_wait.clk" />
- <connection
-   kind="clock"
-   version="23.1"
-   start="clk_0.clk"
-   end="pio_activate_instruction.clk" />
+   end="pio_WAITSIGNAL.clk" />
  <connection
    kind="clock"
    version="23.1"
    start="clk_0.clk"
    end="onchip_memory2_0.clk1" />
+ <connection
+   kind="clock"
+   version="23.1"
+   start="clk_0.clk"
+   end="intr_capturer_0.clock" />
  <connection
    kind="clock"
    version="23.1"
@@ -1067,6 +1111,13 @@
    kind="interrupt"
    version="23.1"
    start="hps_0.f2h_irq0"
+   end="jtag_uart.irq">
+  <parameter name="irqNumber" value="2" />
+ </connection>
+ <connection
+   kind="interrupt"
+   version="23.1"
+   start="intr_capturer_0.interrupt_receiver"
    end="jtag_uart.irq">
   <parameter name="irqNumber" value="2" />
  </connection>
@@ -1094,27 +1145,32 @@
    kind="reset"
    version="23.1"
    start="clk_0.clk_reset"
-   end="pio_instruction.reset" />
+   end="pio_INSTR.reset" />
  <connection
    kind="reset"
    version="23.1"
    start="clk_0.clk_reset"
-   end="pio_data.reset" />
+   end="pio_DATA.reset" />
  <connection
    kind="reset"
    version="23.1"
    start="clk_0.clk_reset"
-   end="pio_wait.reset" />
+   end="pio_ACTIVATE.reset" />
  <connection
    kind="reset"
    version="23.1"
    start="clk_0.clk_reset"
-   end="pio_activate_instruction.reset" />
+   end="pio_WAITSIGNAL.reset" />
  <connection
    kind="reset"
    version="23.1"
    start="clk_0.clk_reset"
    end="onchip_memory2_0.reset1" />
+ <connection
+   kind="reset"
+   version="23.1"
+   start="clk_0.clk_reset"
+   end="intr_capturer_0.reset_sink" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
 </system>
