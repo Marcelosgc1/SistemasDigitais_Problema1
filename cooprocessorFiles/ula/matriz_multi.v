@@ -5,36 +5,41 @@ module matriz_multi (
   input signed [199:0] matriz_b, // Matriz B (5x5, 8 bits por elemento)
   input clock,
   input wire start,
-  output reg signed [199:0] matriz_c = 0, // Resultado da multiplicação
+  output [399:0] result, // Resultado da multiplicação
   output reg done // Sinal de conclusão
 );
+	
+	wire [400:0] matriz_resultante;
 
-	reg [2:0] linha = 0; // Índice da linha atual
-	reg signed [15:0] temp [0:4]; // Armazena resultado parcial da linha
+	
+	
+//	convolution algorithm:
+//	
+//	escalar multi
+// soma results
+//
+//	
+    genvar i;
 
-	always @(posedge clock) begin
-		 if(start) begin
-		         integer i;
-			 for (i = 0; i < 5; i = i + 1) begin
-				  temp[i] = (matriz_a[(linha * 40) + 7 -: 8]   * matriz_b[(i * 8) +: 8]) +
-								(matriz_a[(linha * 40) + 15 -: 8]  * matriz_b[(i * 8) + 40 +: 8]) +
-								(matriz_a[(linha * 40) + 23 -: 8]  * matriz_b[(i * 8) + 80 +: 8]) +
-								(matriz_a[(linha * 40) + 31 -: 8]  * matriz_b[(i * 8) + 120 +: 8]) +
-								(matriz_a[(linha * 40) + 39 -: 8]  * matriz_b[(i * 8) + 160 +: 8]);
-			 end
-			 
-			 for (i = 0; i < 5; i = i + 1) begin
-				  matriz_c[(linha * 40) + (i * 8) + 7 -: 8] <= temp[i][7:0]; // Atribui resultado à matriz C
-			 end
+    generate
+        for (i = 0; i < 25; i = i + 1) begin : escalar_matrizes
+            assign matriz_resultante[i*16 +: 16] = matriz_b[i*8+: 8] * matriz_a[i*8+: 8]; // Multiplica cada elemento pelo escalar
+        end
+    endgenerate
 
-			 if (linha == 4) begin
-				  linha <= 0;
-				  done <= 1; // Fim da multiplicação
-			 end else begin
-				  linha <= linha + 1;
-				  done <= 0;
-			 end
-		end
-	end
-
+	assign result =
+      $signed(matriz_resultante[0*16 +: 16])  + $signed(matriz_resultante[1*16 +: 16]) +
+      $signed(matriz_resultante[2*16 +: 16])  + $signed(matriz_resultante[3*16 +: 16]) +
+      $signed(matriz_resultante[4*16 +: 16])  + $signed(matriz_resultante[5*16 +: 16]) +
+      $signed(matriz_resultante[6*16 +: 16])  + $signed(matriz_resultante[7*16 +: 16]) +
+      $signed(matriz_resultante[8*16 +: 16])  + $signed(matriz_resultante[9*16 +: 16]) +
+      $signed(matriz_resultante[10*16 +: 16]) + $signed(matriz_resultante[11*16 +: 16]) +
+      $signed(matriz_resultante[12*16 +: 16]) + $signed(matriz_resultante[13*16 +: 16]) +
+      $signed(matriz_resultante[14*16 +: 16]) + $signed(matriz_resultante[15*16 +: 16]) +
+      $signed(matriz_resultante[16*16 +: 16]) + $signed(matriz_resultante[17*16 +: 16]) +
+      $signed(matriz_resultante[18*16 +: 16]) + $signed(matriz_resultante[19*16 +: 16]) +
+      $signed(matriz_resultante[20*16 +: 16]) + $signed(matriz_resultante[21*16 +: 16]) +
+      $signed(matriz_resultante[22*16 +: 16]) + $signed(matriz_resultante[23*16 +: 16]) +
+      $signed(matriz_resultante[24*16 +: 16]);
+	 
 endmodule

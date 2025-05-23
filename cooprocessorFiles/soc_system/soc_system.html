@@ -67,7 +67,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
   </table>
   <table class="blueBar">
    <tr>
-    <td class="l">2025.05.12.09:19:29</td>
+    <td class="l">2025.05.22.10:16:56</td>
     <td class="r">Datasheet</td>
    </tr>
   </table>
@@ -1219,6 +1219,76 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        <tr>
         <td class="parametername">resetSynchronousEdges</td>
         <td class="parametervalue">NONE</td>
+       </tr>
+       <tr>
+        <td class="parametername">deviceFamily</td>
+        <td class="parametervalue">UNKNOWN</td>
+       </tr>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_clock_bridge_0"> </a>
+  <div>
+   <hr/>
+   <h2>clock_bridge_0</h2>altera_clock_bridge v23.1
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_clk_0">clk_0</a>
+      </td>
+      <td class="from">clk&#160;&#160;</td>
+      <td class="main" rowspan="4">clock_bridge_0</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;in_clk</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">out_clk&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_video_vga_controller_0">video_vga_controller_0</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;clk</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">DERIVED_CLOCK_RATE</td>
+        <td class="parametervalue">50000000</td>
+       </tr>
+       <tr>
+        <td class="parametername">EXPLICIT_CLOCK_RATE</td>
+        <td class="parametervalue">25000000</td>
+       </tr>
+       <tr>
+        <td class="parametername">NUM_CLOCK_OUTPUTS</td>
+        <td class="parametervalue">1</td>
        </tr>
        <tr>
         <td class="parametername">deviceFamily</td>
@@ -30424,7 +30494,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">timestamp</td>
-        <td class="parametervalue">1747052369</td>
+        <td class="parametervalue">1747919806</td>
        </tr>
        <tr>
         <td class="parametername">deviceFamily</td>
@@ -30449,17 +30519,98 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">TIMESTAMP</td>
-        <td class="parametervalue">1747052369</td>
+        <td class="parametervalue">1747919806</td>
        </tr>
       </table>
      </td>
     </tr>
    </table>
   </div>
+  <a name="module_video_vga_controller_0"> </a>
+  <div>
+   <hr/>
+   <h2>video_vga_controller_0</h2>altera_up_avalon_video_vga_controller v18.0
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_clock_bridge_0">clock_bridge_0</a>
+      </td>
+      <td class="from">out_clk&#160;&#160;</td>
+      <td class="main" rowspan="5">video_vga_controller_0</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;clk</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_clk_0">clk_0</a>
+      </td>
+      <td class="from">clk_reset&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;reset</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">board</td>
+        <td class="parametervalue">DE1-SoC</td>
+       </tr>
+       <tr>
+        <td class="parametername">device</td>
+        <td class="parametervalue">VGA Connector</td>
+       </tr>
+       <tr>
+        <td class="parametername">resolution</td>
+        <td class="parametervalue">VGA 640x480</td>
+       </tr>
+       <tr>
+        <td class="parametername">underflow_flag</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">AUTO_DEVICE_FAMILY</td>
+        <td class="parametervalue">CYCLONEV</td>
+       </tr>
+       <tr>
+        <td class="parametername">AUTO_CLK_CLOCK_RATE</td>
+        <td class="parametervalue">25000000</td>
+       </tr>
+       <tr>
+        <td class="parametername">deviceFamily</td>
+        <td class="parametervalue">Cyclone V</td>
+       </tr>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
   <table class="blueBar">
    <tr>
-    <td class="l">generation took 0.01 seconds</td>
-    <td class="r">rendering took 0.21 seconds</td>
+    <td class="l">generation took 0.03 seconds</td>
+    <td class="r">rendering took 0.61 seconds</td>
    </tr>
   </table>
  </body>

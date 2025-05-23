@@ -1,4 +1,4 @@
-<?xml version="1.0"?><device xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd" schemaVersion="1.1">
+<?xml version="1.0" encoding="UTF-8"?><device xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd" schemaVersion="1.1">
  <vendor>default_vendor.com</vendor>
  <vendorID>default_vendor_com</vendorID>
  <name>soc_system_hps_0_hps</name>
@@ -219418,7 +219418,7 @@ The name of this register in ARM documentation is BWFIFO4 for writes and BRFIFO4
          <addressOffset>0x4</addressOffset>
          <size>32</size>
          <access>read-only</access>
-         <resetValue>0x6821e751</resetValue>
+         <resetValue>0x682f23be</resetValue>
          <resetMask>0xffffffff</resetMask> 
          <fields>
            <field><name>timestamp</name>

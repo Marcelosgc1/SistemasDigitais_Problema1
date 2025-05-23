@@ -1,6 +1,8 @@
 
 module soc_system (
+	act_ins_export,
 	clk_clk,
+	data_export,
 	hps_0_f2h_cold_reset_req_reset_n,
 	hps_0_f2h_debug_reset_req_reset_n,
 	hps_0_f2h_stm_hw_events_stm_hwevents,
@@ -61,6 +63,7 @@ module soc_system (
 	hps_0_hps_io_hps_io_gpio_inst_GPIO53,
 	hps_0_hps_io_hps_io_gpio_inst_GPIO54,
 	hps_0_hps_io_hps_io_gpio_inst_GPIO61,
+	instrucao_export,
 	memory_mem_a,
 	memory_mem_ba,
 	memory_mem_ck,
@@ -78,12 +81,19 @@ module soc_system (
 	memory_mem_dm,
 	memory_oct_rzqin,
 	reset_reset_n,
-	instrucao_export,
-	data_export,
-	act_ins_export,
-	wait_s_export);	
+	wait_s_export,
+	video_vga_controller_0_external_interface_CLK,
+	video_vga_controller_0_external_interface_HS,
+	video_vga_controller_0_external_interface_VS,
+	video_vga_controller_0_external_interface_BLANK,
+	video_vga_controller_0_external_interface_SYNC,
+	video_vga_controller_0_external_interface_R,
+	video_vga_controller_0_external_interface_G,
+	video_vga_controller_0_external_interface_B);	
 
+	output		act_ins_export;
 	input		clk_clk;
+	input	[15:0]	data_export;
 	input		hps_0_f2h_cold_reset_req_reset_n;
 	input		hps_0_f2h_debug_reset_req_reset_n;
 	input	[27:0]	hps_0_f2h_stm_hw_events_stm_hwevents;
@@ -144,6 +154,7 @@ module soc_system (
 	inout		hps_0_hps_io_hps_io_gpio_inst_GPIO53;
 	inout		hps_0_hps_io_hps_io_gpio_inst_GPIO54;
 	inout		hps_0_hps_io_hps_io_gpio_inst_GPIO61;
+	output	[31:0]	instrucao_export;
 	output	[14:0]	memory_mem_a;
 	output	[2:0]	memory_mem_ba;
 	output		memory_mem_ck;
@@ -161,8 +172,13 @@ module soc_system (
 	output	[3:0]	memory_mem_dm;
 	input		memory_oct_rzqin;
 	input		reset_reset_n;
-	output	[31:0]	instrucao_export;
-	input	[15:0]	data_export;
-	output		act_ins_export;
 	input		wait_s_export;
+	output		video_vga_controller_0_external_interface_CLK;
+	output		video_vga_controller_0_external_interface_HS;
+	output		video_vga_controller_0_external_interface_VS;
+	output		video_vga_controller_0_external_interface_BLANK;
+	output		video_vga_controller_0_external_interface_SYNC;
+	output	[7:0]	video_vga_controller_0_external_interface_R;
+	output	[7:0]	video_vga_controller_0_external_interface_G;
+	output	[7:0]	video_vga_controller_0_external_interface_B;
 endmodule

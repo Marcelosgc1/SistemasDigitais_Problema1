@@ -2,7 +2,7 @@ set_global_assignment -entity "soc_system" -library "soc_system" -name IP_TOOL_N
 set_global_assignment -entity "soc_system" -library "soc_system" -name IP_TOOL_VERSION "23.1"
 set_global_assignment -entity "soc_system" -library "soc_system" -name IP_TOOL_ENV "Qsys"
 set_global_assignment -library "soc_system" -name SOPCINFO_FILE [file join $::quartus(qip_path) "../../soc_system.sopcinfo"]
-set_global_assignment -entity "soc_system" -library "soc_system" -name SLD_INFO "QSYS_NAME soc_system HAS_SOPCINFO 1 GENERATION_ID 1747052369"
+set_global_assignment -entity "soc_system" -library "soc_system" -name SLD_INFO "QSYS_NAME soc_system HAS_SOPCINFO 1 GENERATION_ID 1747919806"
 set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "../soc_system.cmp"]
 set_global_assignment -library "soc_system" -name SLD_FILE [file join $::quartus(qip_path) "soc_system.regmap"]
 set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "soc_system_hps_0_hps.svd"]
@@ -17,7 +17,7 @@ set_global_assignment -entity "soc_system" -library "soc_system" -name IP_COMPON
 set_global_assignment -entity "soc_system" -library "soc_system" -name IP_COMPONENT_REPORT_HIERARCHY "On"
 set_global_assignment -entity "soc_system" -library "soc_system" -name IP_COMPONENT_INTERNAL "Off"
 set_global_assignment -entity "soc_system" -library "soc_system" -name IP_COMPONENT_VERSION "MS4w"
-set_global_assignment -entity "soc_system" -library "soc_system" -name IP_COMPONENT_PARAMETER "QVVUT19HRU5FUkFUSU9OX0lE::MTc0NzA1MjM2OQ==::QXV0byBHRU5FUkFUSU9OX0lE"
+set_global_assignment -entity "soc_system" -library "soc_system" -name IP_COMPONENT_PARAMETER "QVVUT19HRU5FUkFUSU9OX0lE::MTc0NzkxOTgwNg==::QXV0byBHRU5FUkFUSU9OX0lE"
 set_global_assignment -entity "soc_system" -library "soc_system" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfRkFNSUxZ::Q3ljbG9uZSBW::QXV0byBERVZJQ0VfRkFNSUxZ"
 set_global_assignment -entity "soc_system" -library "soc_system" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0U=::NUNTRU1BNUYzMUM2::QXV0byBERVZJQ0U="
 set_global_assignment -entity "soc_system" -library "soc_system" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfU1BFRURHUkFERQ==::Ng==::QXV0byBERVZJQ0VfU1BFRURHUkFERQ=="
@@ -1255,6 +1255,19 @@ set_global_assignment -entity "altera_merlin_slave_translator" -library "soc_sys
 set_global_assignment -entity "altera_merlin_slave_translator" -library "soc_system" -name IP_COMPONENT_PARAMETER "QVZfV1JJVEVfV0FJVF9DWUNMRVM=::MA==::QVZfV1JJVEVfV0FJVF9DWUNMRVM="
 set_global_assignment -entity "altera_merlin_slave_translator" -library "soc_system" -name IP_COMPONENT_PARAMETER "QVZfU0VUVVBfV0FJVF9DWUNMRVM=::MA==::QVZfU0VUVVBfV0FJVF9DWUNMRVM="
 set_global_assignment -entity "altera_merlin_slave_translator" -library "soc_system" -name IP_COMPONENT_PARAMETER "QVZfREFUQV9IT0xEX0NZQ0xFUw==::MA==::QVZfREFUQV9IT0xEX0NZQ0xFUw=="
+set_global_assignment -entity "soc_system_video_vga_controller_0" -library "soc_system" -name IP_COMPONENT_NAME "c29jX3N5c3RlbV92aWRlb192Z2FfY29udHJvbGxlcl8w"
+set_global_assignment -entity "soc_system_video_vga_controller_0" -library "soc_system" -name IP_COMPONENT_DISPLAY_NAME "VkdBIENvbnRyb2xsZXI="
+set_global_assignment -entity "soc_system_video_vga_controller_0" -library "soc_system" -name IP_COMPONENT_REPORT_HIERARCHY "Off"
+set_global_assignment -entity "soc_system_video_vga_controller_0" -library "soc_system" -name IP_COMPONENT_INTERNAL "Off"
+set_global_assignment -entity "soc_system_video_vga_controller_0" -library "soc_system" -name IP_COMPONENT_AUTHOR "SW50ZWwgRlBHQSBVbml2ZXJzaXR5IFByb2dyYW0="
+set_global_assignment -entity "soc_system_video_vga_controller_0" -library "soc_system" -name IP_COMPONENT_VERSION "MTguMA=="
+set_global_assignment -entity "soc_system_video_vga_controller_0" -library "soc_system" -name IP_COMPONENT_DESCRIPTION "VkdBIGNvbnRyb2xsZXIgZm9yIERFLXNlcmllcyBCb2FyZHM="
+set_global_assignment -entity "soc_system_video_vga_controller_0" -library "soc_system" -name IP_COMPONENT_PARAMETER "Ym9hcmQ=::REUxLVNvQw==::REUtU2VyaWVzIEJvYXJk"
+set_global_assignment -entity "soc_system_video_vga_controller_0" -library "soc_system" -name IP_COMPONENT_PARAMETER "ZGV2aWNl::VkdBIENvbm5lY3Rvcg==::VmlkZW8gT3V0IERldmljZQ=="
+set_global_assignment -entity "soc_system_video_vga_controller_0" -library "soc_system" -name IP_COMPONENT_PARAMETER "cmVzb2x1dGlvbg==::VkdBIDY0MHg0ODA=::VkdBIFJlc29sdXRpb24="
+set_global_assignment -entity "soc_system_video_vga_controller_0" -library "soc_system" -name IP_COMPONENT_PARAMETER "dW5kZXJmbG93X2ZsYWc=::ZmFsc2U=::SW5jbHVkZSBVbmRlcmZsb3cgRmxhZw=="
+set_global_assignment -entity "soc_system_video_vga_controller_0" -library "soc_system" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfRkFNSUxZ::Q3ljbG9uZSBW::QXV0byBERVZJQ0VfRkFNSUxZ"
+set_global_assignment -entity "soc_system_video_vga_controller_0" -library "soc_system" -name IP_COMPONENT_PARAMETER "QVVUT19DTEtfQ0xPQ0tfUkFURQ==::MjUwMDAwMDA=::QXV0byBDTE9DS19SQVRF"
 set_global_assignment -entity "soc_system_sysid_qsys" -library "soc_system" -name IP_COMPONENT_NAME "c29jX3N5c3RlbV9zeXNpZF9xc3lz"
 set_global_assignment -entity "soc_system_sysid_qsys" -library "soc_system" -name IP_COMPONENT_DISPLAY_NAME "U3lzdGVtIElEIFBlcmlwaGVyYWwgSW50ZWwgRlBHQSBJUA=="
 set_global_assignment -entity "soc_system_sysid_qsys" -library "soc_system" -name IP_COMPONENT_REPORT_HIERARCHY "Off"
@@ -7329,6 +7342,8 @@ set_global_assignment -library "soc_system" -name SYSTEMVERILOG_FILE [file join 
 set_global_assignment -library "soc_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_merlin_slave_agent.sv"]
 set_global_assignment -library "soc_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_merlin_axi_master_ni.sv"]
 set_global_assignment -library "soc_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_merlin_slave_translator.sv"]
+set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_up_avalon_video_vga_timing.v"]
+set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/soc_system_video_vga_controller_0.v"]
 set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/soc_system_sysid_qsys.v"]
 set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/soc_system_pio_WAITSIGNAL.v"]
 set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/soc_system_pio_INSTR.v"]
@@ -7341,58 +7356,58 @@ set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::qua
 set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/soc_system_hps_0.v"]
 set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/soc_system_hps_0_hps_io.v"]
 set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram.v"]
-set_global_assignment -library "soc_system" -name SDC_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0.sdc"]
-set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_clock_pair_generator.v"]
-set_global_assignment -library "soc_system" -name TCL_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_report_timing.tcl"]
-set_global_assignment -library "soc_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altdq_dqs2_acv_connect_to_hard_phy_cyclonev.sv"]
-set_global_assignment -library "soc_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_phy_csr.sv"]
-set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_acv_hard_addr_cmd_pads.v"]
-set_global_assignment -library "soc_system" -name TCL_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_report_timing_core.tcl"]
-set_global_assignment -library "soc_system" -name SOURCE_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0.ppf"]
-set_global_assignment -library "soc_system" -name TCL_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_parameters.tcl"]
-set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_acv_ldc.v"]
-set_global_assignment -library "soc_system" -name TCL_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_timing.tcl"]
-set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_iss_probe.v"]
-set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_reset.v"]
-set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_acv_hard_io_pads.v"]
-set_global_assignment -library "soc_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_mem_if_oct_cyclonev.sv"]
-set_global_assignment -library "soc_system" -name TCL_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_pin_assignments.tcl"]
-set_global_assignment -library "soc_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_pll.sv"]
-set_global_assignment -library "soc_system" -name TCL_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_pin_map.tcl"]
-set_global_assignment -library "soc_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_mem_if_hard_memory_controller_top_cyclonev.sv"]
-set_global_assignment -library "soc_system" -name SOURCE_FILE [file join $::quartus(qip_path) "submodules/hps_inst_ROM.hex"]
-set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_reset_sync.v"]
-set_instance_assignment -entity "soc_system_hps_0_hps_io_border" -library "soc_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/tclrpt.pre.h"]
-set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/tclrpt.pre.h"]
-set_instance_assignment -entity "soc_system_hps_0_hps_io_border" -library "soc_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/tclrpt.pre.c"]
-set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/tclrpt.pre.c"]
-set_instance_assignment -entity "soc_system_hps_0_hps_io_border" -library "soc_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer.pre.h"]
-set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer.pre.h"]
-set_instance_assignment -entity "soc_system_hps_0_hps_io_border" -library "soc_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/sdram_io.pre.h"]
-set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/sdram_io.pre.h"]
-set_instance_assignment -entity "soc_system_hps_0_hps_io_border" -library "soc_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/alt_types.pre.h"]
-set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/alt_types.pre.h"]
-set_instance_assignment -entity "soc_system_hps_0_hps_io_border" -library "soc_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer_auto_inst_init.pre.c"]
-set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer_auto_inst_init.pre.c"]
-set_instance_assignment -entity "soc_system_hps_0_hps_io_border" -library "soc_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer_defines.pre.h"]
-set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer_defines.pre.h"]
 set_instance_assignment -entity "soc_system_hps_0_hps_io_border" -library "soc_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/system.pre.h"]
 set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/system.pre.h"]
-set_instance_assignment -entity "soc_system_hps_0_hps_io_border" -library "soc_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer_auto.pre.h"]
-set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer_auto.pre.h"]
+set_instance_assignment -entity "soc_system_hps_0_hps_io_border" -library "soc_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer_auto_inst_init.pre.c"]
+set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer_auto_inst_init.pre.c"]
 set_instance_assignment -entity "soc_system_hps_0_hps_io_border" -library "soc_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/emif.pre.xml"]
 set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/emif.pre.xml"]
-set_instance_assignment -entity "soc_system_hps_0_hps_io_border" -library "soc_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer.pre.c"]
-set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer.pre.c"]
+set_instance_assignment -entity "soc_system_hps_0_hps_io_border" -library "soc_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer_defines.pre.h"]
+set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer_defines.pre.h"]
+set_instance_assignment -entity "soc_system_hps_0_hps_io_border" -library "soc_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer.pre.h"]
+set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer.pre.h"]
+set_instance_assignment -entity "soc_system_hps_0_hps_io_border" -library "soc_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/alt_types.pre.h"]
+set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/alt_types.pre.h"]
+set_instance_assignment -entity "soc_system_hps_0_hps_io_border" -library "soc_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/tclrpt.pre.c"]
+set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/tclrpt.pre.c"]
+set_instance_assignment -entity "soc_system_hps_0_hps_io_border" -library "soc_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer_auto.pre.h"]
+set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer_auto.pre.h"]
+set_instance_assignment -entity "soc_system_hps_0_hps_io_border" -library "soc_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/sdram_io.pre.h"]
+set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/sdram_io.pre.h"]
+set_instance_assignment -entity "soc_system_hps_0_hps_io_border" -library "soc_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/tclrpt.pre.h"]
+set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/tclrpt.pre.h"]
 set_instance_assignment -entity "soc_system_hps_0_hps_io_border" -library "soc_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer_auto_ac_init.pre.c"]
 set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer_auto_ac_init.pre.c"]
+set_instance_assignment -entity "soc_system_hps_0_hps_io_border" -library "soc_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer.pre.c"]
+set_global_assignment -library "soc_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer.pre.c"]
+set_global_assignment -library "soc_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_pll.sv"]
+set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_reset_sync.v"]
+set_global_assignment -library "soc_system" -name TCL_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_timing.tcl"]
+set_global_assignment -library "soc_system" -name SDC_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0.sdc"]
+set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_altdqdqs.v"]
 set_global_assignment -library "soc_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_mem_if_dll_cyclonev.sv"]
+set_global_assignment -library "soc_system" -name SOURCE_FILE [file join $::quartus(qip_path) "submodules/hps_inst_ROM.hex"]
+set_global_assignment -library "soc_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0.sv"]
 set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_generic_ddio.v"]
-set_global_assignment -library "soc_system" -name SOURCE_FILE [file join $::quartus(qip_path) "submodules/hps_AC_ROM.hex"]
+set_global_assignment -library "soc_system" -name TCL_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_parameters.tcl"]
+set_global_assignment -library "soc_system" -name TCL_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_pin_map.tcl"]
+set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_reset.v"]
+set_global_assignment -library "soc_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_phy_csr.sv"]
+set_global_assignment -library "soc_system" -name TCL_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_report_timing.tcl"]
+set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_acv_ldc.v"]
 set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_mem_if_hhp_qseq_synth_top.v"]
 set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_acv_hard_memphy.v"]
-set_global_assignment -library "soc_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0.sv"]
-set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_altdqdqs.v"]
+set_global_assignment -library "soc_system" -name SOURCE_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0.ppf"]
+set_global_assignment -library "soc_system" -name TCL_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_pin_assignments.tcl"]
+set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_acv_hard_addr_cmd_pads.v"]
+set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_iss_probe.v"]
+set_global_assignment -library "soc_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_mem_if_oct_cyclonev.sv"]
+set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_clock_pair_generator.v"]
+set_global_assignment -library "soc_system" -name SOURCE_FILE [file join $::quartus(qip_path) "submodules/hps_AC_ROM.hex"]
+set_global_assignment -library "soc_system" -name TCL_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_report_timing_core.tcl"]
+set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_acv_hard_io_pads.v"]
+set_global_assignment -library "soc_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_mem_if_hard_memory_controller_top_cyclonev.sv"]
+set_global_assignment -library "soc_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altdq_dqs2_acv_connect_to_hard_phy_cyclonev.sv"]
 set_global_assignment -library "soc_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/soc_system_hps_0_hps_io_border.sv"]
 set_global_assignment -library "soc_system" -name SDC_FILE [file join $::quartus(qip_path) "submodules/soc_system_hps_0_hps_io_border.sdc"]
 set_instance_assignment -entity "soc_system_hps_0_hps_io_border" -library "soc_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/hps.pre.xml"]

@@ -17,6 +17,14 @@
          type = "int";
       }
    }
+   element clock_bridge_0
+   {
+      datum _sortIndex
+      {
+         value = "13";
+         type = "int";
+      }
+   }
    element fpga_only_master
    {
       datum _sortIndex
@@ -189,6 +197,14 @@
          type = "String";
       }
    }
+   element video_vga_controller_0
+   {
+      datum _sortIndex
+      {
+         value = "12";
+         type = "int";
+      }
+   }
 }
 ]]></parameter>
  <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
@@ -256,6 +272,11 @@
  <interface name="memory" internal="hps_0.memory" type="conduit" dir="end" />
  <interface name="reset" internal="clk_0.clk_in_reset" type="reset" dir="end" />
  <interface
+   name="video_vga_controller_0_external_interface"
+   internal="video_vga_controller_0.external_interface"
+   type="conduit"
+   dir="end" />
+ <interface
    name="wait_s"
    internal="pio_WAITSIGNAL.external_connection"
    type="conduit"
@@ -265,6 +286,15 @@
   <parameter name="clockFrequencyKnown" value="true" />
   <parameter name="inputClockFrequency" value="0" />
   <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <module
+   name="clock_bridge_0"
+   kind="altera_clock_bridge"
+   version="23.1"
+   enabled="1">
+  <parameter name="DERIVED_CLOCK_RATE" value="50000000" />
+  <parameter name="EXPLICIT_CLOCK_RATE" value="25000000" />
+  <parameter name="NUM_CLOCK_OUTPUTS" value="1" />
  </module>
  <module
    name="fpga_only_master"
@@ -954,6 +984,18 @@
    enabled="1">
   <parameter name="id" value="-1395322110" />
  </module>
+ <module
+   name="video_vga_controller_0"
+   kind="altera_up_avalon_video_vga_controller"
+   version="18.0"
+   enabled="1">
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="25000000" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+  <parameter name="board" value="DE1-SoC" />
+  <parameter name="device" value="VGA Connector" />
+  <parameter name="resolution" value="VGA 640x480" />
+  <parameter name="underflow_flag" value="false" />
+ </module>
  <connection
    kind="avalon"
    version="23.1"
@@ -1108,6 +1150,16 @@
    start="clk_0.clk"
    end="hps_0.h2f_lw_axi_clock" />
  <connection
+   kind="clock"
+   version="23.1"
+   start="clk_0.clk"
+   end="clock_bridge_0.in_clk" />
+ <connection
+   kind="clock"
+   version="23.1"
+   start="clock_bridge_0.out_clk"
+   end="video_vga_controller_0.clk" />
+ <connection
    kind="interrupt"
    version="23.1"
    start="hps_0.f2h_irq0"
@@ -1156,6 +1208,11 @@
    version="23.1"
    start="clk_0.clk_reset"
    end="pio_ACTIVATE.reset" />
+ <connection
+   kind="reset"
+   version="23.1"
+   start="clk_0.clk_reset"
+   end="video_vga_controller_0.reset" />
  <connection
    kind="reset"
    version="23.1"
