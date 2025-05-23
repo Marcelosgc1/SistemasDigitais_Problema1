@@ -13,7 +13,7 @@
 
   * Soma
   * Subtração
-  * Multiplição
+  * Multiplicação
   * Multiplicação escalar
   * Determinante
   * Transposição de matriz
