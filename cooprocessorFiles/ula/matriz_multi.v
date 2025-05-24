@@ -10,7 +10,7 @@ module matriz_multi (
 );
 	
 	wire [400:0] matriz_resultante;
-	wire [199:0] convolution, modulo, to_positive;
+	wire [199:0] convolution, modulo, compl2;
 	
 
 	
@@ -26,9 +26,11 @@ module matriz_multi (
 // conv pronto!
 //
 // verifica se eh negativo
-//
-//
-//
+// pega modulo
+// 
+// verifica overflow
+// overflow : retorna 255
+// !overflow: retorna valor
 
 
     genvar i;
@@ -57,30 +59,17 @@ module matriz_multi (
 		
 		
 
-	assign to_positive = ~convolution + 1'b1;
+	assign compl2 = ~convolution + 1'b1;
 		
-	assign modulo = convolution[199] ? to_positive : convolution;
-		
-		
+	assign modulo = convolution[199] ? compl2 : convolution;
 		
 		
-
 		
-		
-	
 	assign overflow = |(modulo[199:8]);
 	//nor(overflow, t0, t1);
 	
-	assign result = {overflow, modulo[7:0]};
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	assign result = overflow ? 200'hff : modulo[7:0];
+	
 		
 		
 		
