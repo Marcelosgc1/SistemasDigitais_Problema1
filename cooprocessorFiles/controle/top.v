@@ -20,9 +20,9 @@ module top(
 					//ARI-OPERATIONS
 					SUM = 4'b0011,
 					SUB = 4'b0100,
-					MUL = 4'b0101,
-					TRANSP = 4'b0110,
-					OPST = 4'b0111,
+					MUL = 4'b0101, 	//conv. 1 matriz
+					TRANSP = 4'b0110,	//conv. 2 matriz transposta
+					OPST = 4'b0111,	//conv. 2 matriz 45 graus
 					MULSCL = 4'b1000,
 					DET2 = 4'b1001,
 					DET3 = 4'b1010,
