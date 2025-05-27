@@ -1,84 +1,81 @@
 module matriz_multi (
-  input signed [199:0] matriz_a, // Matriz A (5x5, 8 bits por elemento)
+  input [199:0] matriz_a, // Matriz A (5x5, 8 bits por elemento)
   input signed [199:0] matriz_b, // Matriz B (5x5, 8 bits por elemento)
-  input [1:0] seletor,
-  input clock,
-  input wire start,
-  output [7:0] result, // Resultado da multiplicação
-  output reg done // Sinal de conclusão
+  input clk,
+  input start,
+  output [19:0] result, // Resultado da multiplicação
+  output reg done
 );
+	
+  reg signed [15:0] mult [0:24];
+  reg signed [16:0] stage1 [0:12];
+  reg signed [17:0] stage2 [0:6];
+  reg signed [18:0] stage3 [0:3];
+  reg signed [19:0] stage4 [0:1];
+  reg signed [20:0] final_sum;         
+
+  reg [2:0] stage;
+  reg [19:0] modulo; 
+
+  assign result = (|(modulo[19:8])) ? 20'hff : modulo;
 
 
-parameter zero = 8'b00000000;
+  integer i;
 
-wire [199:0] matriz_c, matriz_d, aux_kernel;
-wire [19:0] r1, r2, absSum;
+  always @(posedge clk) begin
+    if (!start) begin
+      modulo <= 0;
+      stage <= 0;
+      done <= 0;
+    end else begin
+      case (stage)
+        0: begin
+          for (i = 0; i < 25; i = i + 1) begin
+            mult[i] <= $signed(matriz_b[i*8 +: 8]) * matriz_a[i*8 +: 8];
+          end
+          stage <= 1;
+          done <= 0;
+        end
 
-matriz_transposta(matriz_b,, matriz_c);
-assign matriz_d = {matriz_b[8+:8],matriz_b[48+:8],zero,zero,zero,matriz_b[0+:8],matriz_b[40+:8]};
+        1: begin
+          for (i = 0; i < 12; i = i + 1)
+            stage1[i] <= mult[2*i] + mult[2*i+1];
+          stage1[12] <= mult[24]; 
+          stage <= 2;
+        end
 
-assign aux_kernel = seletor[0] ? matriz_d : matriz_c;
+        2: begin
+          for (i = 0; i < 6; i = i + 1)
+            stage2[i] <= stage1[2*i] + stage1[2*i+1];
+          stage2[6] <= stage1[12];
+          stage <= 3;
+        end
 
-matriz_conv uni_mtr(matriz_a, matriz_b, clk, start, r1, done1);
+        3: begin
+          for (i = 0; i < 3; i = i + 1)
+				stage3[i] <= stage2[2*i] + stage2[2*i+1];
+				stage3[3] <= stage2[6];
+          stage <= 4;
+        end
 
-matriz_conv transp(matriz_a, aux_kernel, clk, start, r2, done2);
+        4: begin
+          stage4[0] <= stage3[0] + stage3[1];
+          stage4[1] <= stage3[2] + stage3[3];
+          stage <= 5;
+        end
 
+        5: begin
+          final_sum <= stage4[0] + stage4[1];
+          stage <= 6;
+        end
 
-
-
-
-assign overflow = |(tempSum[20:8]);
-
-assign absSum = overflow ? 200'hff : tempSum[7:0];
-
-assign result = seletor[1] ? absSum : r1;
-
-//SELETOR:
-//
-//0X = 1 matriz
-//10 = tipo sobel, 2 kernel transposta
-//11 = tipo roberts, 2 kernel 45 graus
-
-
-reg state = 0;
-reg [20:0]tempSum;
-
-
-always @ (posedge clock) begin
-
-	if (!start) begin
-		done <= 0;
-		state <= 0;
-	end
-	else begin
-		if(done1 & done2) begin
-			tempSum <= r1+r2;
-			state <= 1;
-		end
-		if(state) begin
-			done <= 1;
-		end
-	end
-
-end
-
-
-
+        6: begin
+          modulo <= final_sum[20] ? (~final_sum + 1'b1) : final_sum;
+          done <= 1;
+          stage <= 6;
+        end
+      endcase
+    end
+  end
 
 endmodule
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
