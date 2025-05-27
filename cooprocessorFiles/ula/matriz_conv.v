@@ -1,71 +1,83 @@
 //MULTIPLICAÇAO 20 ADP BLOCK
 
 module matriz_conv (
-  input signed [199:0] matriz_a, // Matriz A (5x5, 8 bits por elemento)
+  input [199:0] matriz_a, // Matriz A (5x5, 8 bits por elemento)
   input signed [199:0] matriz_b, // Matriz B (5x5, 8 bits por elemento)
-  output [199:0] result // Resultado da multiplicação
+  input clk,
+  input start,
+  output [19:0] result, // Resultado da multiplicação
+  output reg done
 );
 	
-	wire [400:0] matriz_resultante;
-	wire [199:0] convolution, modulo, compl2;
-	
+  reg signed [15:0] mult [0:24];
+  reg signed [16:0] stage1 [0:12];
+  reg signed [17:0] stage2 [0:6];
+  reg signed [18:0] stage3 [0:3];
+  reg signed [19:0] stage4 [0:1];
+  reg signed [20:0] final_sum;         
 
-	
-//	convolution algorithm:
-//	
-//	escalar multi
-// soma results
-// conv pronto!
-//
-// verifica se eh negativo
-// pega modulo
-// 
-// verifica overflow
-// overflow : retorna 255
-// !overflow: retorna valor
+  reg [2:0] stage;
+  reg [19:0] modulo; 
+
+  assign result = (|(modulo[19:8])) ? 20'hff : modulo;
 
 
-    genvar i;
+  integer i;
 
-    generate
-        for (i = 0; i < 25; i = i + 1) begin : escalar_matrizes
-            assign matriz_resultante[i*16 +: 16] = matriz_b[i*8+: 8] * {1'b0, matriz_a[i*8+: 8]}; // Multiplica cada elemento pelo escalar
+  always @(posedge clk) begin
+    if (!start) begin
+      modulo <= 0;
+      stage <= 0;
+      done <= 0;
+    end else begin
+      case (stage)
+        0: begin
+          for (i = 0; i < 25; i = i + 1) begin
+            mult[i] <= $signed(matriz_b[i*8 +: 8]) * matriz_a[i*8 +: 8];
+          end
+          stage <= 1;
+          done <= 0;
         end
-    endgenerate
 
-	assign convolution =
-      $signed(matriz_resultante[0*16 +: 16])  + $signed(matriz_resultante[1*16 +: 16]) +
-      $signed(matriz_resultante[2*16 +: 16])  + $signed(matriz_resultante[3*16 +: 16]) +
-      $signed(matriz_resultante[4*16 +: 16])  + $signed(matriz_resultante[5*16 +: 16]) +
-      $signed(matriz_resultante[6*16 +: 16])  + $signed(matriz_resultante[7*16 +: 16]) +
-      $signed(matriz_resultante[8*16 +: 16])  + $signed(matriz_resultante[9*16 +: 16]) +
-      $signed(matriz_resultante[10*16 +: 16]) + $signed(matriz_resultante[11*16 +: 16]) +
-      $signed(matriz_resultante[12*16 +: 16]) + $signed(matriz_resultante[13*16 +: 16]) +
-      $signed(matriz_resultante[14*16 +: 16]) + $signed(matriz_resultante[15*16 +: 16]) +
-      $signed(matriz_resultante[16*16 +: 16]) + $signed(matriz_resultante[17*16 +: 16]) +
-      $signed(matriz_resultante[18*16 +: 16]) + $signed(matriz_resultante[19*16 +: 16]) +
-      $signed(matriz_resultante[20*16 +: 16]) + $signed(matriz_resultante[21*16 +: 16]) +
-      $signed(matriz_resultante[22*16 +: 16]) + $signed(matriz_resultante[23*16 +: 16]) +
-      $signed(matriz_resultante[24*16 +: 16]);
-		
-		
-		
+        1: begin
+          for (i = 0; i < 12; i = i + 1)
+            stage1[i] <= mult[2*i] + mult[2*i+1];
+          stage1[12] <= mult[24]; 
+          stage <= 2;
+        end
 
-	assign compl2 = ~convolution + 1'b1;
-		
-	assign modulo = convolution[199] ? compl2 : convolution;
-		
-		
-		
-	assign overflow = |(modulo[199:8]);
-	//nor(overflow, t0, t1);
-	
-	assign result = modulo;
-	
-		
-		
-		
-		
-		
-	 
+        2: begin
+          for (i = 0; i < 6; i = i + 1)
+            stage2[i] <= stage1[2*i] + stage1[2*i+1];
+          stage2[6] <= stage1[12];
+          stage <= 3;
+        end
+
+        3: begin
+          for (i = 0; i < 3; i = i + 1)
+				stage3[i] <= stage2[2*i] + stage2[2*i+1];
+				stage3[3] <= stage2[6];
+          stage <= 4;
+        end
+
+        4: begin
+          stage4[0] <= stage3[0] + stage3[1];
+          stage4[1] <= stage3[2] + stage3[3];
+          stage <= 5;
+        end
+
+        5: begin
+          final_sum <= stage4[0] + stage4[1];
+          stage <= 6;
+        end
+
+        6: begin
+          modulo <= final_sum[20] ? (~final_sum + 1'b1) : final_sum;
+          done <= 1;
+          stage <= 6;
+        end
+      endcase
+    end
+  end
+
 endmodule
