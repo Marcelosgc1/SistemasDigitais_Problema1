@@ -18,7 +18,7 @@ wire [7:0]   absSum;
 matriz_transposta(matriz_b,, matriz_c);
 assign matriz_d = {matriz_b[8+:8],matriz_b[48+:8],ZERO,ZERO,ZERO,matriz_b[0+:8],matriz_b[40+:8]};
 
-assign aux_kernel = seletor ? matriz_d : matriz_c;
+assign aux_kernel = seletor ? matriz_c : matriz_d;
 
 matriz_conv uni_mtr(matriz_a, matriz_b, clk, start, r1, done1);
 

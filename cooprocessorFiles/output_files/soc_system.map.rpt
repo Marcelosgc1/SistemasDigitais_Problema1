@@ -1,5 +1,5 @@
 Analysis & Synthesis report for soc_system
-Tue May 27 20:30:09 2025
+Tue May 27 21:55:40 2025
 Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
 
 
@@ -642,7 +642,7 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +---------------------------------+------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Tue May 27 20:30:09 2025          ;
+; Analysis & Synthesis Status     ; Successful - Tue May 27 21:55:40 2025          ;
 ; Quartus Prime Version           ; 23.1std.1 Build 993 05/14/2024 SC Lite Edition ;
 ; Revision Name                   ; soc_system                                     ;
 ; Top-level Entity Name           ; ghrd_top                                       ;
@@ -757,26 +757,26 @@ https://fpgasoftware.intel.com/eula.
 ; Number detected on machine ; 16          ;
 ; Maximum allowed            ; 16          ;
 ;                            ;             ;
-; Average used               ; 10.46       ;
+; Average used               ; 9.78        ;
 ; Maximum used               ; 16          ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;  63.3%      ;
-;     Processor 3            ;  63.3%      ;
-;     Processor 4            ;  63.3%      ;
-;     Processor 5            ;  63.3%      ;
-;     Processor 6            ;  63.3%      ;
-;     Processor 7            ;  63.3%      ;
-;     Processor 8            ;  63.3%      ;
-;     Processor 9            ;  63.3%      ;
-;     Processor 10           ;  63.3%      ;
-;     Processor 11           ;  63.3%      ;
-;     Processor 12           ;  63.3%      ;
-;     Processor 13           ;  63.3%      ;
-;     Processor 14           ;  62.9%      ;
-;     Processor 15           ;  62.8%      ;
-;     Processor 16           ;  60.8%      ;
+;     Processor 2            ;  58.9%      ;
+;     Processor 3            ;  58.8%      ;
+;     Processor 4            ;  58.8%      ;
+;     Processor 5            ;  58.8%      ;
+;     Processor 6            ;  58.8%      ;
+;     Processor 7            ;  58.7%      ;
+;     Processor 8            ;  58.7%      ;
+;     Processor 9            ;  58.7%      ;
+;     Processor 10           ;  58.5%      ;
+;     Processor 11           ;  58.5%      ;
+;     Processor 12           ;  58.5%      ;
+;     Processor 13           ;  58.3%      ;
+;     Processor 14           ;  58.3%      ;
+;     Processor 15           ;  57.7%      ;
+;     Processor 16           ;  57.7%      ;
 +----------------------------+-------------+
 
 
@@ -14949,8 +14949,8 @@ Note: In order to hide this table in the UI and the text report file, please set
 +---------------------------------------+--------------+
 ; Partition Name                        ; Elapsed Time ;
 +---------------------------------------+--------------+
-; Top                                   ; 00:01:19     ;
-; soc_system_hps_0_hps_io_border:border ; 00:00:01     ;
+; Top                                   ; 00:01:03     ;
+; soc_system_hps_0_hps_io_border:border ; 00:00:00     ;
 +---------------------------------------+--------------+
 
 
@@ -14960,7 +14960,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
-    Info: Processing started: Tue May 27 20:25:12 2025
+    Info: Processing started: Tue May 27 21:51:04 2025
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off soc_system -c soc_system
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 16 of the 16 processors detected
@@ -15704,7 +15704,7 @@ Info (12128): Elaborating entity "altera_edge_detector" for hierarchy "altera_ed
 Warning (12010): Port "probe" on the entity instantiation of "altsource_probe_component" is connected to a signal of width 1. The formal width of the signal in the module is 2.  The extra bits will be driven by GND. File: /home/marcelo/Documentos/MI_SD/P1/SistemasDigitais_Problema1/cooprocessorFiles/ip/altsource_probe/hps_reset.v Line: 75
 Warning (12010): Port "ir_out" on the entity instantiation of "node" is connected to a signal of width 1. The formal width of the signal in the module is 3.  The extra bits will be driven by GND. File: /home/marcelo/Documentos/MI_SD/P1/SistemasDigitais_Problema1/cooprocessorFiles/soc_system/synthesis/submodules/altera_avalon_st_jtag_interface.v Line: 101
 Info (11170): Starting IP generation for the debug fabric: alt_sld_fab.
-Info (11172): 2025.05.27.20:25:40 Progress: Loading sldce0f4758/alt_sld_fab_wrapper_hw.tcl
+Info (11172): 2025.05.27.21:51:31 Progress: Loading sldce0f4758/alt_sld_fab_wrapper_hw.tcl
 Info (11172): Alt_sld_fab.alt_sld_fab: SLD fabric agents which did not specify prefer_host were connected to JTAG
 Info (11172): Alt_sld_fab: Generating alt_sld_fab "alt_sld_fab" for QUARTUS_SYNTH
 Info (11172): Alt_sld_fab: "alt_sld_fab" instantiated alt_sld_fab "alt_sld_fab"
@@ -16078,9 +16078,9 @@ Info (21057): Implemented 10958 device resources after synthesis - the final res
     Info (21062): Implemented 69 DSP elements
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 406 warnings
     Info: Peak virtual memory: 990 megabytes
-    Info: Processing ended: Tue May 27 20:30:09 2025
-    Info: Elapsed time: 00:04:57
-    Info: Total CPU time (on all processors): 00:19:53
+    Info: Processing ended: Tue May 27 21:55:41 2025
+    Info: Elapsed time: 00:04:37
+    Info: Total CPU time (on all processors): 00:17:20
 
 
 +------------------------------------------+
