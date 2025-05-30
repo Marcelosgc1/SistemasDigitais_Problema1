@@ -5,7 +5,8 @@ module matriz_conv (
   input signed [199:0] matriz_b, // Matriz B (5x5, 8 bits por elemento)
   input clk,
   input start,
-  output [19:0] result, // Resultado da multiplicação
+  output [7:0] result, 
+  output [20:0] full_result,
   output reg done
 );
 	
@@ -14,19 +15,19 @@ module matriz_conv (
   reg signed [17:0] stage2 [0:6];
   reg signed [18:0] stage3 [0:3];
   reg signed [19:0] stage4 [0:1];
-  reg signed [20:0] final_sum;         
+  reg signed [20:0] final_sum;
+  
 
-  reg [2:0] stage;
-  reg [19:0] modulo; 
-
-  assign result = (|(modulo[19:8])) ? 20'hff : modulo;
-
-
+  reg [2:0]  stage;
+  reg [20:0] modulo;
+  
+  assign result = (|modulo[20:8]) ? 8'hff : modulo[7:0];
+  assign full_result = final_sum; 
+  
   integer i;
 
   always @(posedge clk) begin
     if (!start) begin
-      modulo <= 0;
       stage <= 0;
       done <= 0;
     end else begin
