@@ -12,44 +12,21 @@ module matriz_multi (
 parameter ZERO = 8'b00000000;
 
 wire [199:0] matriz_c, matriz_d, aux_kernel;
-wire [20:0]  r1, r2, r10, newR1, aux1, aux2, aux3;
-wire [7:0]   absSum;
+wire [7:0]   absSum, modulo1, modulo2, result1;
 
 
 matriz_transposta(matriz_b,, matriz_c);
 assign matriz_d = {matriz_b[8+:8],matriz_b[48+:8],ZERO,ZERO,ZERO,matriz_b[0+:8],matriz_b[40+:8]};
 
-
-
 assign aux_kernel = seletor[0] ? matriz_d : matriz_c;
 
 
 
-matriz_conv uni_mtr(matriz_a, matriz_b, clk, start, r1, r10, done1);
-matriz_conv transp(matriz_a, aux_kernel, clk, start, r2, , done2);
+matriz_conv uni_mtr(matriz_a, matriz_b, clk, start, modulo1, signal, done1);
+matriz_conv transp(matriz_a, aux_kernel, clk, start, modulo2, , done2);
 
 
-
-
-assign overflowPOS = |(r10[20:8]);
-assign overflowNEG = !(&(r10[20:8]));
-
-assign aux1 = overflowPOS ? 8'hff : r10[7:0];
-assign aux2 = overflowNEG ? 8'h00 : r10[7:0];
-assign aux3 = r10[20] ? aux2 : aux1;
-
-assign newR1 = seletor[1] ? r1 : aux3;
-
-
-
-//assign overflowPOSR1 = |(unsat1[20:8]);
-//assign overflowNEGR1 = !(&(unsat1[20:8]));
-//
-//
-//assign r1 = seletor[1] ? (overflowPOSR1 ? 200'hff : unsat1[7:0]) : (unsat1[20] ? (overflowNEGR1 ? 200'h0 : unsat1[7:0]) : (overflowPOSR1 ? 200'hff : unsat1[7:0]));
-//
-
-
+assign result1 = (!seletor[1] & signal) ? 8'h00 : modulo1;
 
 
 //SELETOR:
@@ -77,7 +54,7 @@ always @ (posedge clk) begin
 		case (state) 
 			0: begin
 				if(done1 & done2) begin
-					tempSum <= r1+r2;
+					tempSum <= modulo1+modulo2;
 					state <= 1;
 				end
 			end
@@ -91,24 +68,8 @@ always @ (posedge clk) begin
 end
 
 
-assign result = {ZERO,absSum,r2[7:0],newR1[7:0]};
+assign result = {ZERO,absSum,modulo2,result1};
 
 
 
 endmodule
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

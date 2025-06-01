@@ -6,7 +6,7 @@ module matriz_conv (
   input clk,
   input start,
   output [7:0] result, 
-  output [20:0] full_result,
+  output signal,
   output reg done
 );
 	
@@ -22,7 +22,7 @@ module matriz_conv (
   reg [20:0] modulo;
   
   assign result = (|modulo[20:8]) ? 8'hff : modulo[7:0];
-  assign full_result = final_sum; 
+  assign signal = final_sum[20]; 
   
   integer i;
 
