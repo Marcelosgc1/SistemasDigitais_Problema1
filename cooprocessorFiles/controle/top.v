@@ -166,7 +166,7 @@ module top(
 							loaded = 0;
 							count_br = 0;
 							state = MEMORY;
-						end else if (!(count_mem[4] + count_mem[5])) begin
+						end else if (!(count_mem[4] || count_mem[5])) begin
 							count_mem[3:0] = 0;
 							count_mem[4] = 1;
 							loaded = 0;
