@@ -341,7 +341,7 @@ assign HEX3 = dat[6:0];
 assign HEX4 = dat[13:7];
 assign HEX5 = wait_s;
 
-top(ins, ai, CLOCK_50, dat, wait_s);
+top(ins, ai, CLOCK_50, dat, wait_s, VGA_HS, VGA_VS, VGA_R, VGA_G, VGA_B, VGA_SYNC_N, VGA_CLK, VGA_BLANK_N);
 
 // Source/Probe megawizard instance
 hps_reset hps_reset_inst (

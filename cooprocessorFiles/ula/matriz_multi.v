@@ -39,10 +39,9 @@ assign result1 = (!seletor[1] & signal) ? 8'h00 : modulo1;
 
 
 reg state = 0;
-reg [20:0]tempSum;
+reg [8:0]tempSum;
 
-assign overflow = |(tempSum[20:8]);
-assign absSum = overflow ? 200'hff : tempSum[7:0];
+assign absSum = tempSum[8] ? 8'hff : tempSum[7:0];
 
 always @ (posedge clk) begin
 
@@ -59,9 +58,7 @@ always @ (posedge clk) begin
 				end
 			end
 			1: begin
-				if(state) begin
-					done <= 1;
-				end
+				done <= 1;
 			end
 		endcase
 	end

@@ -3,7 +3,16 @@ module top(
 	input activate_instruction,
 	input clk,
 	output [15:0] data_read,
-	output wait_signal
+	output wait_signal,
+	//vga outputs
+	output hsync, 
+	output vsync,
+	output [7:0]red,
+	output [7:0]green,
+	output [7:0]blue,
+	output vga_sync,
+	output vga_clk,
+	output vga_blank
 );
 	
 
@@ -27,7 +36,8 @@ module top(
 					DET2 = 4'b1001,
 					DET3 = 4'b1010,
 					DET4 = 4'b1011,
-					DET5 = 4'b1100;
+					DET5 = 4'b1100,
+					RENDERIZAR = 4'b1111;
 					
 	assign data_read = data_out;
 	reg [2:0] state = FETCH;
@@ -217,5 +227,37 @@ module top(
 
 	
 
+	assign convolution_opcode = (opcode==MUL || opcode==TRANSP || opcode==OPST);
+	reg write_vga;
+	reg [7:0]pixel_color;
+	
+	always @ (posedge clk) begin
+		if (convolution_opcode & done_alu & !write_vga) begin
+			pixel_color <= (opcode==MUL) ? (matrix_C[7:0]) : (matrix_C[23:16]);
+			write_vga <= 1;
+		end
+		else if (write_vga & vga_ram_done) begin
+			write_vga <= 0;
+		end
+	end
+	
+	
+	vga_control(
+		fetched_instruction[21:4], 
+		clk,
+		write_vga,
+		pixel_color,
+		vga_ram_done,
+		hsync, 
+		vsync,
+		red,
+		green,
+		blue,			
+		vga_sync,
+		vga_clk,
+		vga_blank
+);
+	
+	
 
 endmodule

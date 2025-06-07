@@ -3,7 +3,7 @@ Timing Analyzer Summary
 ------------------------------------------------------------
 
 Type  : Slow 1100mV 85C Model Setup 'clock_50_1'
-Slack : 1.533
+Slack : 1.173
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Setup 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
@@ -11,7 +11,7 @@ Slack : 1.730
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Setup 'altera_reserved_tck'
-Slack : 9.966
+Slack : 9.441
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Hold 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
@@ -19,11 +19,11 @@ Slack : 0.143
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Hold 'clock_50_1'
-Slack : 0.231
+Slack : 0.219
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Hold 'altera_reserved_tck'
-Slack : 0.348
+Slack : 0.419
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Recovery 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
@@ -31,11 +31,11 @@ Slack : 3.375
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Recovery 'clock_50_1'
-Slack : 13.747
+Slack : 13.280
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Recovery 'altera_reserved_tck'
-Slack : 14.138
+Slack : 14.103
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Removal 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
@@ -43,11 +43,11 @@ Slack : 0.470
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Removal 'clock_50_1'
-Slack : 0.556
+Slack : 0.523
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Removal 'altera_reserved_tck'
-Slack : 0.691
+Slack : 0.674
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Minimum Pulse Width 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|pll_write_clk_dq_write_clk'
@@ -59,15 +59,15 @@ Slack : 0.623
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Minimum Pulse Width 'clock_50_1'
-Slack : 8.924
+Slack : 8.753
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Minimum Pulse Width 'altera_reserved_tck'
-Slack : 15.056
+Slack : 14.898
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Setup 'clock_50_1'
-Slack : 1.373
+Slack : 1.090
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Setup 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
@@ -75,7 +75,7 @@ Slack : 1.727
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Setup 'altera_reserved_tck'
-Slack : 10.270
+Slack : 9.644
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Hold 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
@@ -83,11 +83,11 @@ Slack : 0.162
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Hold 'clock_50_1'
-Slack : 0.208
+Slack : 0.174
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Hold 'altera_reserved_tck'
-Slack : 0.383
+Slack : 0.435
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Recovery 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
@@ -95,23 +95,23 @@ Slack : 3.468
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Recovery 'clock_50_1'
-Slack : 14.039
+Slack : 13.595
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Recovery 'altera_reserved_tck'
-Slack : 14.256
+Slack : 14.264
+TNS   : 0.000
+
+Type  : Slow 1100mV 0C Model Removal 'clock_50_1'
+Slack : 0.454
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Removal 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
 Slack : 0.460
 TNS   : 0.000
 
-Type  : Slow 1100mV 0C Model Removal 'clock_50_1'
-Slack : 0.515
-TNS   : 0.000
-
 Type  : Slow 1100mV 0C Model Removal 'altera_reserved_tck'
-Slack : 0.642
+Slack : 0.624
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Minimum Pulse Width 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|pll_write_clk_dq_write_clk'
@@ -123,11 +123,11 @@ Slack : 0.630
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Minimum Pulse Width 'clock_50_1'
-Slack : 8.950
+Slack : 8.744
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Minimum Pulse Width 'altera_reserved_tck'
-Slack : 15.033
+Slack : 14.819
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Setup 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
@@ -135,43 +135,43 @@ Slack : 2.110
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Setup 'clock_50_1'
-Slack : 9.640
+Slack : 9.297
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Setup 'altera_reserved_tck'
-Slack : 12.589
+Slack : 12.345
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Hold 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
 Slack : 0.084
 TNS   : 0.000
 
-Type  : Fast 1100mV 85C Model Hold 'clock_50_1'
-Slack : 0.141
-TNS   : 0.000
-
 Type  : Fast 1100mV 85C Model Hold 'altera_reserved_tck'
 Slack : 0.157
+TNS   : 0.000
+
+Type  : Fast 1100mV 85C Model Hold 'clock_50_1'
+Slack : 0.164
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Recovery 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
 Slack : 3.727
 TNS   : 0.000
 
-Type  : Fast 1100mV 85C Model Recovery 'altera_reserved_tck'
-Slack : 15.406
+Type  : Fast 1100mV 85C Model Recovery 'clock_50_1'
+Slack : 15.054
 TNS   : 0.000
 
-Type  : Fast 1100mV 85C Model Recovery 'clock_50_1'
-Slack : 15.548
+Type  : Fast 1100mV 85C Model Recovery 'altera_reserved_tck'
+Slack : 15.409
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Removal 'clock_50_1'
-Slack : 0.295
+Slack : 0.292
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Removal 'altera_reserved_tck'
-Slack : 0.355
+Slack : 0.319
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Removal 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
@@ -187,11 +187,11 @@ Slack : 0.891
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Minimum Pulse Width 'clock_50_1'
-Slack : 8.506
+Slack : 8.500
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Minimum Pulse Width 'altera_reserved_tck'
-Slack : 14.747
+Slack : 14.574
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Setup 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
@@ -199,11 +199,11 @@ Slack : 2.110
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Setup 'clock_50_1'
-Slack : 10.303
+Slack : 10.017
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Setup 'altera_reserved_tck'
-Slack : 13.178
+Slack : 12.909
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Hold 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
@@ -211,7 +211,7 @@ Slack : 0.077
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Hold 'clock_50_1'
-Slack : 0.122
+Slack : 0.128
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Hold 'altera_reserved_tck'
@@ -223,19 +223,19 @@ Slack : 3.825
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Recovery 'altera_reserved_tck'
-Slack : 15.652
+Slack : 15.669
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Recovery 'clock_50_1'
-Slack : 16.099
+Slack : 15.672
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Removal 'clock_50_1'
-Slack : 0.269
+Slack : 0.256
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Removal 'altera_reserved_tck'
-Slack : 0.308
+Slack : 0.275
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Removal 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
@@ -251,11 +251,11 @@ Slack : 0.894
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Minimum Pulse Width 'clock_50_1'
-Slack : 8.460
+Slack : 8.455
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Minimum Pulse Width 'altera_reserved_tck'
-Slack : 14.722
+Slack : 14.551
 TNS   : 0.000
 
 ------------------------------------------------------------

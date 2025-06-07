@@ -8,7 +8,7 @@
   </columns>
  </systemtable>
  <library
-   expandedCategories="Library/University Program/Audio &amp; Video,Library/University Program/Audio &amp; Video/Video,Library/University Program,Project,Library" />
+   expandedCategories="Library/Basic Functions/Configuration and Programming,Library,Project,Library/Basic Functions" />
  <window width="1920" height="1014" x="0" y="66" />
  <hdlexample language="VERILOG" />
 </preferences>

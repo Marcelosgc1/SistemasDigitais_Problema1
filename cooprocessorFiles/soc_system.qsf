@@ -1014,4 +1014,7 @@ set_global_assignment -name VERILOG_FILE ula/matriz_conv.v
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name VERILOG_FILE vga/vga_control.v
+set_global_assignment -name VERILOG_FILE vga/vga_driver.v
+set_global_assignment -name QIP_FILE vgaMemory.qip
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
