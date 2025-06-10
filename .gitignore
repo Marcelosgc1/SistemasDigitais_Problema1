@@ -6,6 +6,9 @@
 !*.jpg
 !*.png
 !*.gif
+!cooprocessorFiles/
+!cooprocessorFiles/**
+
 !*/
 
 !.gitignore

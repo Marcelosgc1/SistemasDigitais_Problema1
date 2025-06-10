@@ -1,40 +1,72 @@
-//MULTIPLICAÇAO 20 ADP BLOCK
-
 module matriz_multi (
-  input signed [199:0] matriz_a, // Matriz A (5x5, 8 bits por elemento)
-  input signed [199:0] matriz_b, // Matriz B (5x5, 8 bits por elemento)
-  input clock,
+  input signed [199:0] matriz_a, 
+  input signed [199:0] matriz_b, 
+  input [1:0]seletor,
+  input clk,
   input wire start,
-  output reg signed [199:0] matriz_c = 0, // Resultado da multiplicação
+  output [199:0] result, // Resultado da convolucao
   output reg done // Sinal de conclusão
 );
 
-	reg [2:0] linha = 0; // Índice da linha atual
-	reg signed [15:0] temp [0:4]; // Armazena resultado parcial da linha
 
-	always @(posedge clock) begin
-		 if(start) begin
-		         integer i;
-			 for (i = 0; i < 5; i = i + 1) begin
-				  temp[i] = (matriz_a[(linha * 40) + 7 -: 8]   * matriz_b[(i * 8) +: 8]) +
-								(matriz_a[(linha * 40) + 15 -: 8]  * matriz_b[(i * 8) + 40 +: 8]) +
-								(matriz_a[(linha * 40) + 23 -: 8]  * matriz_b[(i * 8) + 80 +: 8]) +
-								(matriz_a[(linha * 40) + 31 -: 8]  * matriz_b[(i * 8) + 120 +: 8]) +
-								(matriz_a[(linha * 40) + 39 -: 8]  * matriz_b[(i * 8) + 160 +: 8]);
-			 end
-			 
-			 for (i = 0; i < 5; i = i + 1) begin
-				  matriz_c[(linha * 40) + (i * 8) + 7 -: 8] <= temp[i][7:0]; // Atribui resultado à matriz C
-			 end
+parameter ZERO = 8'b00000000;
 
-			 if (linha == 4) begin
-				  linha <= 0;
-				  done <= 1; // Fim da multiplicação
-			 end else begin
-				  linha <= linha + 1;
-				  done <= 0;
-			 end
-		end
+wire [199:0] matriz_c, matriz_d, aux_kernel;
+wire [7:0]   absSum, modulo1, modulo2, result1;
+
+
+matriz_transposta(matriz_b,, matriz_c);
+assign matriz_d = {matriz_b[8+:8],matriz_b[48+:8],ZERO,ZERO,ZERO,matriz_b[0+:8],matriz_b[40+:8]};
+
+assign aux_kernel = seletor[0] ? matriz_d : matriz_c;
+
+
+
+matriz_conv uni_mtr(matriz_a, matriz_b, clk, start, modulo1, signal, done1);
+matriz_conv transp(matriz_a, aux_kernel, clk, start, modulo2, , done2);
+
+
+assign result1 = (!seletor[1] & signal) ? 8'h00 : modulo1;
+
+
+//SELETOR:
+//
+//0X = 1 matriz (fazer saturaçao dupla)
+//10 = tipo sobel, 2 kernel transposta
+//11 = tipo roberts, 2 kernel 45 graus
+
+
+
+
+reg state = 0;
+reg [8:0]tempSum;
+
+assign absSum = tempSum[8] ? 8'hff : tempSum[7:0];
+
+always @ (posedge clk) begin
+
+	if (!start) begin
+		done <= 0;
+		state <= 0;
 	end
+	else begin
+		case (state) 
+			0: begin
+				if(done1 & done2) begin
+					tempSum <= modulo1+modulo2;
+					state <= 1;
+				end
+			end
+			1: begin
+				done <= 1;
+			end
+		endcase
+	end
+end
+
+
+assign result = {ZERO,absSum,modulo2,result1};
+
+
 
 endmodule

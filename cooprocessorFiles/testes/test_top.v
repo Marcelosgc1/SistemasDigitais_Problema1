@@ -5,7 +5,8 @@ module test_top(
 	output [6:0]seg1,
 	output [6:0]seg2,
 	output [6:0]seg3,
-	output [6:0]seg4
+	output [6:0]seg4,
+	output [15:0]nums
 );
 
 							// 	N0, 	N1,   ID,LIN,COL, OP
@@ -41,8 +42,6 @@ module test_top(
 					read0 = 22'b0000000000_10_000_000_0001;
 
 
-
-	wire [15:0] nums;
 	reg [21:0] my_reg;
 	reg [4:0] i = 0;
 
@@ -55,8 +54,8 @@ module test_top(
 	decod7seg(nums[15:12],seg4);
 
 
-	debounce(!bt0, clk, db0);
-	debounce(!bt1, clk, db1);
+	my_debounce(!bt0, clk, db0);
+	my_debounce(!bt1, clk, db1);
 
 	always @(posedge db0) begin
 
@@ -68,7 +67,7 @@ module test_top(
 
 	//reg [4000:0] all = {det5,det4,det3, det2,zE,yE,xE,zD, yD, xD,zxC,zzC,zCc,zC,yC,xxC,xC,s,o,t,ms5,m,sum, xA, yA, zA, xB, yB, zB};
 
-	reg [4000:0] all = {read0, det5, det4, det3, det2, wmc12, wmc11, wmc10, wmc9, wmc8, wmc7, wmc6, wmc5, wmc4, wmc3, wmc2, wmc1, wmc0, ms5, opos, trans, mult, sub, soma, wmb2, wmb1, wmb0, wma2, wma1, wma0};
+	reg [4000:0] all = {read0, det5, det4, det3, det2, wmc12, wmc11, wmc10, wmc9, wmc8, wmc7, wmc6, wmc5, wmc4, wmc3, wmc2, wmc1, wmc0, ms5, opos, trans, mult, sub, soma, wmb2, wmb1, mult, mult, mult, mult};
 
 
 endmodule

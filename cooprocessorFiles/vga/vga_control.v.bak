@@ -1,0 +1,20 @@
+module vga_control(input[16:0] address, input clk, input [7:0] new_data, input write_enable);
+
+wire [15:0] data_in, ram_data_out;
+
+assign data_in = address[0] ?   {new_data, ram_data_out[7:0]}   :   {ram_data_out[15:8], new_data} ;
+
+
+vgaMemory (  
+        address[16:1],  
+        clk,
+        data_in,
+        write_enable, 
+        ram_data_out
+    );
+
+
+
+
+
+endmodule

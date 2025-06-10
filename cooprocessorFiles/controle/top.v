@@ -2,7 +2,17 @@ module top(
 	input [31:0] instruction,
 	input activate_instruction,
 	input clk,
-	output [15:0] data_read
+	output [15:0] data_read,
+	output wait_signal,
+	//vga outputs
+	output hsync, 
+	output vsync,
+	output [7:0]red,
+	output [7:0]green,
+	output [7:0]blue,
+	output vga_sync,
+	output vga_clk,
+	output vga_blank
 );
 	
 
@@ -19,14 +29,15 @@ module top(
 					//ARI-OPERATIONS
 					SUM = 4'b0011,
 					SUB = 4'b0100,
-					MUL = 4'b0101,
-					TRANSP = 4'b0110,
-					OPST = 4'b0111,
+					MUL = 4'b0101, 	//conv. 1 matriz
+					TRANSP = 4'b0110,	//conv. 2 matriz transposta
+					OPST = 4'b0111,	//conv. 2 matriz 45 graus
 					MULSCL = 4'b1000,
 					DET2 = 4'b1001,
 					DET3 = 4'b1010,
 					DET4 = 4'b1011,
-					DET5 = 4'b1100;
+					DET5 = 4'b1100,
+					RENDERIZAR = 4'b1111;
 					
 	assign data_read = data_out;
 	reg [2:0] state = FETCH;
@@ -82,6 +93,8 @@ module top(
 		matrix_B,
 		result_ula
 	);
+	
+	assign wait_signal = state != FETCH;
 	assign done_pulse = done & !last_done;
 	assign done = (loaded & !write_resul) ? done_alu : done_mem;
 	assign data_to_write = write_resul ? result_ula : data;
@@ -153,7 +166,7 @@ module top(
 							loaded = 0;
 							count_br = 0;
 							state = MEMORY;
-						end else if (!(count_mem[4] + count_mem[5])) begin
+						end else if (!(count_mem[4] | count_mem[5])) begin
 							count_mem[3:0] = 0;
 							count_mem[4] = 1;
 							loaded = 0;
@@ -214,5 +227,37 @@ module top(
 
 	
 
+	assign convolution_opcode = (opcode==MUL || opcode==TRANSP || opcode==OPST);
+	reg write_vga;
+	reg [7:0]pixel_color;
+	
+	always @ (posedge clk) begin
+		if (convolution_opcode & done_alu & !write_vga) begin
+			pixel_color <= (opcode==MUL) ? (matrix_C[7:0]) : (matrix_C[23:16]);
+			write_vga <= 1;
+		end
+		else if (write_vga & vga_ram_done) begin
+			write_vga <= 0;
+		end
+	end
+	
+	
+	vga_control(
+		fetched_instruction[21:4], 
+		clk,
+		write_vga,
+		pixel_color,
+		vga_ram_done,
+		hsync, 
+		vsync,
+		red,
+		green,
+		blue,			
+		vga_sync,
+		vga_clk,
+		vga_blank
+);
+	
+	
 
 endmodule
