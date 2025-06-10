@@ -1,3 +1,0 @@
-Warning (10268): Verilog HDL information at top.v(90): always construct contains both blocking and non-blocking assignments File: /home/marcelo/Documentos/MI_SD/P1/SistemasDigitais_Problema1/cooprocessorFiles/controle/top.v Line: 90
-Warning (10268): Verilog HDL information at alu.v(30): always construct contains both blocking and non-blocking assignments File: /home/marcelo/Documentos/MI_SD/P1/SistemasDigitais_Problema1/cooprocessorFiles/ula/alu.v Line: 30
-Warning (10268): Verilog HDL information at matriz_determ4x4.v(31): always construct contains both blocking and non-blocking assignments File: /home/marcelo/Documentos/MI_SD/P1/SistemasDigitais_Problema1/cooprocessorFiles/ula/matriz_determ4x4.v Line: 31
