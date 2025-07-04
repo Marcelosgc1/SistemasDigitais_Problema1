@@ -34,8 +34,8 @@ https://fpgasoftware.intel.com/eula.
 	(port
 		(pt 0 152)
 		(input)
-		(text "data_export[15..0]" (rect 0 0 70 12)(font "Arial" (font_size 8)))
-		(text "data_export[15..0]" (rect 4 141 112 152)(font "Arial" (font_size 8)))
+		(text "data_export[31..0]" (rect 0 0 70 12)(font "Arial" (font_size 8)))
+		(text "data_export[31..0]" (rect 4 141 112 152)(font "Arial" (font_size 8)))
 		(line (pt 0 152)(pt 272 152)(line_width 3))
 	)
 	(port
@@ -160,16 +160,16 @@ https://fpgasoftware.intel.com/eula.
 	(port
 		(pt 0 1488)
 		(input)
-		(text "wait_s_export" (rect 0 0 55 12)(font "Arial" (font_size 8)))
-		(text "wait_s_export" (rect 4 1477 82 1488)(font "Arial" (font_size 8)))
-		(line (pt 0 1488)(pt 272 1488)(line_width 1))
+		(text "wait_s_export[1..0]" (rect 0 0 74 12)(font "Arial" (font_size 8)))
+		(text "wait_s_export[1..0]" (rect 4 1477 118 1488)(font "Arial" (font_size 8)))
+		(line (pt 0 1488)(pt 272 1488)(line_width 3))
 	)
 	(port
 		(pt 0 72)
 		(output)
-		(text "act_ins_export" (rect 0 0 59 12)(font "Arial" (font_size 8)))
-		(text "act_ins_export" (rect 4 61 88 72)(font "Arial" (font_size 8)))
-		(line (pt 0 72)(pt 272 72)(line_width 1))
+		(text "act_ins_export[1..0]" (rect 0 0 77 12)(font "Arial" (font_size 8)))
+		(text "act_ins_export[1..0]" (rect 4 61 124 72)(font "Arial" (font_size 8)))
+		(line (pt 0 72)(pt 272 72)(line_width 3))
 	)
 	(port
 		(pt 752 72)

@@ -330,18 +330,19 @@ soc_system u0 (
 );
   
 wire [31:0] ins;
-wire [15:0] dat;
-wire ai, wait_s;  
+wire [31:0] dat;
+wire [1:0] ai;
+wire wait_s;  
 
-assign LEDR = {ai,wait_s};
-assign HEX0 = ins[16:10];
-assign HEX1 = ins[23:17];
-assign HEX2 = ins[30:24];
-assign HEX3 = dat[6:0];
-assign HEX4 = dat[13:7];
-assign HEX5 = wait_s;
+//assign LEDR = {ai,wait_s};
+//assign HEX0 = ins[16:10];
+//assign HEX1 = ins[23:17];
+//assign HEX2 = ins[30:24];
+//assign HEX3 = dat[6:0];
+//assign HEX4 = dat[13:7];
+//assign HEX5 = wait_s;
 
-top(ins, ai, CLOCK_50, dat, wait_s, VGA_HS, VGA_VS, VGA_R, VGA_G, VGA_B, VGA_SYNC_N, VGA_CLK, VGA_BLANK_N);
+top(ins, ai, CLOCK_50, KEY, SW, dat, wait_s, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, LEDR, GPIO_0, GPIO_1, VGA_HS, VGA_VS, VGA_R, VGA_G, VGA_B, VGA_SYNC_N, VGA_CLK, VGA_BLANK_N);
 
 // Source/Probe megawizard instance
 hps_reset hps_reset_inst (

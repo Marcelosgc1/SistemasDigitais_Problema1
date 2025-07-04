@@ -80,7 +80,6 @@
 		.memory_mem_dm                                   (<connected-to-memory_mem_dm>),                                   //                                          .mem_dm
 		.memory_oct_rzqin                                (<connected-to-memory_oct_rzqin>),                                //                                          .oct_rzqin
 		.reset_reset_n                                   (<connected-to-reset_reset_n>),                                   //                                     reset.reset_n
-		.wait_s_export                                   (<connected-to-wait_s_export>),                                   //                                    wait_s.export
 		.video_vga_controller_0_external_interface_CLK   (<connected-to-video_vga_controller_0_external_interface_CLK>),   // video_vga_controller_0_external_interface.CLK
 		.video_vga_controller_0_external_interface_HS    (<connected-to-video_vga_controller_0_external_interface_HS>),    //                                          .HS
 		.video_vga_controller_0_external_interface_VS    (<connected-to-video_vga_controller_0_external_interface_VS>),    //                                          .VS
@@ -88,6 +87,7 @@
 		.video_vga_controller_0_external_interface_SYNC  (<connected-to-video_vga_controller_0_external_interface_SYNC>),  //                                          .SYNC
 		.video_vga_controller_0_external_interface_R     (<connected-to-video_vga_controller_0_external_interface_R>),     //                                          .R
 		.video_vga_controller_0_external_interface_G     (<connected-to-video_vga_controller_0_external_interface_G>),     //                                          .G
-		.video_vga_controller_0_external_interface_B     (<connected-to-video_vga_controller_0_external_interface_B>)      //                                          .B
+		.video_vga_controller_0_external_interface_B     (<connected-to-video_vga_controller_0_external_interface_B>),     //                                          .B
+		.wait_s_export                                   (<connected-to-wait_s_export>)                                    //                                    wait_s.export
 	);
 

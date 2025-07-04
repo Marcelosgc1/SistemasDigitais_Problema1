@@ -1,0 +1,25 @@
+module line_buffers(input [31:0] datain, input [8:0]address, input done, input clk, output [7:0] dataout);
+
+
+
+reg [4095:0] BUFFER0, BUFFER1, BUFFER2, BUFFER3, BUFFER4;
+reg last_done;
+
+assign dataout = BUFFER0[address[8:0] * 8 +:8];
+assign new_line = !(|address);
+
+always @(posedge clk) begin
+	if(done) begin
+		BUFFER0[address[8:2] * 32 +:31] <= datain;
+	end
+	if(new_line) begin
+		BUFFER1 <= BUFFER0;
+		BUFFER2 <= BUFFER1;
+		BUFFER3 <= BUFFER2;
+		BUFFER4 <= BUFFER3;
+	end
+end
+//
+
+
+endmodule

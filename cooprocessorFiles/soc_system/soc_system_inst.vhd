@@ -1,8 +1,8 @@
 	component soc_system is
 		port (
-			act_ins_export                                  : out   std_logic;                                        -- export
+			act_ins_export                                  : out   std_logic_vector(1 downto 0);                     -- export
 			clk_clk                                         : in    std_logic                     := 'X';             -- clk
-			data_export                                     : in    std_logic_vector(15 downto 0) := (others => 'X'); -- export
+			data_export                                     : in    std_logic_vector(31 downto 0) := (others => 'X'); -- export
 			hps_0_f2h_cold_reset_req_reset_n                : in    std_logic                     := 'X';             -- reset_n
 			hps_0_f2h_debug_reset_req_reset_n               : in    std_logic                     := 'X';             -- reset_n
 			hps_0_f2h_stm_hw_events_stm_hwevents            : in    std_logic_vector(27 downto 0) := (others => 'X'); -- stm_hwevents
@@ -81,7 +81,6 @@
 			memory_mem_dm                                   : out   std_logic_vector(3 downto 0);                     -- mem_dm
 			memory_oct_rzqin                                : in    std_logic                     := 'X';             -- oct_rzqin
 			reset_reset_n                                   : in    std_logic                     := 'X';             -- reset_n
-			wait_s_export                                   : in    std_logic                     := 'X';             -- export
 			video_vga_controller_0_external_interface_CLK   : out   std_logic;                                        -- CLK
 			video_vga_controller_0_external_interface_HS    : out   std_logic;                                        -- HS
 			video_vga_controller_0_external_interface_VS    : out   std_logic;                                        -- VS
@@ -89,7 +88,8 @@
 			video_vga_controller_0_external_interface_SYNC  : out   std_logic;                                        -- SYNC
 			video_vga_controller_0_external_interface_R     : out   std_logic_vector(7 downto 0);                     -- R
 			video_vga_controller_0_external_interface_G     : out   std_logic_vector(7 downto 0);                     -- G
-			video_vga_controller_0_external_interface_B     : out   std_logic_vector(7 downto 0)                      -- B
+			video_vga_controller_0_external_interface_B     : out   std_logic_vector(7 downto 0);                     -- B
+			wait_s_export                                   : in    std_logic_vector(1 downto 0)  := (others => 'X')  -- export
 		);
 	end component soc_system;
 
@@ -176,7 +176,6 @@
 			memory_mem_dm                                   => CONNECTED_TO_memory_mem_dm,                                   --                                          .mem_dm
 			memory_oct_rzqin                                => CONNECTED_TO_memory_oct_rzqin,                                --                                          .oct_rzqin
 			reset_reset_n                                   => CONNECTED_TO_reset_reset_n,                                   --                                     reset.reset_n
-			wait_s_export                                   => CONNECTED_TO_wait_s_export,                                   --                                    wait_s.export
 			video_vga_controller_0_external_interface_CLK   => CONNECTED_TO_video_vga_controller_0_external_interface_CLK,   -- video_vga_controller_0_external_interface.CLK
 			video_vga_controller_0_external_interface_HS    => CONNECTED_TO_video_vga_controller_0_external_interface_HS,    --                                          .HS
 			video_vga_controller_0_external_interface_VS    => CONNECTED_TO_video_vga_controller_0_external_interface_VS,    --                                          .VS
@@ -184,6 +183,7 @@
 			video_vga_controller_0_external_interface_SYNC  => CONNECTED_TO_video_vga_controller_0_external_interface_SYNC,  --                                          .SYNC
 			video_vga_controller_0_external_interface_R     => CONNECTED_TO_video_vga_controller_0_external_interface_R,     --                                          .R
 			video_vga_controller_0_external_interface_G     => CONNECTED_TO_video_vga_controller_0_external_interface_G,     --                                          .G
-			video_vga_controller_0_external_interface_B     => CONNECTED_TO_video_vga_controller_0_external_interface_B      --                                          .B
+			video_vga_controller_0_external_interface_B     => CONNECTED_TO_video_vga_controller_0_external_interface_B,     --                                          .B
+			wait_s_export                                   => CONNECTED_TO_wait_s_export                                    --                                    wait_s.export
 		);
 

@@ -81,7 +81,6 @@ module soc_system (
 	memory_mem_dm,
 	memory_oct_rzqin,
 	reset_reset_n,
-	wait_s_export,
 	video_vga_controller_0_external_interface_CLK,
 	video_vga_controller_0_external_interface_HS,
 	video_vga_controller_0_external_interface_VS,
@@ -89,11 +88,12 @@ module soc_system (
 	video_vga_controller_0_external_interface_SYNC,
 	video_vga_controller_0_external_interface_R,
 	video_vga_controller_0_external_interface_G,
-	video_vga_controller_0_external_interface_B);	
+	video_vga_controller_0_external_interface_B,
+	wait_s_export);	
 
-	output		act_ins_export;
+	output	[1:0]	act_ins_export;
 	input		clk_clk;
-	input	[15:0]	data_export;
+	input	[31:0]	data_export;
 	input		hps_0_f2h_cold_reset_req_reset_n;
 	input		hps_0_f2h_debug_reset_req_reset_n;
 	input	[27:0]	hps_0_f2h_stm_hw_events_stm_hwevents;
@@ -172,7 +172,6 @@ module soc_system (
 	output	[3:0]	memory_mem_dm;
 	input		memory_oct_rzqin;
 	input		reset_reset_n;
-	input		wait_s_export;
 	output		video_vga_controller_0_external_interface_CLK;
 	output		video_vga_controller_0_external_interface_HS;
 	output		video_vga_controller_0_external_interface_VS;
@@ -181,4 +180,5 @@ module soc_system (
 	output	[7:0]	video_vga_controller_0_external_interface_R;
 	output	[7:0]	video_vga_controller_0_external_interface_G;
 	output	[7:0]	video_vga_controller_0_external_interface_B;
+	input	[1:0]	wait_s_export;
 endmodule

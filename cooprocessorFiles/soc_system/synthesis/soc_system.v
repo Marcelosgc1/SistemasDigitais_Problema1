@@ -4,9 +4,9 @@
 
 `timescale 1 ps / 1 ps
 module soc_system (
-		output wire        act_ins_export,                                  //                                   act_ins.export
+		output wire [1:0]  act_ins_export,                                  //                                   act_ins.export
 		input  wire        clk_clk,                                         //                                       clk.clk
-		input  wire [15:0] data_export,                                     //                                      data.export
+		input  wire [31:0] data_export,                                     //                                      data.export
 		input  wire        hps_0_f2h_cold_reset_req_reset_n,                //                  hps_0_f2h_cold_reset_req.reset_n
 		input  wire        hps_0_f2h_debug_reset_req_reset_n,               //                 hps_0_f2h_debug_reset_req.reset_n
 		input  wire [27:0] hps_0_f2h_stm_hw_events_stm_hwevents,            //                   hps_0_f2h_stm_hw_events.stm_hwevents
@@ -93,7 +93,7 @@ module soc_system (
 		output wire [7:0]  video_vga_controller_0_external_interface_R,     //                                          .R
 		output wire [7:0]  video_vga_controller_0_external_interface_G,     //                                          .G
 		output wire [7:0]  video_vga_controller_0_external_interface_B,     //                                          .B
-		input  wire        wait_s_export                                    //                                    wait_s.export
+		input  wire [1:0]  wait_s_export                                    //                                    wait_s.export
 	);
 
 	wire   [1:0] hps_0_h2f_axi_master_awburst;                              // hps_0:h2f_AWBURST -> mm_interconnect_0:hps_0_h2f_axi_master_awburst
