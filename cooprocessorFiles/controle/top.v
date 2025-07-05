@@ -94,7 +94,7 @@ module top(
 		clk,
 		opcode,
 		data,
-		operandA,
+		matrix_A,
 		matrix_B,
 		start_ALU,
 		matrix_C,
@@ -111,7 +111,7 @@ module top(
 		result_ula
 	);
 	
-	assign operandA = ipu_request ? buf_matrix : matrix_A;
+	//assign operandA = ipu_request ? buf_matrix : matrix_A;
 	assign wait_signal = state != FETCH;
 	assign done_pulse = done & !last_done;
 	assign done = (loaded & !write_resul) ? done_alu : done_mem;
@@ -137,8 +137,8 @@ module top(
 			//Estado de busca
 			FETCH: begin
 				//quando recebe activate_instruction, muda de estado
-				if (activate_instruction | ipu_request) begin	
-					fetched_instruction = ipu_request ? ipu_inst : instruction;
+				if (activate_instruction) begin	
+					fetched_instruction = instruction;
 					state = DECODE;
 				end else begin
 					state = FETCH;
@@ -260,81 +260,81 @@ module top(
 	
 	assign address_buf = {v_count_buf, h_count_buf[8:2]};
 	assign WRITE_ENABLE = cam_we | conv_we;
-	assign addr = start_buf ? address_buf : hps_read_image ? hps_image_address : cam_we | cam_valid_pixel ? cam_address : conv_address;
+	assign addr = hps_read_image ? hps_image_address : cam_we | cam_valid_pixel ? cam_address : conv_address;
 	assign memory_clk = cam_we | cam_valid_pixel ? cam_clock : clk;
 	assign data_in = cam_we | cam_valid_pixel ? cam_data : conv_data;
 	//assign ipu_request = instruction[3:0]==RENDERIZAR & activate_ipu;
-	assign h_count = ipu_state==1 ? h_count_buf : h_count_conv;
-	assign v_count = ipu_state==1 ? v_count_buf : v_count_conv;
+	//assign h_count = ipu_state==1 ? h_count_buf : h_count_conv;
+	//assign v_count = ipu_state==1 ? v_count_buf : v_count_conv;
 	
 	assign hps_read_image = instruction[3:0]==READ_IMAGE;
 	assign hps_image_address = instruction[19:4];
 	
 	always @ (posedge clk) begin
 		
-		case (ipu_state)
-			0: begin
-				if(instruction[3:0]==PHOTO_CONV) begin
-					ipu_state <= 1;
-					size <= instruction[5:4];
-					start_process <= 1;
-				end else if (start_process) begin
-					start_process <= 0;
-				end
-				start_buf <= 0;
-				loader <= 0;
-				h_count_buf <= 0;
-				v_count_buf <= 0;
-				h_count_conv <= 0;
-				v_count_conv <= 0;
-				ipu_state <= 0;
-				ipu_request <= 0;
-				curr_result <= 0;
-			end
-			
-			1: begin
-				if (!start_buf) begin
-					start_buf <= 1;
-					loader <= size + 1;
-				end else begin
-					loader <= loader - (h_count_buf == 9'd508);
-					h_count_buf <= (h_count_buf == 9'd508) ? 0 : h_count_buf + 4;
-					v_count_buf <= v_count_buf + (h_count_buf == 9'd508);
-					ipu_state <= (h_count_buf == 9'd508) & loader == 0 ? 2 : 1 ;
-					start_buf <= (h_count_buf != 9'd508) | loader != 0;
-				end
-			end
-			
-			2: begin
-				if (!wait_signal) begin
-					ipu_request <= 1;
-					ipu_inst <= {h_count_conv,v_count_conv,4'b0111};
-					curr_result <= 0;
-				end else if (ipu_request) begin
-					if (done_alu & !curr_result) begin
-						curr_result <= 1;
-						ipu_request <= 0;
-						if(h_count_conv==9'h1ff)begin
-							if (v_count_conv==9'h1df) begin
-								ipu_state <= 0;
-							end else begin
-								h_count_conv <= 0;
-								v_count_conv <= v_count_conv + 1;
-								loader <= 0;
-								ipu_state <= 1;
-								start_buf <= 1;
-							end
-						end
-						else begin
-							h_count_conv <= h_count_conv + 1;
-						end
-					end
-				
-				end
-			
-			end
-		
-		endcase
+//		case (ipu_state)
+//			0: begin
+//				if(instruction[3:0]==PHOTO_CONV) begin
+//					ipu_state <= 1;
+//					size <= instruction[5:4];
+//					start_process <= 1;
+//				end else if (start_process) begin
+//					start_process <= 0;
+//				end
+//				start_buf <= 0;
+//				loader <= 0;
+//				h_count_buf <= 0;
+//				v_count_buf <= 0;
+//				h_count_conv <= 0;
+//				v_count_conv <= 0;
+//				ipu_state <= 0;
+//				ipu_request <= 0;
+//				curr_result <= 0;
+//			end
+//			
+//			1: begin
+//				if (!start_buf) begin
+//					start_buf <= 1;
+//					loader <= size + 1;
+//				end else begin
+//					loader <= loader - (h_count_buf == 9'd508);
+//					h_count_buf <= (h_count_buf == 9'd508) ? 0 : h_count_buf + 4;
+//					v_count_buf <= v_count_buf + (h_count_buf == 9'd508);
+//					ipu_state <= (h_count_buf == 9'd508) & loader == 0 ? 2 : 1 ;
+//					start_buf <= (h_count_buf != 9'd508) | loader != 0;
+//				end
+//			end
+//			
+//			2: begin
+//				if (!wait_signal) begin
+//					ipu_request <= 1;
+//					ipu_inst <= {h_count_conv,v_count_conv,4'b0111};
+//					curr_result <= 0;
+//				end else if (ipu_request) begin
+//					if (done_alu & !curr_result) begin
+//						curr_result <= 1;
+//						ipu_request <= 0;
+//						if(h_count_conv==9'h1ff)begin
+//							if (v_count_conv==9'h1df) begin
+//								ipu_state <= 0;
+//							end else begin
+//								h_count_conv <= 0;
+//								v_count_conv <= v_count_conv + 1;
+//								loader <= 0;
+//								ipu_state <= 1;
+//								start_buf <= 1;
+//							end
+//						end
+//						else begin
+//							h_count_conv <= h_count_conv + 1;
+//						end
+//					end
+//				
+//				end
+//			
+//			end
+//		
+//		endcase
 	
 	
 		
@@ -396,15 +396,15 @@ module top(
 	);
 	
 	
-	line_buffers(
-		ram_data_out, 
-		h_count, 
-		v_count,
-		start_buf,
-		size,
-		clk,
-		buf_matrix
-	);
-	
+//	line_buffers(
+//		ram_data_out, 
+//		h_count, 
+//		v_count,
+//		start_buf,
+//		size,
+//		clk,
+//		buf_matrix
+//	);
+//	
 
 endmodule
