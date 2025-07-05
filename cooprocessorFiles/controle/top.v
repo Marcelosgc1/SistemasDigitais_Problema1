@@ -274,11 +274,11 @@ module top(
 		
 		case (ipu_state)
 			0: begin
-				if(instruction[3:0]==PHOTO_CONV) begin
+				if(instruction[3:0]==PHOTO_CONV & !start_process) begin
 					ipu_state <= 1;
 					size <= instruction[5:4];
 					start_process <= 1;
-				end else if (start_process) begin
+				end else if (instruction[3:0]!=PHOTO_CONV) begin
 					start_process <= 0;
 				end
 				start_buf <= 0;

@@ -5,7 +5,7 @@ module line_buffers(input [31:0] datain, input [8:0]address, input [8:0]vertical
 reg [4095:0] BUFFER0, BUFFER1, BUFFER2, BUFFER3, BUFFER4;
 reg [7:0] num [24:0];
 wire [7:0] data [4:0];
-
+wire [7:0] centralPixel3x3, centralPixel5x5;
 
 assign centralPixel3x3 = BUFFER1[address[8:0] * 8 +:8];
 assign centralPixel5x5 = BUFFER2[address[8:0] * 8 +:8];
